@@ -412,9 +412,10 @@ ol {
 .hero-image img {
     -webkit-filter: grayscale(100%);
     filter: grayscale(100%);
-    border-radius: 50px;
-    -moz-border-radius: 50px;
-    -webkit-border-radius: 50px;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border: 4px solid #4a4a4a;
 }
 
 .hero-info h2 {
