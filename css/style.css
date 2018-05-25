@@ -437,6 +437,7 @@ ol {
     display: inline-block;
     border-bottom: 2px solid #404249;
     margin-right: 14px;
+    margin-bottom: 10px;
 }
 
 .hero-info ul li:last-child {
