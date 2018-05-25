@@ -60,18 +60,12 @@ $(window).on('load', function () {
   /*------------------
     Popup
   --------------------*/
-  $('.portfolio-item .port-pic').magnificPopup({
-    type: 'image',
-    mainClass: 'img-popup-warp',
-    removalDelay: 500,
-  });
-
 
   if ($().circleProgress) {
 
     //Set progress circle 1
     $("#progress1").circleProgress({
-      value: 0.75,
+      value: 0.88,
       size: 175,
       thickness: 2,
       fill: "#40424a",
@@ -83,42 +77,6 @@ $(window).on('load', function () {
       size: 175,
       thickness: 2,
       fill: "#40424a",
-      emptyFill: "rgba(0, 0, 0, 0)"
-    });
-
-    //Set progress circle white
-    $("#progress3").circleProgress({
-      value: 0.75,
-      size: 175,
-      thickness: 2,
-      fill: "#ffffff",
-      emptyFill: "rgba(0, 0, 0, 0)"
-    });
-
-    //Set progress circle white
-    $("#progress4").circleProgress({
-      value: 0.83,
-      size: 175,
-      thickness: 2,
-      fill: "#ffffff",
-      emptyFill: "rgba(0, 0, 0, 0)"
-    });
-
-    //Set progress circle skyblue
-    $("#progress5").circleProgress({
-      value: 0.75,
-      size: 175,
-      thickness: 2,
-      fill: "#009fff",
-      emptyFill: "rgba(0, 0, 0, 0)"
-    });
-
-    //Set progress circle skyblue
-    $("#progress6").circleProgress({
-      value: 0.83,
-      size: 175,
-      thickness: 2,
-      fill: "#009fff",
       emptyFill: "rgba(0, 0, 0, 0)"
     });
   }

@@ -437,6 +437,7 @@ ol {
     display: inline-block;
     border-bottom: 2px solid #404249;
     margin-right: 14px;
+    margin-bottom: 10px;
 }
 
 .hero-info ul li:last-child {
@@ -695,8 +696,15 @@ ol {
 .copyright {
     padding-top: 5px;
     font-size: 12px;
-    color: #838488;
+    color: #404249;
     line-height: normal;
+}
+
+.copyright a,
+.copyright a:hover,
+.copyright a:focus,
+.copyright a:active {
+    color: #404249;
 }
 
 /*---------------------
