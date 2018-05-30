@@ -57,10 +57,6 @@ $(window).on('load', function () {
   });
 
 
-  /*------------------
-    Popup
-  --------------------*/
-
   if ($().circleProgress) {
 
     //Set progress circle 1

@@ -528,7 +528,7 @@ ol {
 }
 
 .resume-list h2 {
-    font-size: 72px;
+    font-size: 50px;
     margin-bottom: 10px;
 }
 
@@ -538,10 +538,6 @@ ol {
     color: #808181;
     margin-top: 10px;
     margin-bottom: 45px;
-}
-
-.resume-list p {
-    margin-bottom: 0;
 }
 
 /*---------------------
@@ -1475,7 +1471,11 @@ ol {
     }
 
     .resume-list h2 {
-        font-size: 50px;
+        font-size: 40px;
+    }
+
+    .section-title h2 {
+        font-size: 36px;
     }
 
     .portfolio-item {
