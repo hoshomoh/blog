@@ -595,44 +595,17 @@ ol {
 
 .portfolio-item h2 {
     font-size: 24px;
-    margin-bottom: 5px;
-}
-
-.portfolio-item p {
-    font-size: 14px;
     margin-bottom: 0;
 }
 
 .portfolio-item .port-pic {
     margin-bottom: 30px;
     display: block;
-    height: 480px;
-    background: #333;
-    background-position: center center;
+    height: 250px;
+    background: #333 center center;
     background-size: cover;
     overflow: hidden;
     position: relative;
-}
-
-.portfolio-item .port-pic:after {
-    position: absolute;
-    content: '';
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 0;
-    background: #000;
-    opacity: 0;
-    z-index: 2;
-    -webkit-transition: all 0.4s cubic-bezier(0.55, 0.09, 0.68, 0.53) 0s;
-    -o-transition: all 0.4s cubic-bezier(0.55, 0.09, 0.68, 0.53) 0s;
-    transition: all 0.4s cubic-bezier(0.55, 0.09, 0.68, 0.53) 0s;
-}
-
-.portfolio-item:hover .port-pic:after {
-    opacity: 0.8;
-    height: 100%;
-    top: 0;
 }
 
 /*---------------------
@@ -1252,10 +1225,6 @@ ol {
         min-width: 180px;
     }
 
-    .portfolio-item .port-pic {
-        height: 310px;
-    }
-
     .home-three-style .header-section {
         padding: 50px 30px;
     }
@@ -1291,10 +1260,6 @@ ol {
 
     .home-three-style .main-right-area {
         padding-left: 100px;
-    }
-
-    .portfolio-item .port-pic {
-        height: 310px;
     }
 
     .portfolio-item {
