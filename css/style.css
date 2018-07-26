@@ -51,8 +51,11 @@ textarea:focus {
     outline: none;
 }
 
+a,
 a:hover,
+a:active,
 a:focus {
+    color: #249d8b;
     text-decoration: none;
     outline: none;
 }
@@ -811,6 +814,11 @@ ol {
 
 /* small Mobile :320px. */
 @media only screen and (max-width: 479px) {
+    .hero-image-wrapper {
+        display: none !important;
+        visibility: hidden !important;
+    }
+
     .hero-text h2 {
         font-size: 50px;
     }
@@ -833,6 +841,7 @@ ol {
 
     .section-title h2 {
         font-size: 36px;
+        margin-bottom: 60px;
     }
 
     .portfolio-item {
