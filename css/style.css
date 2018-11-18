@@ -680,7 +680,7 @@ ol {
 .copyright {
     padding-top: 5px;
     font-size: 12px;
-    color: #404249;
+    color: #ffffff;
     line-height: normal;
 }
 
@@ -688,7 +688,7 @@ ol {
 .copyright a:hover,
 .copyright a:focus,
 .copyright a:active {
-    color: #404249;
+    color: #ffffff;
 }
 
 
