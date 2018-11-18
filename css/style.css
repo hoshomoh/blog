@@ -446,6 +446,14 @@ ol {
     margin-bottom: 0;
 }
 
+.hero-tech-tag {
+    background: #484848;
+    color: #f9f9f9;
+    padding: 5px 8px;
+    font-size: 11px;
+    margin-bottom: 5px;
+}
+
 /*---------------------
 	Social section
 -----------------------*/
@@ -608,6 +616,11 @@ ol {
     background-size: cover;
     overflow: hidden;
     position: relative;
+    color: #ffffff !important;
+    font-size: 70px;
+    font-weight: 700;
+    line-height: 250px;
+    text-align: center;
 }
 
 /*---------------------
