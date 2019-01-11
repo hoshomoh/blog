@@ -1,0 +1,11 @@
+title: Oshomo Oforomeh
+email: hello@oshomo.oforomeh.com
+baseurl: "/blog"
+twitter_username: hoshomoh
+github_username:  oshomo
+
+# Build settings
+markdown: kramdown
+theme: minima
+plugins:
+  - jekyll-feed
