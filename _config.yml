@@ -1,10 +1,10 @@
 title: Oshomo Oforomeh
 email: hello@oshomo.oforomeh.com
-baseurl: "/blog"
 twitter_username: hoshomoh
 github_username:  oshomo
 
 # Build settings
+permalink: /:categories/:title:output_ext
 markdown: kramdown
 theme: minima
 plugins:
