@@ -4,21 +4,25 @@
     <title>{{ page.title }}</title>
     <meta charset="UTF-8">
     {% if page.meta %}
-        {% include {{page.meta}}.html %}
+    {% include {{page.meta}}.html %}
     {% endif %}
-
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="/assets/images/favicon.ico?updated" type="image/x-icon">
-    <link rel="icon" href="/assets/images/favicon.ico?updated" type="image/x-icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,400i,600,600i,700" rel="stylesheet">
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="/assets/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/assets/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="/assets/css/flaticon.css"/>
-    <link rel="stylesheet" href="/assets/css/owl.carousel.css"/>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"
+          integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ="
+          crossorigin="anonymous" />
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+          integrity="sha256-UhQQ4fxEeABh4JrcmAJ1+16id/1dnlOEVCFOxDef9Lw="
+          crossorigin="anonymous"/>
     <link rel="stylesheet" href="/assets/css/style.css?version=1.0.1"/>
 
 
@@ -30,25 +34,40 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-120373129-1"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
+
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+
       gtag('js', new Date());
 
       gtag('config', 'UA-120373129-1');
     </script>
     {% if page.head_script %}
-        {% include {{page.head_script}}.html %}
+    {% include {{page.head_script}}.html %}
     {% endif %}
 </head>
 <body>
-    {% include preloader.html %}
-    {% include header.html %}
-    {{ content }}
-    {% include footer.html %}
-    <!--====== Javascripts & Jquery ======-->
-    <script src="/assets/js/jquery-2.1.4.min.js"></script>
-    <script src="/assets/js/bootstrap.min.js"></script>
-    <script src="/assets/js/owl.carousel.min.js"></script>
-    <script src="/assets/js/circle-progress.min.js"></script>
-    <script src="/assets/js/main.js"></script>
+{% include preloader.html %}
+{% include header.html %}
+{{ content }}
+{% include footer.html %}
+<!--====== Javascripts & Jquery ======-->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+        integrity="sha256-pTxD+DSzIwmwhOqTFN+DB+nHjO4iAsbgfyFq5K5bcE0="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-circle-progress/1.2.2/circle-progress.min.js"
+        integrity="sha256-2XpjfLL5tRYLa3AAM0gz6aAY0zxvHogDzTWemxkTPDg="
+        crossorigin="anonymous"></script>
+<script src="/assets/js/main.js"></script>
 </body>
 </html>

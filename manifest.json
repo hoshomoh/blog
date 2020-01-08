@@ -1,0 +1,23 @@
+{
+	"name": "Oshomo Oforomeh",
+	"short_name": "O_o",
+	"theme_color": "#f2f7f8",
+	"background_color": "#f2f7f8",
+	"display": "standalone",
+	"orientation": "portrait",
+	"Scope": "/",
+	"start_url": "/?utm_source=homescreen",
+	"icons": [
+		{
+			"src": "/assets/images/manifest-icon-192.png",
+			"sizes": "192x192",
+			"type": "image/png"
+		},
+		{
+			"src": "/assets/images/manifest-icon-512.png",
+			"sizes": "512x512",
+			"type": "image/png"
+		}
+	],
+	"splash_pages": null
+}
