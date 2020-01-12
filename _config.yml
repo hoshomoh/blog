@@ -1,10 +1,19 @@
+baseurl:
 title: Oshomo Oforomeh
-email: hello@oshomo.oforomeh.com
-twitter_username: hoshomoh
-github_username:  oshomo
-
-# Build settings
-permalink: /:categories/:title:output_ext
+subtitle: Personal website and articles.
+author: Oshomo Oforomeh
+simple_search: http://google.com/search
+description: Oshomo Oforomeh personal website and articles.
 markdown: kramdown
-plugins:
-  - jekyll-feed
+markdown_ext: "markdown,mkdown,mkdn,mkd,md"
+permalink: /articles/:year/:month/:title
+excerpt_separator: <!--more-->  # you can specify your own separator, of course.
+exclude: ['Gemfile', 'Gemfile.lock', 'README.md']
+jekyll_compose:
+  default_front_matter:
+    drafts:
+      layout: post
+      categories:
+    posts:
+      layout: post
+      categories:

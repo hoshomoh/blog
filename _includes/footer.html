@@ -1,9 +1,14 @@
-<!-- Footer section start -->
-<footer class="footer-section">
-    <div class="container text-center">
-        <div class="copyright">
-            Copyright &copy;<script>document.write(new Date().getFullYear());</script>
-        </div>
-    </div>
+<footer>
+  <hr class="slender">
+  <ul class="footer-links">
+    <li><a href="mailto:hello@oshomo.oforomeh.com"><span class="fas fa-envelope-square"></span></a></li>    
+    {% for entry in site.data.social %}
+      <li>
+        <a href="{{ entry.link }}"><span class="{{ entry.icon }}"></span></a>
+      </li>
+    {% endfor %}  
+  </ul>
+<div class="credits">
+<span>&copy; {{ site.time | date: '%Y' }} &nbsp;&nbsp;{{site.author | upcase }}</span></br> <br>
+</div>  
 </footer>
-<!-- Footer section end -->
