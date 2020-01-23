@@ -62,8 +62,23 @@ Finally, its Monday, and we were able to release the working software to the cus
 * Use feature toggles to manage feature roll out to customers. Feature Flags have a tendency to multiply rapidly, particularly when first introduced. They are useful and cheap to create and so often a lot are created. However toggles do come with a carrying cost. {% sidenote 'feature-toggle-pete-hodgson' 'A statement from Pete Hodgson [article](https://martinfowler.com/articles/feature-toggles.html) on Feature Toggles (aka Feature Flags).' %}
 * Invest heavily into logging, monitoring and alerting the right people. 
 
-### 3. Distraction from external team members
+### 3. Distractions
 
+Often have I heard the phrases, "I am more productive in the morning", "I am more productive at night", "I am more productive from home" etc. After asking myself and few other engineers, I realize one common theme with the engineers that make this comments. This engineers are either not distracted during this period, or they have less distractions during this time. 
 
+Recent studies have shown that it takes about 30 - 45 minute to get "into the zone" and focus on the task at hand. Once distracted, it can be difficult to get back into the zone. Studies also show that it takes about 30 - 45 minutes to return to the original task. If you have 8 working hours in a day, removing compulsory and pre-planned meeting and lunch, you probably have in 6 hours in total to do real work. If you get distracted for at least 6 times during those 6 hour period you end up with having only 3 hours to do real work as the half of the time was probably spent getting back into the zone. 
+
+I categorise distraction into two forms; direct and indirect distraction.  
+
+__Direct Distraction__
+
+For lack of words I decided to go with direct, direct distractions are those distractions that are primarily caused by me or those that I have 100% control over. All form of communication falls into this category, IM, slack, emails, and social media. This services or tools themselves do no harm, distraction is mostly caused by how we use them. Below are things I have tried, to reduce distractions caused by how I use this services or tools in the past. 
+
+* Disabled mobile notifications for email, social media apps and slack. Also note that I did this on device level and not app level. 
+* Created email automation to move irrelevant emails from my inbox to a separate folder and mark them to read. Irrelevant emails include, emails for update on a PR, emails for update on issues.
+* Created email automation to move all calender invite from my inbox to a separate folder so I can attend to them when I want.
+* Slack is such a good communication tool for work, but if you are not careful, it can be a productivity bottleneck. Thankfully, Slack has implemented different features{% sidenote 'slack-noise-cancelling-features' 'Slack keeps all your team communication in one place, but your team does a lot! [These tips](https://slack.com/intl/en-de/help/articles/218551977-Reduce-noise-in-Slack) will help you manage what gets your attention — and what does not. While [this](https://slack.com/intl/en-de/help/articles/217626558-Keep-up-with-whats-important) will help you keep up with what is important.'%} to put you in charge of how you consume information.
+
+__Indirect Distraction__
 
 ### 4. Poorly refined tasks

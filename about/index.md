@@ -9,7 +9,5 @@ I have served in the capacity of a web developer, backend engineer, full-stack e
 
 With the above in mind, my interest now lies in serving in the capacity of a technical team lead or engineering manager  while using my engineering and product experience to help any product in the product-market fit or scaling stage to achieve its product mission and vision and have fun while doing it.
 
-Feel free to glance at my [CV](https://docs.google.com/document/d/1UhZQhn-iYkXYOdr4vbGxjwj9_bQ_gLbGZdk2aVyld-w/edit?usp=sharing) to get more insight into my work experience.
-
 
 
