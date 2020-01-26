@@ -1,9 +1,16 @@
 ---
 layout: post
-title: Productive Engineering Teams
+title: A Productive Engineer
 date: 2020-01-10 16:21 +0100
+excerpt: Over the years, I have found that I am most productive when I work at home or when I work after or before every other person at the office has left. This caused for a self reflection and I began to ask the question; "why am I most productive during this two instances?". After much thought, it has come down to this three elements - Meetings, Processes over tools and Distractions. In this article, I discuss my personal view and experiences of how this elements hinders productivity and in some cases proffer solutions that works for me. I hope you enjoy it.
 categories: 
 ---
+
+## TL;DR
+
+{% marginnote 'mn-id-whatever' 'Article Outline:<br /><br />[Introduction](#introduction)<br />[Being busy is not being productive](#being-busy-is-not-being-productive)<br />[Meeting](#1-meetings)<br />[Processes over tools](#2-processes-over-tools)<br />[Distractions](#3-distractions)' %}
+
+> Over the years, I have found that I am most productive when I work at home or when I work after or before every other person at the office has left. This caused for a self reflection and I began to ask the question; "why am I most productive during this two instances?". After much thought, it has come down to this three elements: **Meetings**, **Processes over tools** and **Distractions**. In this article, I discuss my personal view and experiences of how this elements hinders productivity and in some cases proffer solutions that works for me. I hope you enjoy it.
 
 ## Introduction 
 
@@ -28,7 +35,7 @@ I don't think any software engineer leaves their home in the morning with the so
 * test that the engineered solution solves the user problem;
 * release the working tested solution to the user.
 
-As a software engineer, after everyday work, I ask myself, was I productive today? and I can tell you for a fact that in the past 4 years I have only answered "yes" to that question 40% of the time. Below are some noticeable patterns that hinder me from being productive as a software engineer.
+As a software engineer, after everyday work, I ask myself, was I productive today? and I can tell you for a fact that in the past 4 years I have only answered "yes" to that question 40% of the time. Below are elements that stand out and hinder me from being productive as a software engineer.
 
 ### 1. Meetings
 
@@ -36,7 +43,7 @@ Software craftsmanship requires a certain flow within a certain period during th
 
 And I am not talking about those meetings that are pre-planned(stand-up, refinement, retrospective and planning); I am referring to those meeting that adds no single value to your role as a software engineer. I mean those meetings someone from product asked you to join in case there is a technical question that needs to be answered. I am talking about those meetings you joined because you think you will miss out on crucial information if you don't a symptom widely known as [FOMO](https://en.wikipedia.org/wiki/Fear_of_missing_out)
 
-I have seen companies that tell you that these meetings are not compulsory and you can choose to decline, yet the meeting tool provided as given all and sundry the ability to invite you to a meeting. What these companies don't realise is the havoc done by the noise caused by the email/push notification caused by this invite. Luckily for me, my engineering lead recently shared smart ways work around mitigate noise from emails and push notifications. I will share this with you in another blog post. Stay tuned. 
+I have seen companies that tell you that these meetings are not compulsory and you can choose to decline, yet the meeting tool provided as given all and sundry the ability to invite you to a meeting. What these companies don't realise is the havoc done by the noise caused by the email/push notification caused by this invite. As you read on you will learn how I mitigate noise and distractions caused from emails and push notifications.
 
 In my experience, the meetings described above is a symptom of not having technical product managers or technical team lead or engineering manager. If the product managers are not technical, then you need an engineering manager and maybe a technical team lead. The technical team lead is not always needed as a senior engineer in the team can always act in the same regard as a technical team lead. If the product managers are also technical, having an engineering manager is also highly advised. And if for any reason you already have this roles field within a team and you still see this problem at large, then one of these guys aren't doing their job.
 
@@ -81,4 +88,11 @@ For lack of words I decided to go with direct, direct distractions are those dis
 
 __Indirect Distraction__
 
-### 4. Poorly refined tasks
+Indirect distraction are those distractions that I cannot control. Meetings generally fall in this category. In my first point above, I discussed how meetings can hinder one from optimum productivity. Meetings are very difficult to control, especially when you are not the one setting up the meeting. However, there are things you can do to get the most out of your days while attending only relevant meetings and staying productive. 
+
+* Find out your sweet spot, during the day, be it mornings, afternoon or evenings and set up fake recurring meetings for this time in your calender.
+* The brain, needs time to recharge, if you usually break from 12PM, set up fake meetings from 12PM to 1:30PM so you can enjoy lunch, recharge and get back to work with assurance that no one will schedule a meeting for that time. 
+* Make an habit of going over your calender after everyday's work, declining less important meetings, and rescheduling those that can be rescheduled.
+
+In conclusion, focus is an habit that needs to be built and exercised, it does not come naturally. I hope after reading this article, you can start to exercise some of the points outlined above for yourself and gain more productive hours in your work place. 
+
