@@ -14,13 +14,17 @@ categories:
 
 ## Introduction 
 
-Software Engineers like to build stuff (cool stuff), use new technologies, pay technical-debt, make existing solutions faster, find new ways to approach existing solutions. All this and more are what makes a software engineer pumped up and ready to go to work the following day. 
+Software Engineers like to build stuff (cool stuff), use new technologies, pay technical-debt, make existing solutions faster, find new ways to approach existing solutions. All this and more are what makes a software engineer pumped up and ready to work every other day.
 
-The reason we call them software engineers in the first place is because of their ability to solve simple and complex human problems with software systems by applying software engineering principles to design, develop, maintain and test software systems. 
+The reason we call them software engineers in the first place is because of their ability to solve simple and complex problems with software systems by applying software engineering principles to design, develop, maintain and test software systems. 
 
-But, in the past 4 years, I have noticed a trend with most engineering teams that hinders software engineers to do what they know how to do best thereby making them less or not productive. One of the most difficult jobs in software engineering is tracking software engineers productivity, which is even more difficult is communicating their productivity to top management and business stakeholders. This is usually the job of an engineering manager.
+One of the most difficult jobs in software engineering is tracking software engineers' productivity, which is even more difficult is communicating their productivity to top management and business stakeholders. This is usually the job of an engineering manager.
 
-In simple term, it is easy to go to top management as a marketing lead and say we need to increase our marketing spend by 40% because this data shows that if we do so we can increase our conversion rate, sign up rate or even download rate etc. by so and so per cent. Now, put the same thing into the perspective of an engineering manager. How do you go to top management and say we need a new PHP backend engineer while you already have 4? cause as far as management is concerned they can't see what the existing 4 have been doing in the past 3 months. There are data points and metrics to measure engineering teams productivity and also communicate it, but, I would cover that in another series. 
+It is easier to communicate to management that an increase in the marketing budget by 40% will increase the conversion, sign-up or app download rates by a certain percentage with the show of data and some predictive analysis.
+
+In comparison, from an engineering manager's perspective, how do they justify to management the need for an additional hire say a PHP engineer when there are already say 4 of such engineers on ground, considering the challenge in measuring the work output and productivity of the already existing engineers? There are data points and metrics to measure software engineer's and engineering teams productivity and also communicate it, but, I would cover that in another series. 
+
+I have noticed certain practices at the workplace in engineering teams that stalls developers' workflow thereby making them less productive. In the next section, I will dig deep into these practices in more details. 
 
 ## Being busy is not being productive
 
