@@ -2,7 +2,7 @@
 layout: post
 title: A Productive Engineer
 date: 2020-01-10 16:21 +0100
-excerpt: Over the years, I have found that I am most productive when I work at home or when I work after or before every other person at the office has left. This caused for a self reflection and I began to ask the question; "why am I most productive during this two instances?". After much thought, it has come down to this three elements - Meetings, Processes over tools and Distractions. In this article, I discuss my personal view and experiences of how this elements hinders productivity and in some cases proffer solutions that works for me. I hope you enjoy it.
+excerpt: Over the years, I have seen that I am most productive when I work at home or when I work before others arrive or leave work. This caused for a self reflection and I began to ask the question; "why am I most productive during this instances?". After much thought, it has come down to this three elements - Meetings, Processes over tools and Distractions. In this article, I discuss my personal view and experiences of how this elements hinders productivity and in some cases proffer solutions that works for me. I hope you enjoy it.
 categories: 
 ---
 
@@ -10,7 +10,7 @@ categories:
 
 {% marginnote 'mn-id-whatever' 'Article Outline:<br /><br />[Introduction](#introduction)<br />[Being busy is not being productive](#being-busy-is-not-being-productive)<br />[Meeting](#1-meetings)<br />[Processes over tools](#2-processes-over-tools)<br />[Distractions](#3-distractions)' %}
 
-> Over the years, I have found that I am most productive when I work at home or when I work after or before every other person at the office has left. This caused for a self reflection and I began to ask the question; "why am I most productive during this two instances?". After much thought, it has come down to this three elements: **Meetings**, **Processes over tools** and **Distractions**. In this article, I discuss my personal view and experiences of how this elements hinders productivity and in some cases proffer solutions that works for me. I hope you enjoy it.
+> Over the years, I have seen that I am most productive when I work at home or when I work before others arrive or leave work. This caused for a self reflection and I began to ask the question; "why am I most productive during this instances?". After much thought, it has come down to this three elements: **Meetings**, **Processes over tools** and **Distractions**. In this article, I discuss my personal view and experiences of how this elements hinders productivity and in some cases proffer solutions that works for me. I hope you enjoy it.
 
 ## Introduction 
 
@@ -22,7 +22,7 @@ One of the most difficult jobs in software engineering is tracking software engi
 
 It is easier to communicate to management that an increase in the marketing budget by 40% will increase the conversion, sign-up or app download rates by a certain percentage with the show of data and some predictive analysis.
 
-In comparison, from an engineering manager's perspective, how do they justify to management the need for an additional hire say a PHP engineer when there are already say 4 of such engineers on ground, considering the challenge in measuring the work output and productivity of the already existing engineers? There are data points and metrics to measure software engineer's and engineering teams productivity and also communicate it, but, I would cover that in another series. 
+In comparison, from an engineering manager's perspective, how do they justify to management the need for an additional hire say a PHP engineer when there are already say 4 of such engineers on ground? Considering the challenge in measuring the work output and productivity of the already existing engineers. There are data points and metrics to measure software engineer's and engineering teams productivity and also communicate it, but, I would cover that in another series. 
 
 I have noticed certain practices at the workplace in engineering teams that stalls developers' workflow thereby making them less productive. In the next section, I will dig deep into these practices in more details. 
 
@@ -43,19 +43,19 @@ As a software engineer, after everyday work, I ask myself, was I productive toda
 
 ### 1. Meetings
 
-Software craftsmanship requires a certain flow within a certain period during the day or night, this flow is difficult to get into, but when you get in this flow, awesome things happen. One of the easiest patterns I notice that stops me from getting into the flow or takes me out of this flow is meetings. 
+Software craftsmanship requires that software engineers be in a certain flow within a certain period during the day or night, this flow is difficult to get into, but when you get in this flow, awesome things happen(at least for me). One common element that stops me from getting into the flow or takes me out of the flow is meetings. 
 
-And I am not talking about those meetings that are pre-planned(stand-up, refinement, retrospective and planning); I am referring to those meeting that adds no significant value to your job as a software engineer. I mean those meetings someone from product asked you to join in case there is a technical question that needs to be answered. I am talking about those meetings you joined because you think you will miss out on crucial information if you don't a symptom widely known as [FOMO](https://en.wikipedia.org/wiki/Fear_of_missing_out)
+And I am not talking about those meetings that are pre-planned(stand-up, refinement, retrospective and planning); I am referring to those meeting that adds no significant value to your job as a software engineer. I mean those meetings someone from product asked you to join in case there is a technical question that needs to be answered. I am talking about those meetings you joined because you think you will miss out on crucial information if you don't, a symptom widely known as [FOMO](https://en.wikipedia.org/wiki/Fear_of_missing_out)
 
-I have often hear different companies argue that these meetings are not compulsory and you can choose to decline. What these companies don't realise is the amount of time needed to reject or accept meeting invites and more importantly the havoc done by the noise and distractions from email or push notification as a result of this meeting invites. As you read on you will learn how I mitigate noise and distractions caused from emails and push notifications.
+I often hear different companies argue that these meetings are not compulsory and you can choose to decline. What these companies don't realise is the amount of time needed to reject or accept meeting invites and more importantly the havoc done by the noise and distractions from email or push notification as a result of this meeting invites. As you read on you will learn how I mitigate noise and distractions caused from emails and push notifications.
 
 In my experience, the meetings described above is a symptom of not having technical product managers or technical team lead or engineering manager. If the product managers are not technical, then you need an engineering manager and maybe a technical team lead. The technical team lead is not always needed as a senior engineer in the team can always act in the same regard as a technical team lead. If the product managers are also technical, having an engineering manager is also highly advised. And if for any reason you already have this roles filled within a team and you still see this problem at large, then one of these guys aren't doing their job.
 
 ### 2. Processes over tools
 
-As I mentioned before, writing software that solves user problem in an easier, better and faster ways always involve using certain tools. These tools are by far the most important aspect of shipping working software/product to the user on time.  These tools are so important that some companies even have dedicated teams that build tools to make engineers life better, some common name of such teams includes infrastructure teem, [engineering productivity team as used by Google](https://landing.google.com/engprod/). 
+As I mentioned before, writing software that solves user problem in an easier, better and faster way always involve using certain tools. These tools are by far the most important aspect of shipping working software/product to the user on time.  These tools are so important that some companies even have dedicated teams that build tools to make software engineers life better. Some common name of such teams includes infrastructure teem, [engineering productivity team as used by Google](https://landing.google.com/engprod/). 
 
-Now, with the level of importance these tools have, one would expect engineering teams to invest time and other resources into the building, buying or leasing the best tools needed for the job, but surprisingly that is not the case as a lot {% sidenote 'lot-of-clarification' 'This is based on engineering teams I have personally encountered and not any publicly available data.' %} of product and engineering teams have now replaced those tools with processes.
+Now, with the level of importance these tools have, one would expect engineering teams to invest time and other resources into the building, buying or leasing the best tools needed for the job, but surprisingly that is not the case as a lot{% sidenote 'lot-of-clarification' 'This is based on engineering teams I have personally encountered and not any publicly available data.' %} of product and engineering teams have now replaced those tools with processes.
  
  A classic and maybe very popular example is release management. Today one would assume that shipping tested and working software should be as easy as merging to a master branch but consider these real-world scenario I personally encountered.
 
@@ -69,9 +69,9 @@ Unfortunately for Max, it's now 5 PM and release would have to wait till the fol
 Finally, its Monday, and we were able to release the working software to the customer. This scenario probably sounds made-up but it is not as I experienced this firsthand. For this scenario, below are some things that could have been done to improve the development process for the engineer and reduce the time taken to ship working software to the customer.
 
 * Use available tools for low-level code review. By low-level, I mean code style checks, syntax checks, etc.
-* Use available tools for managing external package/dependencies update, upgrade and security. {% sidenote 'dependency-bot' 'An example is [Dependabot](https://dependabot.com/). Dependabot creates pull requests to keep your dependencies secure and up-to-date. Has support for various language and for free if you are using Github.' %}
+* Use available tools for managing external package/dependencies update, upgrade and security.{% sidenote 'dependency-bot' 'An example is [Dependabot](https://dependabot.com/). Dependabot creates pull requests to keep your dependencies secure and up-to-date. Has support for various language and for free if you are using Github.' %}
 * Invest in automated testing, be it unit tests, integration tests or even end to end tests and more importantly integrate these tests into your merge checks; one tool I personally use for this is [codecov.io](https://codecov.io).
-* Use feature toggles to manage feature roll out to customers. Feature Flags have a tendency to multiply rapidly, particularly when first introduced. They are useful and cheap to create and so often a lot are created. However toggles do come with a carrying cost. {% sidenote 'feature-toggle-pete-hodgson' 'A statement from Pete Hodgson [article](https://martinfowler.com/articles/feature-toggles.html) on Feature Toggles (aka Feature Flags).' %}
+* Use feature toggles to manage feature roll out to customers. Feature Flags have a tendency to multiply rapidly, particularly when first introduced. They are useful and cheap to create and so often a lot are created. However toggles do come with a carrying cost.{% sidenote 'feature-toggle-pete-hodgson' 'A statement from Pete Hodgson [article](https://martinfowler.com/articles/feature-toggles.html) on Feature Toggles (aka Feature Flags).' %}
 * Invest heavily into logging, monitoring and alerting the right people. 
 
 ### 3. Distractions
