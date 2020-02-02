@@ -14,9 +14,10 @@ if (workbox) {
     '/assets/img/oshomo.jpg',
     '/assets/img/manifest-icon-192.png',
     '/assets/img/manifest-icon-512.png',
-    { url: '/', revision: '383676' },
+    {url: '/', revision: '383676'},
   ]);
   workbox.routing.registerRoute(/\.(?:png|jpg|jpeg|svg)$/, new workbox.strategies.CacheFirst({
     "cacheName": "images",
     plugins: [new workbox.expiration.Plugin({maxAgeSeconds: 2592000, purgeOnQuotaError: false})]
   }), 'GET');
+}
