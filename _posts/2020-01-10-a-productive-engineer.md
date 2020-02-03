@@ -2,14 +2,14 @@
 layout: post
 title: A Productive Engineer
 date: 2020-01-10 16:21 +0100
-excerpt: Over the years, I have seen that I am most productive when I work at home or when I work before others arrive or leave work. This caused for a self-reflection and I began to ask the question; "why am I most productive during this instances?". After much thought, it has come down to these - Meetings, Processes over tools and Distractions.
+excerpt: Over the years, I have noticed that I am most productive when I work from home or when I work before others leave or arrive at my workplace. This caused for a self-reflection and I began to ask the question; "why am I most productive during this times?". After much thought, it has come down to - Meetings, Processes over tools and Distractions.
 ---
 
 ## TL;DR
 
 {% marginnote 'mn-id-whatever' '**Article Outline:**<br /><br />[Introduction](#introduction)<br />[Being busy is not being productive](#being-busy-is-not-being-productive)<br />[Meeting](#1-meetings)<br />[Processes over tools](#2-processes-over-tools)<br />[Distractions](#3-distractions)' %}
 
-> Over the years, I have seen that I am most productive when I work at home or when I work before others arrive or leave work. This caused for a self-reflection and I began to ask the question; “why am I most productive during these instances?”. After much thought, it has come down to these: **Meetings**, **Processes over tools** and **Distractions**. In this article, I discuss my personal view and experiences of how this elements hinder productivity and in some cases proffer solutions that work for me. I hope you enjoy it.
+> Over the years, I have noticed that I am most productive when I work from home or when I work before others leave or arrive at my workplace. This caused for a self-reflection and I began to ask the question; “why am I most productive during these times?”. After much thought, it has come down to: **Meetings**, **Processes over tools** and **Distractions**. In this article, I discuss my personal view and experiences of how this elements hinder productivity and in some cases proffer solutions that work for me. I hope you enjoy it.
 
 ## Introduction 
 
