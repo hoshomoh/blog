@@ -14,7 +14,7 @@ if (workbox) {
     '/assets/img/oshomo.jpg',
     '/assets/img/manifest-icon-192.png',
     '/assets/img/manifest-icon-512.png',
-    {url: '/', revision: '6789876567'},
+    {url: '/', revision: '2345609876'},
   ]);
   workbox.routing.registerRoute(/\.(?:png|jpg|jpeg|svg)$/, new workbox.strategies.CacheFirst({
     "cacheName": "images",
