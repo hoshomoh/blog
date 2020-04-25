@@ -7,7 +7,5 @@ My name is *Oshomo Oforomeh* and I am an experienced software engineer with a Bs
 
 I have served in the capacity of a web developer, backend engineer, full-stack engineer and temporary team lead. And I have seen first-hand the different challenges and mistakes with how technological organization approach product development as well as improvement areas in how product teams use technology to solve customer needs for a product while shipping fast and not leaving behind technical dept.
 
-With the above in mind, my interest now lies in serving in the capacity of a technical team lead or engineering manager  while using my engineering and product experience to help any product in the product-market fit or scaling stage to achieve its product mission and vision and have fun while doing it.
-
-
+With the above in mind, my interest lies in serving in the capacity of a software engineer(backend or full-stack) to solve engineering challenges while contributing to the organization's product mission and vision and have fun while doing it.
 
