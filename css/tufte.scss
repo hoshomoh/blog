@@ -314,7 +314,8 @@ figure, figure img.maincolumn {
   max-width: 55%;
   -webkit-margin-start: 0;
   -webkit-margin-end: 0;
-  margin-bottom: 3em;
+  margin-bottom: 2em;
+  margin-top: 2rem;
 }
 
 figcaption {
@@ -396,6 +397,28 @@ p, footer, div.table-wrapper, div.mathblock {
 
 div.table-wrapper {
   overflow-x: auto;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+
+  .col {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    @media screen and (max-width: 760px) {
+      flex: none;
+    }
+  }
+
+  .gap {
+    content: '';
+    padding: 5px;
+  }
 }
 
 //changed all overflow values to 'auto' so scroll bars appear only as needed

@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
-# bundle install
-# bundle exec jekyll serve
+# Install - bundle install
+# Build and Serve - bundle exec jekyll serve
+# Deploy - rake -f UploadToGithub.Rakefile
 gem "jekyll", github: "jekyll/jekyll"
 gem 'rouge'

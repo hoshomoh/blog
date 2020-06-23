@@ -4,7 +4,7 @@
 #
 module Jekyll
   class RenderFullWidthTag < Liquid::Tag
-    
+
     require "shellwords"
 
     def initialize(tag_name, text, tokens)

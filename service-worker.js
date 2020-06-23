@@ -14,10 +14,19 @@ if (workbox) {
     '/assets/img/oshomo.jpg',
     '/assets/img/manifest-icon-192.png',
     '/assets/img/manifest-icon-512.png',
-    {url: '/', revision: '361245aa-c072-407f-aa37-6b09a5fce2cf'},
   ]);
+
   workbox.routing.registerRoute(/\.(?:png|jpg|jpeg|svg)$/, new workbox.strategies.CacheFirst({
     "cacheName": "images",
-    plugins: [new workbox.expiration.Plugin({maxAgeSeconds: 2592000, purgeOnQuotaError: false})]
+    plugins: [new workbox.expiration.Plugin({
+      maxAgeSeconds: 2592000,
+      purgeOnQuotaError: false
+    })]
   }), 'GET');
+
+  workbox.routing.registerRoute(function (data) {
+    return data && data.url && data.url.origin === 'https://cdnjs.cloudflare.com';
+  }, new workbox.strategies.StaleWhileRevalidate({
+    cacheName: 'cloudflare-cdn-files',
+  }));
 }
