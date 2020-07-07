@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Life at trivago
+date: 2020-07-01 16:21 +0100
 excerpt: On September 4th 2018, at exactly 11:25 EST I landed in Leipzig, Germany with a one way ticket I had purchased. I came to Germany for one reason, to join the trivago team in Leipzig to help achieve the mission and vision of trivago express booking. This article focuses on my time at trivago. I hope you enjoy it.
 ---
 
@@ -84,7 +85,7 @@ My team was responsible for the entire user experience of express booking, from 
 
 ## The Company
 
-If you got here, then you most likely already know a lot about the trivago. Regardless there are few things I will love to highlight about the trivago. I don't know what you've heard about trivago, but take it from "trivago is a good place to work." The salary might not be as competitive as what you are used to, but the company makes up for it with other benefits you likely don't get elsewhere. 
+If you got here, then you most likely already know a lot about the trivago. Regardless there are few things I will love to highlight about the trivago. I don't know what you've heard about trivago, but take it from me "trivago is a good place to work." The salary might not be as competitive as what you are used to, but the company makes up for it with other benefits you likely don't get elsewhere. 
 
 Few of those benefits includes unlimited vacations, tech get together, study/conference budget, trivago on tour, bi-weekly and monthly team events. Unfortunately, I only had the opportunity to experience one *Tech Get Together* and *trivago On Tour*. If you are interested, I will share a little details about both of them i the next two sections.
 
@@ -96,12 +97,27 @@ The highlight for me was the fact that 98% of those talks were prepared and pres
 
 {% maincolumn 'assets/img/posts/life-at-trivago/rolf-open-remarks.jpg' 'Rolf Schrömgens - *trivago CEO in 2019* giving the opening remarks.' %}
 
-The talks were categorised into *People/Team/Leadership*, *Programming languages & Techniques*, *Software & Applications*, *Mobile*, *Big Data & Data Science*, *Product*, *Infracstructure & Devops*, *Design UI/UX* and *Various* for talks that didn't really fit into the other categories. One interesting talk in the various category I clearly remember was **A beginners guide to engineering bread.** You were basically thought how to make your own bread.
+The talks were categorised into *People/Team/Leadership*, *Programming languages & Techniques*, *Software & Applications*, *Mobile*, *Big Data & Data Science*, *Product*, *Infracstructure & Devops*, *Design UI/UX* and *Various* for talks that didn't really fit into the other categories. One interesting talk in the various category I clearly remember was **A beginners guide to engineering bread.** We were thought how to make your bread, and it was an interesting session.
 
-My favorite talk was **Designing understandable data visualizations**, presented by Ana Risteska. Where she teaches how to use the power of visual attributes to communictae data without putting too much strain on the users brain. You can download the presentation [here](https://github.com/anarisris/presentations/blob/master/tech-get-together.pdf).
+My favorite talk was **Designing understandable data visualizations**, presented by Ana Risteska. Where she teaches how to use the power of visual attributes to communicate data without putting too much strain on the users brain. You can download the presentation [here](https://github.com/anarisris/presentations/blob/master/tech-get-together.pdf).
+
+I really enjoyed all the session I attended and gained knowledge about things I didn't know before. I also had the opportunity to see and speak to engineers in other team especially those I work with on regular basis but, only see on Slack.
 
 ### trivago On Tour
 
+At trivago, there are 4 core company events that happen every year, one of them is the trivago on tour which happens to be an annual trip for all trivago employees and frankly my favorite.
+ 
+The activities and destination are guarded secrets, this means you wouldn't know where you were going until you got there. Before d-day, some employees would have spread all kinds of rumours and gossips about the activities only problem was, no one was going to validate any of those rumours, so we are left dreaming of where the journey might take us until we are already there.
+
+Each trivago on tour has a different theme and destination, I missed the 2018 trivago on tour because of visa issues. The 2018 tour was in an old military base near Dusseldorf and the theme was about endurance and helping each other conquer obstacles and challenges during trying times by working together as one team. 
+
+In 2019, the tour took us to Austria by train, and the theme was centered around #trust. trivago gave all employees the opportunity to shape the tour with whatever hidden talents they have. We also had other fun activities including short and long distance hike, fun games, parties and lots of alcohol. Below are some pictures I took in Austria.
+
+{% twocolumnfigure 'assets/img/posts/life-at-trivago/team-in-austria.jpg' 'Some of my teammate at the tour. From L-R Myself, Axel, Sven and Florian' 'assets/img/posts/life-at-trivago/austria-beauty.jpg' 'The clouds were just too gorgeous...soo blue' %}
+
+{% twocolumnfigure 'assets/img/posts/life-at-trivago/austria-clouds.jpg' 'View from the mountain top after hiking for about 10KM.' 'assets/img/posts/life-at-trivago/austria-fountain.jpg' 'No caption :wink' %}
+
+I really enjoyed my time at trivago, and I will highly recommend, as in my opinion is one of the best place to work in Germany. trivago  is always hiring, feel free to check out their [career page](https://company.trivago.com/open-positions/) for open positions.
 
 
 
