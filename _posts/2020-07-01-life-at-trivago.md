@@ -3,6 +3,7 @@ layout: post
 title: Life at trivago
 date: 2020-07-01 16:21 +0100
 excerpt: On September 4th 2018, at 11:25 CEST I landed in Leipzig, Germany with a one-way ticket I had purchased. I came to Germany for one reason; to join the trivago team in Leipzig contribute to the mission and vision of trivago express booking. This article focuses on my time at trivago. I hope you enjoy it.
+image: assets/img/posts/life-at-trivago/desk-decoration-first-day.jpg
 ---
 
 On September 4th 2018, at 11:25 CEST I landed in Leipzig, Germany with a one-way ticket I had purchased. I came to Germany for one reason; to join the trivago team in Leipzig contribute to the mission and vision of trivago express booking. {% sidenote 'note-on-express-booking' 'A trivago product that allows OTAS and Hotel Chains to expand their businesses to new markets and increase conversation while promoting their brand and competing with big players with ease.' %} 
@@ -11,7 +12,7 @@ On September 4th 2018, at 11:25 CEST I landed in Leipzig, Germany with a one-way
 
 When moving to a new country because of employment, two things that can really stress you out are **Visa and Accommodation**. Lucky for me, the good folks at trivago had both sorted out. The people and office management team were very helpful with the visa process and had a flat prepared for you to stay until you get your own place with the added advantage that you didn't have to pay a dime. {% sidenote 'pay-for-flat' 'I think this changed a year after I joined and you had to pay a penny and could only stay there for up to three months.' %}
 
-If you are moving to a non-English-speaking locale like Germany, then you had one more thing to worry about - **Language**. A huge consolation was that Germany is filled with lots of internationals that could speak English fluently. At the same time, key offices where you need to do compulsory registration had only German-speaking employees. I didn't have to worry so much as the folks in people and office management would offer to go with you for this registration and translate documents for you when needed.
+If you are moving to a non-English-speaking locale like Germany, then you had one more thing to worry about - **Language**. A huge consolation was that Germany has a lot of internationals that speak fluent English so, language was not really a problem. At the same time, important offices where you need to do compulsory registration had only German-speaking employees. I didn't have to worry so much as the folks in people and office management would offer to go with you for this registration and translate documents for you when needed.
 
 In retrospect, my relocation was smooth and without stress, and I have the people and office management folks to thank for that, with personal gratitude to Sören Ille and Cinthia Solorio; you guys ROCK!!!
 

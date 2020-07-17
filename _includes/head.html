@@ -4,16 +4,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
   <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
-  <meta name="image" content="{{ "/assets/img/oshomo.jpg" | prepend: site.baseurl }}">
+  <meta name="image" content="{% if page.image %}{{ page.image | prepend: site.baseurl }}{% else %}{{ "/assets/img/oshomo.jpg" | prepend: site.baseurl }}{% endif %}">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
   <meta name="twitter:description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
   <meta name="twitter:site" content="@hoshomoh">
   <meta name="twitter:creator" content="@hoshomoh">
-  <meta name="twitter:image:src" content="{{ "/assets/img/oshomo.jpg" | prepend: site.baseurl }}">
+  <meta name="twitter:image:src" content="{% if page.image %}{{ page.image | prepend: site.baseurl }}{% else %}{{ "/assets/img/oshomo.jpg" | prepend: site.baseurl }}{% endif %}">
   <meta name="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
   <meta name="og:description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
-  <meta name="og:image" content="{{ "/assets/img/oshomo.jpg" | prepend: site.baseurl }}">
+  <meta name="og:image" content="{% if page.image %}{{ page.image | prepend: site.baseurl }}{% else %}{{ "/assets/img/oshomo.jpg" | prepend: site.baseurl }}{% endif %}">
   <meta name="og:url" content="https://oshomo.oforomeh.com">
   <meta name="og:site_name" content="{{page.title}}">
   <meta name="og:locale" content="en_UK">
