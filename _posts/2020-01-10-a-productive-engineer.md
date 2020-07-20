@@ -3,7 +3,7 @@ layout: post
 title: A Productive Engineer
 date: 2020-01-10 16:21 +0100
 excerpt: Over the years, I have noticed that I am most productive when I work from home or when I work after people leave or before people arrive at my workplace. This caused for a self-reflection and I began to ask the question; "why am I most productive during this times?". After much thought, it has come down to - Meetings, Processes over tools and Distractions.
-image: assets/img/posts/being-busy.jpg
+image: /assets/img/posts/being-busy.jpg
 ---
 
 ## TL;DR

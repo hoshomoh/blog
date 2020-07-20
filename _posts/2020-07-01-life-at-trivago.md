@@ -3,7 +3,7 @@ layout: post
 title: Life at trivago
 date: 2020-07-01 16:21 +0100
 excerpt: On the 4th of September 2018 at 11:25 CEST, I landed in Leipzig, Germany with a one-way ticket. I moved to Germany for the single intention to join the trivago team and contribute to mission and vision of the express booking team. In this article, I share my experience at trivago and, I hope you enjoy it.
-image: assets/img/posts/life-at-trivago/desk-decoration-first-day.jpg
+image: /assets/img/posts/life-at-trivago/desk-decoration-first-day.jpg
 ---
 
 On the 4th of September 2018 at 11:25 CEST, I landed in Leipzig, Germany with a one-way ticket. I moved to Germany for the single intention to join the trivago team and contribute to mission and vision of the **Express Booking** team. In this article, I share my experience at trivago and, I hope you enjoy it.{% sidenote 'note-on-express-booking' 'A trivago product that allows OTAS and Hotel Chains to expand their businesses to new markets and increase conversation while promoting their brand and competing with big players with ease.' %}
