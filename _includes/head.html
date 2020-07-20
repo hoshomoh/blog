@@ -4,26 +4,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
   <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
-  <meta name="image" content="{% if page.image %}{{ page.image | prepend: site.url }}{% else %}{{ '/assets/img/oshomo.jpg' | prepend: site.url }}{% endif %}">
+  <meta name="image" content="{% if page.image %}{{ page.image | absolute_url }}{% else %}{{ '/assets/img/oshomo.jpg' | absolute_url }}{% endif %}">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
   <meta name="twitter:description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
   <meta name="twitter:site" content="@hoshomoh">
   <meta name="twitter:creator" content="@hoshomoh">
-  <meta name="twitter:image:src" content="{% if page.image %}{{ page.image | prepend: site.url }}{% else %}{{ '/assets/img/oshomo.jpg' | prepend: site.url }}{% endif %}">
+  <meta name="twitter:image:src" content="{% if page.image %}{{ page.image | absolute_url }}{% else %}{{ '/assets/img/oshomo.jpg' | absolute_url }}{% endif %}">
   <meta name="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
   <meta name="og:description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
-  <meta name="og:image" content="{% if page.image %}{{ page.image | prepend: site.url }}{% else %}{{ '/assets/img/oshomo.jpg' | prepend: site.url }}{% endif %}">
+  <meta name="og:image" content="{% if page.image %}{{ page.image | absolute_url }}{% else %}{{ '/assets/img/oshomo.jpg' | absolute_url }}{% endif %}">
   <meta name="og:url" content="{{ page.url }}">
   <meta name="og:site_name" content="{{ site.title }}">
   <meta name="og:locale" content="en_UK">
   <meta name="og:type" content="website">
   <meta key="theme-color" name="theme-color" content="#f2f7f8" />
   <meta key="apple-status-bar-color" name="apple-mobile-web-app-status-bar-style" content="#f2f7f8" />
-  <link rel="shortcut icon" href="{{ '/assets/img/favicon.ico' | prepend: site.url }}" type="image/x-icon">
-  <link rel="icon" href="{{ '/assets/img/favicon.ico' | prepend: site.url }}" type="image/x-icon">
-  <link rel="apple-touch-icon" href="{{ '/assets/img/manifest-icon-192.png' | prepend: site.url }}" />
-  <link rel="manifest" href="{{ '/manifest.json' | prepend: site.url }}" />
+  <link rel="shortcut icon" href="{{ '/assets/img/favicon.ico' | absolute_url }}" type="image/x-icon">
+  <link rel="icon" href="{{ '/assets/img/favicon.ico' | absolute_url }}" type="image/x-icon">
+  <link rel="apple-touch-icon" href="{{ '/assets/img/manifest-icon-192.png' | absolute_url }}" />
+  <link rel="manifest" href="{{ '/manifest.json' | absolute_url }}" />
 
   <!-- Google Fonts loaded here depending on setting in _data/options.yml true loads font, blank does not-->
   {% if site.data.options.lato_font_load %}
@@ -35,10 +35,10 @@
     <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   {% endif %}
 
-  <link rel="stylesheet" type="text/css" href="{{ '/css/tufte.css' | prepend: site.url }}?revision={{site.data.options.version}}">
-  <link rel="stylesheet" type="text/css" href="{{ '/css/print.css' | prepend: site.url }}?revision={{site.data.options.version}}" media="print">
-  <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.url | prepend: site.url }}">
-  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/feed.xml' | prepend: site.url }}" />
+  <link rel="stylesheet" type="text/css" href="{{ '/css/tufte.css' | absolute_url }}?revision={{site.data.options.version}}">
+  <link rel="stylesheet" type="text/css" href="{{ '/css/print.css' | absolute_url }}?revision={{site.data.options.version}}" media="print">
+  <link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/feed.xml' | absolute_url }}" />
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-120373129-1"></script>
