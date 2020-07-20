@@ -10,15 +10,15 @@ On September 4th 2018, at 11:25 CEST I landed in Leipzig, Germany with a one-way
 
 ## Relocating to Germany
 
-When moving to a new country because of employment, two things that can really stress you out are **Visa and Accommodation**. Lucky for me, the good folks at trivago had both sorted out. The people and office management team were very helpful with the visa process and had a flat prepared for you to stay until you get your own place with the added advantage that you didn't have to pay a dime.{% sidenote 'pay-for-flat' 'I think this changed a year after I joined and you had to pay a penny and could only stay there for up to three months.' %}
+When moving to a new country because of employment, two things that can really stress you out are **Visa and Accommodation**. Lucky for me, the good folks at trivago had both sorted out. The people and office management team were very helpful with the visa process and had a flat prepared for me to stay until I get my own place with the added advantage that I didn't have to pay a dime.{% sidenote 'pay-for-flat' 'I think this changed a year after I joined and you had to pay a penny and could only stay there for up to three months.' %}
 
-If you are moving to a non-english-speaking locale like Germany, then you had one more thing to worry about - **Language**. A huge consolation was, Germany has a lot of internationals that speak fluent English so, language was not really a problem. At the same time, important offices where you need to do compulsory registration had only German-speaking employees. I didn't have to worry so much as the folks in people and office management would offer to go with you for this registration to translate documents and, also serve as a translator when needed.
+If you are moving to a non-english-speaking locale like Germany, then you had one more thing to worry about - **Language**. A huge consolation for me was, Germany has lots of internationals that speak fluent English so, language was not really a problem. At the same time, important offices where you need to do compulsory registration had only German-speaking employees. I didn't have to worry so much because the folks in people and office management would offer to go with you for this registration to serve as a translator when needed.
 
 In retrospect, my relocation was smooth and without stress, and I have the people and office management folks to thank for that, with personal gratitude to Sören Ille and Cinthia Solorio; you guys ROCK!!!
 
 ## My First Experience
 
-Before I came to Germany, my general knowledge about Germany was zero to none. I, however, knew it was one of the most powerful countries both in Europe and in the world. As a result, I made some assumptions. One of those assumptions almost got me stranded at the Leipzig airport on arrival.
+Before I came to Germany, my general knowledge about Germany was zero to none. However, I knew it was one of the most powerful countries both in Europe and in the world. As a result, I made some assumptions. One of those assumptions almost got me stranded at the Leipzig airport on arrival.
 
 Hear me out, I come from a developing country where cashless was a thing, like you didn't have to worry about moving around with cash. All you needed was your debit card; as almost all businesses even small businesses had POS machines, and paying by card was a norm. Plus, UBER also worked. 
 
@@ -26,17 +26,17 @@ I came to Germany with the assumption that, if this was possible in Nigeria, the
 
 {% marginfigure 'touch-down-leipzig-margin' 'assets/img/posts/life-at-trivago/touch-down-leipzig.jpg' '*Quick shot* from my window seat few seconds before landing at the **Leipzig / Halle Airport**.' %}
 
-The first thing I did was connect to the Airport WI-FI, launched the Uber app on my phone and that was when I saw the notice, *"Unfortunately, Uber is not available in your area."*. I was like impossible, it must be my internet. I disconnected and connected back hoping that would fix something, after multiple tries, I decided to ask for help, turned out Uber doesn't work here and later learnt UBER only work in select German states.
+The first thing I did was connect to the Airport WI-FI, launched the Uber app on my phone and that was when I saw the notice, *"Unfortunately, Uber is not available in your area."*. I was like impossible, it must be my internet. I disconnected and connected back hoping that would fix something, after multiple tries, I decided to ask for help, turned out Uber wasn't available in Leipzig.
  
-I also couldn't use the local taxi as the only accepted payment method was cash. To cut the long story short, my saving grace was a young fella who agreed to accept PayPal for cash which is how I was able eventually take the local taxi. I think I spent roughly 2 hours at the airport after checking out.
+I also couldn't use the local taxi as the only accepted payment method was cash. To cut the long story short, my saving grace was a young fella who agreed to accept PayPal for cash which is how I was able eventually take the local taxi to my final destination. I think I spent roughly 2 hours at the airport after checking out.
 
 ## The Check-in Week
 
-As a newbie in trivago, you undergo a 5-day onboarding program hence the name *Check-in Week*. The check-in week takes place at the company campus in Dusseldorf, Germany and the goal was to create a welcoming, insightful and challenging start for the newbies, ensuring you understand the business, connect with the company culture and feel empowered to make an impact. 
+As a newbie in trivago, you undergo a 5-day onboarding program hence the name *Check-in Week*. The check-in week takes place at the company campus in Dusseldorf, Germany and the goal was to create a welcoming, insightful and challenging start for the newbies and more importantly to ensure that newbies understand the business model, connect with the company culture and feel empowered to make an impact. 
 
 **<u>Day 1</u>**
 
-On the first day, you get a general overview of trivago from the business model -> core values -> organisational structure. You also get to meet lots of people while browsing around the beautiful campus. You end the day by getting your work laptop, so you can set up your email, slack and other communication tools used by the company.
+On the first day, you get a general overview about trivago from business model -> core values -> organisational structure. You also get to meet lots of people while browsing around the beautiful campus. You end the day by getting your work laptop so, you can set up your email, slack and other communication tools used by the company.
 
 {% twocolumnfigure 'assets/img/posts/life-at-trivago/meeting-room-in-trivago-campus.jpg' 'Meeting room at the trivago campus.' 'assets/img/posts/life-at-trivago/trivago-culture-kitchen.jpg' 'trivago Culture Kitchen' %}
 
@@ -44,9 +44,9 @@ On the first day, you get a general overview of trivago from the business model 
 
 On day 2, you should now have your laptop and, also set up your work mail. Once you log into your email, there are notifications for JIRA task that require completion in your inbox. The tasks involve simple things like updating your info in Workday, going to wage and accounting to get your salary account all sorted if you want to get paid. Time slots have already been set aside for these tasks, so you can still participate in the core check-in week activities. 
 
-In the next 2 - 4 days, you are divided into groups for group activities and case studies. A representative from each pillar/department in the organisational structure comes in to discuss the role and function of that pillar, the pillar structure and how what they do contributes to the trivago mission and vision. This is also an opportunity for you to see how your role and team, fits into the trivago ecosystem. Afterwards, each group is given a case study to show their understanding of the pillar functions. 
+In the next 2 - 4 days, you are divided into groups for group activities and case studies. A representative from each pillar/department in the organisational structure comes in to discuss the role and function of that pillar, the pillar structure and how what they do contributes to the trivago mission and vision. This is also an opportunity for you to see how your role and team fits into the trivago ecosystem. Afterwards, each group is given a case study to show their understanding of the pillar functions. 
 
-Some case studies were fun while some were challenging. I did enjoy the marketing case study. Some groups stayed at the campus till 9 PM to show you how challenging some of the case studies were.
+Some case studies were fun while some were challenging. I did enjoy the marketing case study. Some groups stayed at the campus till 9 PM to show you how challenging some of the case studies where.
 
 **<u>Day 5</u>**
 
