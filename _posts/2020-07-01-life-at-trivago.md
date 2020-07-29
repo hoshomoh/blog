@@ -2,11 +2,11 @@
 layout: post
 title: Life at trivago
 date: 2020-07-01 16:21 +0100
-excerpt: On the 4th of September 2018 at 11:25 CEST, I landed in Leipzig, Germany with a one-way ticket. I moved to Germany for the single intention to join the trivago team and contribute to mission and vision of the express booking team. In this article, I share my experience at trivago and, I hope you enjoy it.
+excerpt: On the 4th of September 2018 at 11:25 CEST, I landed in Leipzig, Germany with a one-way ticket. I moved to Germany for the single intention to join trivago and contribute to mission and vision of the express booking team. In this article, I share my experience at trivago and, I hope you enjoy it.
 image: /assets/img/posts/life-at-trivago/desk-decoration-first-day.jpg
 ---
 
-On the 4th of September 2018 at 11:25 CEST, I landed in Leipzig, Germany with a one-way ticket. I moved to Germany for the single intention to join the trivago team and contribute to mission and vision of the **Express Booking** team. In this article, I share my experience at trivago and, I hope you enjoy it.{% sidenote 'note-on-express-booking' 'A trivago product that allows OTAS and Hotel Chains to expand their businesses to new markets and increase conversation while promoting their brand and competing with big players with ease.' %}
+On the 4th of September 2018 at 11:25 CEST, I landed in Leipzig, Germany with a one-way ticket. I moved to Germany for the single intention to join trivago and contribute to mission and vision of the **Express Booking**{% sidenote 'note-on-express-booking' 'A trivago product that allows OTAS and Hotel Chains to expand their businesses to new markets and increase conversation while promoting their brand and competing with big players with ease.' %} team. In this article, I share my experience at trivago and, I hope you enjoy it.
 
 ### {% newthought 'Relocating to Germany' %}
 
@@ -57,7 +57,7 @@ Even though my team didn’t win, we still got the chance to end the day by cele
 
 ### {% newthought 'The Team' %}
 
-I would never forget my first day at the Leipzig office. after the check-in week. Luckily for me, my first day commute to the office was quite short, I just had to take a 1 minutes elevator ride down to the first floor, since I was staying at the company residence on the third floor in the same building. 
+I would never forget my first day at the Leipzig office after the check-in week. Luckily for me, my first day commute to the office was quite short, I just had to take a 1 minutes elevator ride down to the first floor, since I was staying at the company residence on the third floor in the same building. 
 
 After getting information overload from the check-in week, I was ready to jump into work mode. I went straight to where my colleagues from office management were sitting. They kindly gave me the tour of the office and introduced me to my team and manager.
 
@@ -75,11 +75,11 @@ The Leipzig office had this culture of putting your country's flag at the entran
 
 [trivago](https://company.trivago.com/) is a meta-search company. The simplest way to think about trivago is "Google" but for hotels and alternative accommodations. After picking a travel destination, picking the perfect accommodation for your stay at that destination can be quite a challenge because there is so much variable to consider coupled with the fact that the same accommodation can have different prices across multiple OTA{% sidenote 'ota-meaning' 'OTA is an acronym for *Online Travel Agency*. You can find a list of OTA [here](https://en.wikipedia.org/wiki/Category:Online_travel_agencies)' %} or booking platforms.
 
-trivago has mastered the art of guiding you to finding the best accommodation for your travel or business destination while comparing prices of millions of accommodation from small, medium, and big OTA.
+trivago has mastered the art of guiding you to finding the best accommodation for your travel or business destinations while comparing prices of millions of accommodation from small, medium, and big OTA.
 
 At trivago, we care for the OTA as much as we do for the customers. This is why we have a product called *Express Booking*, built to help small, medium and even big OTA increase conversion by entering new markets without worrying above content localization or payment methods. Visit [this page](https://www.trivago.com/expressbooking/) to learn more about trivago express booking.
 
-My team was responsible for the customer experience of Express booking. After a user choose a rate on trivago and, they get redirected to Express booking, my team’s product takes over and smoothly guide the customer to making a successful booking. In between, we empower the users by:
+My team was responsible for the customer experience of Express booking. After a user choose a rate on trivago and, they get redirected to Express booking, my team was responsible for smoothly guiding the customer to making a successful booking. In general, we empower the users by:
 
  - Making sure the localized information is accurate,  
  - Ensuring a smooth desktop and mobile experience, 
