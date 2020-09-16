@@ -15,6 +15,10 @@ jekyll_compose:
     drafts:
       layout: post
       categories:
+      excerpt:
+      image:
     posts:
       layout: post
       categories:
+      excerpt:
+      image:

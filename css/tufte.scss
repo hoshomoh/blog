@@ -83,22 +83,29 @@ html {
   }
 }
 
-// sets link style according to values in _settings.scss
-.mathblock {
+// Mathjax fonts need TLC
+.mjx-math {
   font-size: 1.3rem;
 }
 
+// sets link style according to values in _settings.scss
 a {
   color: $contrast-color;
   text-decoration: none;
 }
 
-p > a {
+p > a, cite > a, span > a {
   @if $link-style == underline {
     color: $text-color;
     text-decoration: none;
-    border-bottom: 1px solid #777;
-    padding-bottom: 1px;
+    background: -webkit-linear-gradient($bg-color, $bg-color), -webkit-linear-gradient($bg-color, $bg-color), -webkit-linear-gradient(currentColor, currentColor);
+    background: linear-gradient($bg-color, $bg-color), linear-gradient($bg-color, $bg-color), linear-gradient(currentColor, currentColor);
+    -webkit-background-size: 0.05em 1px, 0.05em 1px, 1px 1px;
+    -moz-background-size: 0.05em 1px, 0.05em 1px, 1px 1px;
+    background-size: 0.05em 1px, 0.05em 1px, 1px 1px;
+    background-repeat: no-repeat, no-repeat, repeat-x;
+    text-shadow: 0.03em 0 $bg-color, -0.03em 0 $bg-color, 0 0.03em $bg-color, 0 -0.03em $bg-color, 0.06em 0 $bg-color, -0.06em 0 $bg-color, 0.09em 0 $bg-color, -0.09em 0 $bg-color, 0.12em 0 $bg-color, -0.12em 0 $bg-color, 0.15em 0 $bg-color, -0.15em 0 $bg-color;
+    background-position: 0% 93%, 100% 93%, 0% 93%;
   } @else {
     color: $contrast-color;
     text-decoration: none;
@@ -110,7 +117,7 @@ body {
   margin-left: auto;
   margin-right: auto;
   padding-left: 12.5%;
-  font-family: et-bembo, Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
+  font-family: $body-font;
   background-color: $bg-color;
   color: $text-color;
   max-width: 1400px;
@@ -169,21 +176,49 @@ p, li {
   vertical-align: baseline;
 }
 
-blockquote p {
-  font-size: 1.1rem;
-  line-height: 1.78181818;
-  margin-top: 1.78181818rem;
-  margin-bottom: 1.78181818rem;
+/* Chapter Epigraphs */
+div.epigraph > blockquote {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
+div.epigraph > blockquote, div.epigraph > blockquote > p {
+  font-style: italic;
+}
+
+div.epigraph > blockquote > footer {
+  font-style: normal;
+  width: 45%;
+  padding-left: 2.5%;
+  padding-right: 2.5%;
+  padding-top: 0;
+  margin-top: 0.4455rem;
+  margin-bottom: 3.1182rem
+}
+
+div.epigraph > blockquote > footer > cite {
+  font-style: italic;
+}
+
+/* end chapter epigraphs styles */
+
+blockquote p, blockquote footer {
   width: 45%;
   padding-left: 2.5%;
   padding-right: 2.5%;
 }
 
 blockquote footer {
-  width: 45%;
+  font-size: 1.1rem;
+  line-height: 1.78181818;
+  margin-top: 1.78181818rem;
+  margin-bottom: 1.78181818rem;
   text-align: right;
 }
 
+/* blockquote footer { width: 45%;
+                    text-align: right; }
+*/
 
 .sans {
   font-family: $sans-font;
@@ -197,11 +232,6 @@ pre, pre code, p code, p pre code {
   margin-top: 1.71428571rem;
 }
 
-p code {
-  font-weight: bold;
-  color: #072b36;
-}
-
 h1 code, h2 code, h3 code {
   font-size: 0.80em;
 }
@@ -212,7 +242,7 @@ h1 code, h2 code, h3 code {
 
 table, table.booktabs {
   width: auto; //making booktabs style tables the unstyled default in case someone uses Markdown styling
-  margin: 0 auto;
+  //margin: 0 auto;
   border-spacing: 0px;
   border-top: 2px solid $border-color;
   border-bottom: 2px solid $border-color;
@@ -222,7 +252,7 @@ table, table.booktabs {
   border-bottom: 1px solid $border-color;
   padding: 0.65ex 0.5em 0.4ex 0.5em;
   font-weight: normal;
-  text-align: center;
+  //text-align: center;
 }
 
 th, td {
@@ -260,15 +290,15 @@ th, td {
   caption-side: top;
 }
 
-.booktabs tbody tr td.l {
+.booktabs tbody tr, .booktabs thead tr th.l, .booktabs td.l {
   text-align: left !important;
 }
 
-.booktabs tbody tr td.c {
+.booktabs tbody tr, .booktabs thead tr th.c, .booktabs td.c {
   text-align: center !important;
 }
 
-.booktabs tbody tr td.r {
+.booktabs tbody tr, .booktabs thead tr th.r, .booktabs td.r {
   text-align: right !important;
 }
 
@@ -285,7 +315,6 @@ th, td {
 
 /* -- End of Table Styling section --*/
 
-
 /* Basic Layout stuff --*/
 
 article {
@@ -300,7 +329,6 @@ section {
   padding-bottom: 1rem;
 }
 
-
 ul, ol {
   width: 45%;
   -webkit-padding-start: 5%;
@@ -314,14 +342,13 @@ figure, figure img.maincolumn {
   max-width: 55%;
   -webkit-margin-start: 0;
   -webkit-margin-end: 0;
-  margin-bottom: 2em;
-  margin-top: 2rem;
+  margin-bottom: 3em;
 }
 
 figcaption {
   float: right;
   clear: right;
-  margin-right: -48%;
+  margin-right: -50%;
   margin-top: 0;
   margin-bottom: 0;
   font-size: 1.0rem;
@@ -389,41 +416,22 @@ blockquote .sidenote, blockquote .marginnote {
 
 //removed superscripting for numerical reference in sidenote
 
-p, footer, div.table-wrapper, div.mathblock {
+p, footer, div.table-wrapper, .MJXc-display {
   width: 55%;
 }
 
-div.table-wrapper {
+div.table-wrapper, table {
   overflow-x: auto;
-}
-
-.row {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  width: 100%;
-
-  .col {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-
-    @media screen and (max-width: 760px) {
-      flex: none;
-    }
-  }
-
-  .gap {
-    content: '';
-    padding: 5px;
-  }
 }
 
 //changed all overflow values to 'auto' so scroll bars appear only as needed
 
 @media screen and (max-width: 760px) {
-  p, footer, div.mathblock {
+  p, footer {
     width: 90%;
+  }
+  pre code {
+    width: 87.5%;
   }
   ul {
     width: 85%;
@@ -432,10 +440,10 @@ div.table-wrapper {
     max-width: 90%;
   }
   figcaption, figure.fullwidth figcaption {
-    margin: 0 auto;
+    margin-right: 0;
     max-width: none;
   }
-  blockquote p, blockquote footer {
+  blockquote p, blockquote footer, div.epigraph > blockquote > footer, .MJXc-display {
     width: 80%;
     padding-left: 5%;
     padding-right: 5%;
@@ -447,13 +455,10 @@ div.table-wrapper {
 }
 
 //more .code class removal
-pre, p pre code, pre code {
-  overflow-x: auto;
-}
 
-pre, p pre code {
+pre {
   padding-left: 2.5%;
-  padding-right: 2.5%;
+  overflow-x: auto;
 }
 
 .fullwidth, li.listing div {
@@ -506,6 +511,10 @@ label.margin-toggle:not(.sidenote-number) {
   label {
     cursor: pointer;
   }
+  pre, pre code, p code, p pre code {
+    width: 90%;
+    padding: 0;
+  }
   .table-caption {
     display: block;
     float: right;
@@ -523,6 +532,13 @@ label.margin-toggle:not(.sidenote-number) {
   }
   img {
     max-width: 100%;
+  }
+  figcaption.maincolumn-figure, figure.fullwidth figcaption {
+    float: none;
+    text-align: center;
+  }
+  figure.fullwidth figcaption {
+    margin-left: 0;
   }
 }
 
@@ -615,14 +631,15 @@ ul.footer-links li svg {
 
 body.full-width, .content-listing, ul.content-listing li.listing {
   width: 90%;
-  padding: 0% 5%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 5%;
 
 }
 
 .full-width article p {
   width: 90%;
 }
-
 
 h1.content-listing-header {
   font-style: normal;
@@ -647,7 +664,6 @@ li.listing {
     width: 100%
   }
 }
-
 
 li.listing:last-of-type {
   border-bottom: none;
@@ -684,7 +700,6 @@ hr.slender {
 
 //printing stuff
 @media print {
-
   * {
     -webkit-transition: none !important;
     transition: none !important;
@@ -739,5 +754,28 @@ hr.slender {
 
   body header, body footer {
     display: none;
+  }
+}
+
+// Customs Styles
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+
+  .col {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    @media screen and (max-width: 760px) {
+      flex: none;
+    }
+  }
+
+  .gap {
+    content: '';
+    padding: 5px;
   }
 }
