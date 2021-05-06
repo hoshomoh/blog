@@ -5,7 +5,7 @@ This is my official website and blog.
 ### Build and Serve 
 
 ```shell script
-docker run -rm -it \
+docker run --rm -it \
   --volume="$PWD:/srv/jekyll" \
   --volume="$PWD/vendor/bundle:/usr/local/bundle" \
   -p 4000:4000 jekyll/jekyll:4.0 \
@@ -15,7 +15,7 @@ docker run -rm -it \
 ### Deploy
 
 ```shell script
-docker run -rm -it \
+docker run --rm -it \
   --volume="$PWD:/srv/jekyll" \
   --volume="$PWD/vendor/bundle:/usr/local/bundle" \
   -p 4000:4000 jekyll/jekyll:4.0 \
