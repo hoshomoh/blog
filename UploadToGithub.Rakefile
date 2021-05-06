@@ -1,10 +1,8 @@
-require 'rubygems'
 require 'rake'
 require 'rdoc'
 require 'date'
 require 'yaml'
 require 'tmpdir'
-
 
 desc "Generate and publish blog to master"
 task :publish do
