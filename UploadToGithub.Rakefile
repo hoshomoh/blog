@@ -4,19 +4,10 @@ require 'rdoc'
 require 'date'
 require 'yaml'
 require 'tmpdir'
-require 'jekyll'
-
-desc "Generate blog files"
-task :generate do
-  Jekyll::Site.new(Jekyll.configuration({
-    "source"      => ".",
-    "destination" => "_site"
-  })).process
-end
 
 
 desc "Generate and publish blog to master"
-task :publish => [:generate] do
+task :publish do
   Dir.mktmpdir do |tmp|
     system "mv _site/* #{tmp}"
     system "git checkout -B master"

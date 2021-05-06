@@ -2,21 +2,25 @@
 
 This is my official website and blog.
 
-### Install 
-
-```shell script
-bundle install
-```
-
 ### Build and Serve 
 
 ```shell script
-bundle exec jekyll serve
+docker run -it \
+  --volume="$PWD:/srv/jekyll" \
+  --volume="$PWD/vendor/bundle:/usr/local/bundle" \
+  -p 4000:4000 jekyll/jekyll:4.0 \
+  jekyll serve
 ```
 
 ### Deploy
 
 ```shell script
+docker run -it \
+  --volume="$PWD:/srv/jekyll" \
+  --volume="$PWD/vendor/bundle:/usr/local/bundle" \
+  -p 4000:4000 jekyll/jekyll:4.0 \
+  jekyll build
+
 rake -f UploadToGithub.Rakefile
 ```
 

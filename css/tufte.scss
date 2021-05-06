@@ -330,10 +330,14 @@ section {
 }
 
 ul, ol {
-  width: 45%;
+  width: 55%;
   -webkit-padding-start: 5%;
   -webkit-padding-end: 5%;
   list-style-type: none;
+}
+
+ul ul {
+  width: 100%;
 }
 
 //li { padding: 0.5em 0; } //vertical padding on list items screws up vertical rhythym

@@ -72,12 +72,12 @@ $names = $request->input('products.*.name');
 Actually it is indirectly documented in the [route section](https://laravel.com/docs/8.x/routing). You can access the
  current route using `$request->route` and this can also be used to access the route parameters like so:
  
-  ```php
- $userId = $request->route('user_id');
+```php
+$userId = $request->route('user_id');
  
 // With Default Value
- $names = $request->route('user_id', '1');
-  ```
+$names = $request->route('user_id', '1');
+```
 
 Laravel supports dependency injection for route parameters, so if you are a fan of [route model binding](https
 ://laravel.com/docs/8.x/routing#route-model-binding) like me then you should consider using parameter injection
