@@ -232,6 +232,14 @@ pre, pre code, p code, p pre code {
   margin-top: 1.71428571rem;
 }
 
+p code {
+  padding: 2px;
+  border: 1px solid rgba(0,0,0,.05);
+  border-radius: .35rem;
+  background-color: #f1f4f8;
+  color: $text-color;
+}
+
 h1 code, h2 code, h3 code {
   font-size: 0.80em;
 }
