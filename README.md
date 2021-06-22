@@ -16,14 +16,6 @@ Create production build:
 make shell
 
 jekyll build
-
-rake -f UploadToGithub.Rakefile
-```
-
-Push changes to master:
-
-```shell script
-rake -f UploadToGithub.Rakefile
 ```
 
 ### Post and Pages

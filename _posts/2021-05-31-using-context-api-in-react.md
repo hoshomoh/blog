@@ -17,10 +17,11 @@ children components. This can be very cumbersome for global variables or propert
 user locale, theme etc. React context provide us with an API to pass data across all components without having to 
 pass props from grand-parent to parent and then to child. 
 
-Often I see people try to use a state container like Redux to solve this problem but then end up with a more complex 
+I often see devs try to use a state container like Redux to solve this problem but then end up with a more complex 
 solution of creating a store, initial state and then passing state value down to components using `mapStateToProps`.
 
-The context API offers us a clean and re-usable way of passing down global variables across all out components.
+The context API offers us a clean and re-usable way of passing global variables across all components in our 
+application.
 
 ## Creating Context
 
@@ -38,14 +39,15 @@ export const UserConsumer = UserContext.Consumer;
 export default UserContext;
 ```
 
-The code above create a React context named `UserContext` and this also gives us a `Provider` and a `Consumer`. 
-`Provider` as the name implies is the component that provides the value to be used by other component while 
-`Consumer` is a component consuming or rather using this value. 
+The code above create a React context `UserContext` and gives us a `Provider` and a `Consumer`. 
+`Provider` as the name implies is the component that provides the value that will be accessed globally by other 
+components while `Consumer` is a component that has direct access to the global variable. 
 
-`React.createContext` takes a `defaultValue` which as you can see above in our case I have set to `null`. The 
-`defaultValue` is only used when the `Consumer` can not find a matching `Provider` above the component tree. This is 
-mostly useful during testing when you don't want to wrap your components in a `Provider`. Passing `undefined` as the
-`defaultValue` does not cause the consuming components to use this value. 
+`React.createContext` takes a `defaultValue` as you can see above. In our case, we set the `defaultValue` to 
+`null`. The `defaultValue` is only used when the `Consumer` can not find a matching `Provider` above the component 
+tree. This is mostly useful during testing when you don't want to wrap your components in a `Provider`{% sidenote 
+'context-undefined-default-value' 'Passing `undefined` as the `defaultValue` does not cause the consuming components to 
+use this value. ' %}.
 
 ## Providing Context
 
@@ -60,18 +62,19 @@ import { UserProvider } from './UserContext';
 
 function App() {
   const user = { name: 'Oshomo Oforomeh' };
+  const value = { user };
 
   return (
-    <UserProvider value={{ user }}>
+    <UserProvider value={value}>
       <Home />
     </UserProvider>
   )
 }
 ```
 
-Now the user `value` will ve available to the `HomePage` component and its children, grand-children and 
+Now the `user` will ve available to the `HomePage` component and its children, grand-children and 
 great-grand-children. You need to be careful how you update and manage the `Provider` value, because a change to the 
-`value` will cause a re-render of all the components consuming the `Provider` value.
+`user` will cause a re-render of all the components consuming the `Provider` value.
 
 ## Consuming Context
 
@@ -104,8 +107,10 @@ class Home extends React.Component {
 ```
 
 Note that `static contextType = UserContext` assumes that you are using the experimental public class field{% 
-sidenote 'public-class-field-explanation' 'Both public and private field declarations are an 
-experimental feature (stage 3) proposed at TC39, the JavaScript standards committee.<br /><br />Support in browsers is limited, but the feature can be used through a build step with systems like Babel.'%}. If you are not, then use the code sample below instead.
+sidenote 'public-class-field-explanation' 'Both public and private field declarations are an experimental feature 
+(stage 3) proposed at TC39, the JavaScript standards committee.<br /><br />Support in browsers is limited, but the 
+feature can be used through a build step with systems like Babel.'%}. If you are not, then use the code sample below 
+instead.
 
 ```tsx
 import React from 'react';
@@ -126,10 +131,10 @@ class Home extends React.Component {
 Home.contextType = UserContext;
 ```
 
-The static `contextType` has one drawback, it doesn't allow a class component to consume multiple `Provider`. To 
-consume multiple provider in a class component, we wrap our component with the `Consumer` component, which requires 
-a function as a child and the function receives the current context `Provider` value like below. This method can 
-also be used when consuming a single `Provider`.
+The static `contextType` has one drawback, it doesn't allow a class component to consume multiple providers. To 
+consume multiple providers in a class component, we wrap our component with the `Consumer` component. The `Consumer` 
+component take a function that returns a React component as children. The function receives the context value like 
+below. This method can also be used when consuming a single `Provider`.
 
 Consuming single provider with `Consumer`.
 
@@ -181,10 +186,10 @@ class Home extends React.Component {
 
 ### Functional Components & Hooks
 
-Functional components are much simpler, whether you are consuming one or multiple provider. To do so we use the 
-`useContext` hook which is equivalent to the static `contextType` we used in the class component. The only 
-difference is we can use multiple hooks in a functional component, thus giving us the ability to consume multiple 
-provider with ease.
+Functional components are much simpler, whether you are consuming one or multiple provider. With functional 
+components we use the `useContext` hook which is equivalent to the static `contextType` we used in the class 
+component. The only difference is we can use multiple hooks in a functional component, thus giving us the ability 
+to consume multiple provider with ease.
 
 ```tsx
 import React from 'react';
@@ -201,9 +206,11 @@ const Home = () => {
 
 ## Updating Context
 
-Sometimes you find you might want to update the context value from a deeply nested component down the tree, like 
-changing a theme from light to dark and vice versa. In this case, you can pass an update function down through the 
-context value to allow consumers use this function to update the context value. Lets make an update to our initial 
+Sometimes you might want to update the context value from a deeply nested component down the tree, like 
+changing a theme from light to dark and vice versa. 
+
+In this case, you can pass a function down through the context value to allow consumers update context values using 
+this function. Let us make an update to our initial 
 context provider: 
 
  ```tsx
@@ -216,14 +223,10 @@ const UserContext = React.createContext({
 
 export const UserProvider = ({ children }) => {
   const [user, updateUser] = React.useState(null);
+  const value = { user, updateUser };
 
   return (
-    <UserContext.Provider
-      value={{
-        user,
-        updateUser
-      }}
-    >
+    <UserContext.Provider value={value}>
       {children}
     </UserContext.Provider>
   )
