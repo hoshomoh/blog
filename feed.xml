@@ -1,31 +1,1235 @@
----
-layout: null
-nav_exclude: true
----
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>{{ site.title | xml_escape }}</title>
-    <description>{{ site.description | xml_escape }}</description>
-    <link>{{ site.url }}{{ site.baseurl }}/</link>
-    <atom:link href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}" rel="self" type="application/rss+xml"/>
-    <pubDate>{{ site.time | date_to_rfc822 }}</pubDate>
-    <lastBuildDate>{{ site.time | date_to_rfc822 }}</lastBuildDate>
-    <generator>Jekyll v{{ jekyll.version }}</generator>
-    {% for post in site.posts limit:10 %}
+    <title>Oshomo Oforomeh</title>
+    <description>Oshomo Oforomeh personal website and articles.</description>
+    <link>https://oshomo.oforomeh.com/</link>
+    <atom:link href="https://oshomo.oforomeh.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sat, 06 Aug 2022 11:29:11 -0500</pubDate>
+    <lastBuildDate>Sat, 06 Aug 2022 11:29:11 -0500</lastBuildDate>
+    <generator>Jekyll v4.2.0</generator>
+    
       <item>
-        <title>{{ post.title | xml_escape }}</title>
-        <description>{{ post.content | xml_escape }}</description>
-        <pubDate>{{ post.date | date_to_rfc822 }}</pubDate>
-        <link>{{ post.url | prepend: site.baseurl | prepend: site.url }}</link>
-        <guid isPermaLink="true">{{ post.url | prepend: site.baseurl | prepend: site.url }}</guid>
-        {% for tag in post.tags %}
-        <category>{{ tag | xml_escape }}</category>
-        {% endfor %}
-        {% for cat in post.categories %}
-        <category>{{ cat | xml_escape }}</category>
-        {% endfor %}
+        <title>Using Context API in React</title>
+        <description>&lt;p&gt;&lt;label for=&quot;mn-id-whatever&quot; class=&quot;margin-toggle&quot;&gt; ⊕&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;mn-id-whatever&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;marginnote&quot;&gt;&lt;strong&gt;Article Outline:&lt;/strong&gt;&lt;br /&gt;&lt;br /&gt;&lt;a href=&quot;#creating-context&quot;&gt;Creating Context&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;#providing-context&quot;&gt;Providing Context&lt;/a&gt;&lt;br /&gt;&lt;a href=&quot;#consuming-context&quot;&gt;Consuming Context&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;#updating-context&quot;&gt;Updating Context&lt;/a&gt; &lt;br /&gt;&lt;a href=&quot;#conclusion&quot;&gt;Conclusion&lt;/a&gt; &lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;Data is often passed to react components using props, whether as a single component or components with one or more 
+children components. This can be very cumbersome for global variables or properties like current logged-in user, 
+user locale, theme etc. React context provide us with an API to pass data across all components without having to 
+pass props from grand-parent to parent and then to child.&lt;/p&gt;
+
+&lt;p&gt;I often see devs try to use a state container like Redux to solve this problem but then end up with a more complex 
+solution of creating a store, initial state and then passing state value down to components using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mapStateToProps&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;The context API offers us a clean and re-usable way of passing global variables across all components in our 
+application.&lt;/p&gt;
+
+&lt;h2 id=&quot;creating-context&quot;&gt;Creating Context&lt;/h2&gt;
+
+&lt;p&gt;Say we wanted to create a global context for handling currently authenticated user. We start by creating a file 
+named &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;UserContext.js&lt;/code&gt; with the content below:&lt;/p&gt;
+
+&lt;div class=&quot;language-tsx highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;React&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;react&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;UserContext&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;React&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createContext&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;UserProvider&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;UserContext&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Provider&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;UserConsumer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;UserContext&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Consumer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;UserContext&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The code above create a React context &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;UserContext&lt;/code&gt; and gives us a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Provider&lt;/code&gt; and a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Consumer&lt;/code&gt;. 
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Provider&lt;/code&gt; as the name implies is the component that provides the value that will be accessed globally by other 
+components while &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Consumer&lt;/code&gt; is a component that has direct access to the global variable.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;React.createContext&lt;/code&gt; takes a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;defaultValue&lt;/code&gt; as you can see above. In our case, we set the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;defaultValue&lt;/code&gt; to 
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;null&lt;/code&gt;. The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;defaultValue&lt;/code&gt; is only used when the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Consumer&lt;/code&gt; can not find a matching &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Provider&lt;/code&gt; above the component 
+tree. This is mostly useful during testing when you don’t want to wrap your components in a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Provider&lt;/code&gt;&lt;label for=&quot;context-undefined-default-value&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;context-undefined-default-value&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;sidenote&quot;&gt;Passing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;undefined&lt;/code&gt; as the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;defaultValue&lt;/code&gt; does not cause the consuming components to 
+use this value.  &lt;/span&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;providing-context&quot;&gt;Providing Context&lt;/h2&gt;
+
+&lt;p&gt;No matter how you choose to consume a context value, the context &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Provider&lt;/code&gt; must always be a parent of the 
+components consuming the context value. The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Provider&lt;/code&gt; takes &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;value&lt;/code&gt; as props and this value is passed down to all 
+descendent components that subscribe to the context value via a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Consumer&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-tsx highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;React&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;react&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Home&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;./Home&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;UserProvider&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;./UserContext&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;App&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;Oshomo Oforomeh&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;UserProvider&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Home&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;UserProvider&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;user&lt;/code&gt; will ve available to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HomePage&lt;/code&gt; component and its children, grand-children and 
+great-grand-children. You need to be careful how you update and manage the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Provider&lt;/code&gt; value, because a change to the 
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;user&lt;/code&gt; will cause a re-render of all the components consuming the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Provider&lt;/code&gt; value.&lt;/p&gt;
+
+&lt;h2 id=&quot;consuming-context&quot;&gt;Consuming Context&lt;/h2&gt;
+
+&lt;p&gt;Unlike the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Provider&lt;/code&gt; the way you consume a context is not the same for class and functional components. I will show 
+you how to use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Consumer&lt;/code&gt; to subscribe to a context and access the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Provider&lt;/code&gt; value.&lt;/p&gt;
+
+&lt;h3 id=&quot;class-components&quot;&gt;Class Components&lt;/h3&gt;
+
+&lt;p&gt;The easiest way to consume a context in a class component is to use the static &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;contextType&lt;/code&gt; property on the class. 
+Using this property let you consume the nearest context &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Provider&lt;/code&gt; value using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;this.context&lt;/code&gt;. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;this.context&lt;/code&gt; can be 
+used in all component lifecycle including the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;render&lt;/code&gt; method.&lt;/p&gt;
+
+&lt;div class=&quot;language-tsx highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;React&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;react&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;UserContext&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;./UserContext&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Home&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;React&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Component&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;contextType&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;UserContext&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+  &lt;span class=&quot;nx&quot;&gt;componentDidMount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// { name: 'Oshomo Oforomeh' }&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;nx&quot;&gt;render&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;div&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;div&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Note that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;static contextType = UserContext&lt;/code&gt; assumes that you are using the experimental public class field&lt;label for=&quot;public-class-field-explanation&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;public-class-field-explanation&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;sidenote&quot;&gt;Both public and private field declarations are an experimental feature 
+(stage 3) proposed at TC39, the JavaScript standards committee.&lt;br /&gt;&lt;br /&gt;Support in browsers is limited, but the 
+feature can be used through a build step with systems like Babel. &lt;/span&gt;. If you are not, then use the code sample below 
+instead.&lt;/p&gt;
+
+&lt;div class=&quot;language-tsx highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;React&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;react&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;UserContext&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;./UserContext&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Home&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;React&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Component&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;componentDidMount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// { name: 'Oshomo Oforomeh' }&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;nx&quot;&gt;render&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;div&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;div&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;Home&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;contextType&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;UserContext&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The static &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;contextType&lt;/code&gt; has one drawback, it doesn’t allow a class component to consume multiple providers. To 
+consume multiple providers in a class component, we wrap our component with the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Consumer&lt;/code&gt; component. The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Consumer&lt;/code&gt; 
+component take a function that returns a React component as children. The function receives the context value like 
+below. This method can also be used when consuming a single &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Provider&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Consuming single provider with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Consumer&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-tsx highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;React&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;react&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;UserConsumer&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;./UserContext&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Home&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;React&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Component&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;render&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;UserConsumer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;div&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;div&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;UserConsumer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Consuming multiple provider with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Consumer&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-tsx highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;React&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;react&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;UserConsumer&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;./UserContext&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;ThemeConsumer&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;./ThemeContext&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Home&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;React&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Component&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;render&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;ThemeConsumer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+          &lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;theme&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;UserConsumer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+              &lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+                  &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;div&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+                    &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;span&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;theme&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;span&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+                    &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;span&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;span&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+                  &lt;span class=&quot;p&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;div&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+                &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+              &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;UserConsumer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+          &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;ThemeConsumer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;functional-components--hooks&quot;&gt;Functional Components &amp;amp; Hooks&lt;/h3&gt;
+
+&lt;p&gt;Functional components are much simpler, whether you are consuming one or multiple provider. With functional 
+components we use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;useContext&lt;/code&gt; hook which is equivalent to the static &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;contextType&lt;/code&gt; we used in the class 
+component. The only difference is we can use multiple hooks in a functional component, thus giving us the ability 
+to consume multiple provider with ease.&lt;/p&gt;
+
+&lt;div class=&quot;language-tsx highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;React&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;react&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;UserContext&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;./UserContext&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Home&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;React&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;useContext&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;UserContext&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;// You can add as much context as you want&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;// const theme = React.useContext(ThemeContext);&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;div&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;div&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;updating-context&quot;&gt;Updating Context&lt;/h2&gt;
+
+&lt;p&gt;Sometimes you might want to update the context value from a deeply nested component down the tree, like 
+changing a theme from light to dark and vice versa.&lt;/p&gt;
+
+&lt;p&gt;In this case, you can pass a function down through the context value to allow consumers update context values using 
+this function. Let us make an update to our initial 
+context provider:&lt;/p&gt;
+
+&lt;div class=&quot;language-tsx highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;React&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;react&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;UserContext&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;React&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createContext&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;updateUser&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;UserProvider&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;({&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;children&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;updateUser&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;React&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;useState&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;updateUser&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;UserContext&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Provider&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;children&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;UserContext&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Provider&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;UserConsumer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;UserContext&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Consumer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;UserContext&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now we can get the user value from the context as we did before as well as update the user value in the context like 
+below:&lt;/p&gt;
+
+&lt;div class=&quot;language-tsx highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;React&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;react&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;UserContext&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;./UserContext&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Home&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;updateUser&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;React&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;useContext&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;UserContext&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;div&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;button&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;onClick&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;updateUser&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;Oshomo Updated&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+        Update User
+      &lt;span class=&quot;p&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;button&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`Current User: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;div&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;React.createContext()&lt;/code&gt; to create context and get the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Provider&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Consumer&lt;/code&gt; from the created context.&lt;/p&gt;
+
+&lt;p&gt;I advise you wrap &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Provider&lt;/code&gt; in a parent component so you can easily manage &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Provider&lt;/code&gt; value.&lt;/p&gt;
+
+&lt;p&gt;You can consume a context in a class by using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;static contextType = Context&lt;/code&gt; inside the class or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Class.contextType = Context&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;To consume multiple context in a class, wrap you component in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;Context.Consumer&amp;gt;{component}&amp;lt;/Context.Consumer&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;You can consume one or more context in a functional component by using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;React.useContext(Context)&lt;/code&gt;.&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 31 May 2021 11:18:00 -0500</pubDate>
+        <link>https://oshomo.oforomeh.com/articles/2021/05/using-context-api-in-react</link>
+        <guid isPermaLink="true">https://oshomo.oforomeh.com/articles/2021/05/using-context-api-in-react</guid>
+        
+        
       </item>
-    {% endfor %}
+    
+      <item>
+        <title>Accessing Laravel request properties dynamically a no-no</title>
+        <description>&lt;p&gt;Laravel offers multiple ways of accessing request properties. You can browse through the official
+ &lt;a href=&quot;https://laravel.com/docs/8.x/requests&quot;&gt;documentation&lt;/a&gt; for a full list of the available methods.&lt;/p&gt;
+
+&lt;p&gt;One and very popular way for accessing request properties is via &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Dynamic Properties&lt;/code&gt;. According to the Laravel
+ documentation, this is what happens internally when you use dynamic properties:&lt;/p&gt;
+
+&lt;div class=&quot;epigraph&quot;&gt;&lt;blockquote&gt;&lt;p&gt;When using dynamic properties, Laravel will first look for the parameter's value in the request payload. If it is not present, Laravel will search for the field in the route parameters.
+&lt;/p&gt;&lt;footer&gt;Laravel, &lt;cite&gt;[Version 8.x]&lt;/cite&gt;&lt;/footer&gt;&lt;/blockquote&gt;&lt;/div&gt;
+
+&lt;p&gt;While this is a very powerful feature I do not recommend developer use it for the following reasons:&lt;/p&gt;
+
+&lt;h3 id=&quot;1same-property-in-input-and-route-parameters&quot;&gt;1.Same property in input and route parameters&lt;/h3&gt;
+
+&lt;p&gt;The same property might exist in both the route parameters and the input parameters. For example take the request below:&lt;/p&gt;
+
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If you meant to access the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;name&lt;/code&gt; from the route parameter then &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$name&lt;/code&gt; would be incorrect since laravel would return the value from the input parameters.&lt;/p&gt;
+
+&lt;h3 id=&quot;2-less-intuitive&quot;&gt;2. Less intuitive&lt;/h3&gt;
+
+&lt;p&gt;When I am reading through a codebase, I like to look at a variable and immediately guess where the value is coming from
+. With the usage of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dynamic properties&lt;/code&gt;, this makes that impossible, thus making the code more difficult to understand
+ at first look.&lt;/p&gt;
+
+&lt;p&gt;Laravel offers other more intuitive methods for accessing request properties for all kind of scenarios without
+ having to use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dynamic properties&lt;/code&gt; such that when another developer is reading through your codebase, they can
+  immediately guess where a variable is coming from. See table below:&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Scenario&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Available Method&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;From Body&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;strong&gt;$request-&amp;gt;input&lt;/strong&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;From Query String&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;strong&gt;$request-&amp;gt;query&lt;/strong&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;From Cookie&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;strong&gt;$request-&amp;gt;cookie&lt;/strong&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;From File Upload&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;strong&gt;$request-&amp;gt;file&lt;/strong&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;From Route&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;strong&gt;$request-&amp;gt;route&lt;/strong&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;what-of-request-get&quot;&gt;What of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$request-&amp;gt;get&lt;/code&gt;?&lt;/h3&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$request-&amp;gt;get&lt;/code&gt; works because the method belongs to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Symfony HttpFoundation&lt;/code&gt; and is not usually needed when using
+ Laravel. In fact, there is no mention of it within the Laravel documentation, so if I where you I will stay away
+  from, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$request-&amp;gt;get&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Another reason you should use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$request-&amp;gt;input&lt;/code&gt; over &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$request-&amp;gt;get&lt;/code&gt; is because &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$request-&amp;gt;input&lt;/code&gt; is more powerful
+ and can be used with array/JSON inputs by using “dot” notation to access the array or JSON properties like below:&lt;/p&gt;
+
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'products.0.name'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;$names&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'products.*.name'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;why-is-request-route-not-documented&quot;&gt;Why is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$request-&amp;gt;route&lt;/code&gt; not documented?&lt;/h3&gt;
+
+&lt;p&gt;Actually it is indirectly documented in the &lt;a href=&quot;https://laravel.com/docs/8.x/routing&quot;&gt;route section&lt;/a&gt;. You can access the
+ current route using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$request-&amp;gt;route&lt;/code&gt; and this can also be used to access the route parameters like so:&lt;/p&gt;
+
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$userId&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;route&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'user_id'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+ 
+&lt;span class=&quot;c1&quot;&gt;// With Default Value&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$names&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;route&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'user_id'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'1'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Laravel supports dependency injection for route parameters, so if you are a fan of &lt;a href=&quot;https
+://laravel.com/docs/8.x/routing#route-model-binding&quot;&gt;route model binding&lt;/a&gt; like me then you should consider using parameter injection
+ instead of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$request-&amp;gt;route&lt;/code&gt;. As an example, say you have a route as defined below:&lt;/p&gt;
+
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nc&quot;&gt;Route&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;put&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'user/{id}'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;UserController&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'update'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;You may still type-hint the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Illuminate\Http\Request&lt;/code&gt; and access your route parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{id}&lt;/code&gt; by defining your controller method as follows:&lt;/p&gt;
+
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Request&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;//&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+</description>
+        <pubDate>Mon, 14 Sep 2020 04:36:00 -0500</pubDate>
+        <link>https://oshomo.oforomeh.com/articles/2020/09/accessing-laravel-request-properties-dynamically-a-no-no</link>
+        <guid isPermaLink="true">https://oshomo.oforomeh.com/articles/2020/09/accessing-laravel-request-properties-dynamically-a-no-no</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Life at trivago</title>
+        <description>&lt;p&gt;On the 4th of September 2018 at 11:25 CEST, I landed in Leipzig, Germany with a one-way ticket. I moved to Germany for the single intention to join trivago and contribute to mission and vision of the &lt;strong&gt;Express Booking&lt;/strong&gt;&lt;label for=&quot;note-on-express-booking&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;note-on-express-booking&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;sidenote&quot;&gt;A trivago product that allows OTAS and Hotel Chains to expand their businesses to new markets and increase conversation while promoting their brand and competing with big players with ease. &lt;/span&gt; team. In this article, I share my experience at trivago and, I hope you enjoy it.&lt;/p&gt;
+
+&lt;h3 id=&quot;relocating-to-germany&quot;&gt;&lt;span class=&quot;newthought&quot;&gt;Relocating to Germany&lt;/span&gt;&lt;/h3&gt;
+
+&lt;p&gt;When moving to a new country for employment, two things that can stress you out are &lt;strong&gt;Visa and Accommodation&lt;/strong&gt;. Luckily for me, the good folks at trivago had those sorted out. The HR and Office Management team were extremely helpful with the visa process and had a temporary residence sponsored by trivago prepared for me until I settle into the new city.&lt;label for=&quot;pay-for-flat&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;pay-for-flat&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;sidenote&quot;&gt;I think this changed a year after I joined and you had to pay a penny and could only stay there for up to 3 months. &lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;If you are moving to a non-English-speaking country like Germany, then you have one more thing to worry about - &lt;strong&gt;Language&lt;/strong&gt;. A huge consolation for me was, Germany has lots of internationals that speak fluent English so, the language was not much of a problem. Although some public offices where one needs to do compulsory city registrations had only German-speaking employees, I didn’t have to worry about this as some colleagues in HR and Office Management would offer to go with me for these registrations and support with translations when needed.&lt;/p&gt;
+
+&lt;p&gt;In retrospect, my relocation was smooth and without stress, and I have the HR and Office Management folks to thank for that, with personal gratitude to Sören Ille and Cinthia Solorio; you guys ROCK!!!&lt;/p&gt;
+
+&lt;h3 id=&quot;my-first-experience&quot;&gt;&lt;span class=&quot;newthought&quot;&gt;My First Experience&lt;/span&gt;&lt;/h3&gt;
+
+&lt;p&gt;Before my relocation, my general knowledge about Germany ranged very little to nothing. However, I knew it was one of the most powerful countries in Europe and the world at large. As a result, I made some assumptions. One of those assumptions almost got me stranded at the Leipzig airport on arrival.&lt;/p&gt;
+
+&lt;p&gt;Hear me out, I come from a developing country where cashless was a thing and, you didn’t have to worry about moving around with cash. All you needed was your debit card; as almost all businesses even small businesses had POS machines and, paying with a debit card was a norm. Plus, UBER also worked.&lt;/p&gt;
+
+&lt;p&gt;I came to Germany with the assumption that, if this was possible in Nigeria, then why travel to a country like Germany with cash. So, I came with no cash, solely dependent on my debit card. I checked myself out of the Leipzig airport with my backpack and one big hand luggage, ready to take a taxi to the address I was given.&lt;/p&gt;
+
+&lt;p&gt;&lt;label for=&quot;touch-down-leipzig-margin&quot; class=&quot;margin-toggle&quot;&gt;⊕&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;touch-down-leipzig-margin&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;marginnote&quot;&gt;&lt;img class=&quot;fullwidth&quot; src=&quot;/assets/img/posts/life-at-trivago/touch-down-leipzig.jpg&quot; /&gt;&lt;br /&gt;&lt;em&gt;Quick shot&lt;/em&gt; from my window seat few seconds before landing at the &lt;strong&gt;Leipzig / Halle Airport&lt;/strong&gt;.&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;The first thing I did was connect to the Airport WI-FI, launched the Uber app on my phone and that was when I saw the notice, &lt;em&gt;“Unfortunately, Uber is not available in your area.”&lt;/em&gt;. I was like this is impossible, it must be my internet. I restarted my WIFI and re-connected hoping that would fix the issue but after multiple restarts and re-connections, I asked for help and, it turned out Uber wasn’t available in Leipzig.&lt;/p&gt;
+
+&lt;p&gt;I also couldn’t use the local taxi as their only accepted payment method was cash. To cut the long story short, my saving grace was a young fella who agreed to accept PayPal for cash which is how I was able to eventually take the local taxi to my final destination. I think I spent roughly 2 hours at the airport after checking out.&lt;/p&gt;
+
+&lt;h3 id=&quot;the-check-in-week&quot;&gt;&lt;span class=&quot;newthought&quot;&gt;The Check-in Week&lt;/span&gt;&lt;/h3&gt;
+
+&lt;p&gt;As a newbie in trivago, you undergo a 5-day onboarding program hence the name &lt;em&gt;Check-in Week&lt;/em&gt;. The check-in week takes place at the company campus in Dusseldorf, Germany and the goal was to create a welcoming, insightful and challenging start for the newbies and more importantly to ensure that newbies understand the business model, connect with the company culture and feel empowered to make an impact.&lt;/p&gt;
+
+&lt;p&gt;&lt;u&gt;&lt;span class=&quot;newthought&quot;&gt;Day 1&lt;/span&gt; &lt;/u&gt;&lt;/p&gt;
+
+&lt;p&gt;On the first day, you get a general overview of trivago from the business model -&amp;gt; core values -&amp;gt; organizational structure. You also get to meet lots of people while browsing through the beautiful campus. You end the day by getting your work laptop and setting up your email, slack, and other communication tools used at trivago.&lt;/p&gt;
+
+&lt;div class=&quot;row&quot;&gt;&lt;figure class=&quot;col fullwidth&quot;&gt;&lt;img src=&quot;/assets/img/posts/life-at-trivago/meeting-room-in-trivago-campus.jpg&quot; /&gt;&lt;figcaption class=&quot;maincolumn-figure&quot;&gt;Meeting room at the trivago campus.&lt;/figcaption&gt;&lt;/figure&gt;&lt;span class=&quot;gap&quot;&gt;&lt;/span&gt;&lt;figure class=&quot;col fullwidth&quot;&gt;&lt;img src=&quot;/assets/img/posts/life-at-trivago/trivago-culture-kitchen.jpg&quot; /&gt;&lt;figcaption class=&quot;maincolumn-figure&quot;&gt;trivago Culture Kitchen&lt;/figcaption&gt;&lt;/figure&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;u&gt;&lt;span class=&quot;newthought&quot;&gt;Day 2 - 4&lt;/span&gt; &lt;/u&gt;&lt;/p&gt;
+
+&lt;p&gt;By day two, you should  have your laptop and work email setup. Once you log into your email, in your inbox awaits Jira tickets to be completed by you.
+The tickets involve simple things like updating your info in Workday, going to Wage and Accounting to get your salary account all sorted if you want to get paid.&lt;/p&gt;
+
+&lt;p&gt;In the next 2 - 4 days, you are divided into groups for group activities and case studies. A representative from each pillar/department in the organisational structure comes in to discuss the role, structure and functions of their pillar and how it aligns with trivago’s overall mission as a company. This is also an opportunity for you to see how your role and team fits into the trivago ecosystem. Afterwards, each group is given a case study to show their understanding of the pillar functions.&lt;/p&gt;
+
+&lt;p&gt;Overall, the case studies were fun and challenging. There were even times we had to stay until 9 pm to complete them. Particularly for me, the marketing case study stood out.&lt;/p&gt;
+
+&lt;p&gt;&lt;u&gt;&lt;span class=&quot;newthought&quot;&gt;Day 5&lt;/span&gt; &lt;/u&gt;&lt;/p&gt;
+
+&lt;p&gt;That last day is what I like to call &lt;em&gt;fun day&lt;/em&gt;. Each group were given a tablet with a game we had to play. The game involves walking around the city of Dusseldorf, finding items and locations, taking pictures of landmarks, meeting at specific locations at specific times etc. Each achievement had a score and there was a prize for the winning team.&lt;/p&gt;
+
+&lt;p&gt;Even though my team didn’t win, we still got the chance to end the day by celebrating the end of a successful checkin week at a local pub that brews its own beer. And as per trivago’s fashion, we were allowed to drink as much as we want for free while sitting and reflecting back on our respective experiences of the check-in week. We all exchanged contacts and went our separate ways to the remote offices.&lt;/p&gt;
+
+&lt;h3 id=&quot;the-team&quot;&gt;&lt;span class=&quot;newthought&quot;&gt;The Team&lt;/span&gt;&lt;/h3&gt;
+
+&lt;p&gt;I would never forget my first day at the Leipzig office after the check-in week. Luckily for me, my first day commute to the office was quite short, I just had to take a 1 minutes elevator ride down to the first floor, since I was staying at the company residence on the third floor in the same building.&lt;/p&gt;
+
+&lt;p&gt;After getting information overload from the check-in week, I was ready to jump into work mode. I went straight to where my colleagues from office management were sitting. They kindly gave me the tour of the office and introduced me to my team and manager.&lt;/p&gt;
+
+&lt;p&gt;In my first meeting with my manager, he gave me a confluence page prepared for me with a detailed outline of tasks and activities that were planned for me to help me smoothly integrate into the team. By the end of the meeting, he showed me where I would be seating.&lt;label for=&quot;seat-change-freq&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;seat-change-freq&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;sidenote&quot;&gt;During my time at trivago, I changed seat at least 3 times. &lt;/span&gt;&lt;/p&gt;
+
+&lt;figure&gt;&lt;img src=&quot;/assets/img/posts/life-at-trivago/desk-decoration-first-day.jpg&quot; /&gt;&lt;figcaption class=&quot;maincolumn-figure&quot;&gt;My first day at the Leipzig office with my desk decorated with a welcome card.&lt;/figcaption&gt;&lt;/figure&gt;
+
+&lt;p&gt;The Leipzig office had this culture of putting your country’s flag at the entrance of the office when a newbie joins. My desk had been decorated and there was a welcome card with little notes from every member of the team. I have never felt more welcome.&lt;/p&gt;
+
+&lt;p&gt;20 month down the line, and I must confess that my teammates are some of the finest, smartest, kindest people I have ever worked with. I am very happy I had the opportunity to meet every single person at the Leipzig office and more importantly work closely with every member of the Express Booking team.&lt;/p&gt;
+
+&lt;div class=&quot;row&quot;&gt;&lt;figure class=&quot;col fullwidth&quot;&gt;&lt;img src=&quot;/assets/img/posts/life-at-trivago/adyen-discussions.jpg&quot; /&gt;&lt;figcaption class=&quot;maincolumn-figure&quot;&gt;One of my favorite team moment. We had just concluded a meeting about PSD2&lt;/figcaption&gt;&lt;/figure&gt;&lt;span class=&quot;gap&quot;&gt;&lt;/span&gt;&lt;figure class=&quot;col fullwidth&quot;&gt;&lt;img src=&quot;/assets/img/posts/life-at-trivago/tour-at-the-campus.jpg&quot; /&gt;&lt;figcaption class=&quot;maincolumn-figure&quot;&gt;A quick tour with the team at the trivago campus after Tech Get Together 2019&lt;/figcaption&gt;&lt;/figure&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;the-product&quot;&gt;&lt;span class=&quot;newthought&quot;&gt;The Product&lt;/span&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://company.trivago.com/&quot;&gt;trivago&lt;/a&gt; is a meta-search company. The simplest way to think about trivago is “Google” but for hotels and alternative accommodations. After picking a travel destination, picking the perfect accommodation for your stay at that destination can be quite a challenge because there is so much variable to consider coupled with the fact that the same accommodation can have different prices across multiple OTA&lt;label for=&quot;ota-meaning&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;ota-meaning&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;sidenote&quot;&gt;OTA is an acronym for &lt;em&gt;Online Travel Agency&lt;/em&gt;. You can find a list of OTA &lt;a href=&quot;https://en.wikipedia.org/wiki/Category:Online_travel_agencies&quot;&gt;here&lt;/a&gt; &lt;/span&gt; or booking platforms.&lt;/p&gt;
+
+&lt;p&gt;trivago has mastered the art of guiding you to finding the best accommodation for your travel or business destinations while comparing prices of millions of accommodation from small, medium, and big OTA.&lt;/p&gt;
+
+&lt;p&gt;At trivago, we care for the OTA as much as we do for the customers. This is why we have a product called &lt;em&gt;Express Booking&lt;/em&gt;, built to help small, medium and even big OTA increase conversion by entering new markets without worrying above content localization or payment methods. Visit &lt;a href=&quot;https://www.trivago.com/expressbooking/&quot;&gt;this page&lt;/a&gt; to learn more about trivago express booking.&lt;/p&gt;
+
+&lt;p&gt;My team was responsible for the customer experience of Express booking. After a user choose a rate on trivago and, they get redirected to Express booking, my team was responsible for smoothly guiding the customer to making a successful booking. In general, we empower the users by:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Making sure the localized information is accurate,&lt;/li&gt;
+  &lt;li&gt;Ensuring a smooth desktop and mobile experience,&lt;/li&gt;
+  &lt;li&gt;Adding support for various payment method including but not limited to &lt;em&gt;Credit Card&lt;/em&gt;, &lt;em&gt;Direct Debit&lt;/em&gt;, &lt;em&gt;Paypal&lt;/em&gt;, &lt;em&gt;Installment&lt;/em&gt; etc.&lt;/li&gt;
+  &lt;li&gt;Allowing users to manage all their bookings in one place&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Planning your next vacation? Make sure to use trivago for your next booking in order to get the cheapest or best deal depending on what you are looking for.&lt;/p&gt;
+
+&lt;h3 id=&quot;the-company&quot;&gt;&lt;span class=&quot;newthought&quot;&gt;The Company&lt;/span&gt;&lt;/h3&gt;
+
+&lt;p&gt;If you got here, then you most likely already know a lot about trivago. Regardless, there are a few things I want to highlight about trivago. I don’t know what you’ve heard about trivago, but take it from me “trivago is a good place to work.” The salary might not be as competitive as what you are used to, but the company makes up for it with other benefits you likely don’t get elsewhere.&lt;/p&gt;
+
+&lt;p&gt;Few of those benefits include unlimited vacation days, &lt;em&gt;Tech Get Together&lt;/em&gt;( an internal tech conference), yearly training and conference budget, &lt;em&gt;trivago On Tour&lt;/em&gt;, bi-weekly and monthly team events. Unfortunately, I only had the opportunity to experience one &lt;em&gt;Tech Get Together&lt;/em&gt; and one  &lt;em&gt;trivago On Tour&lt;/em&gt;. If you are interested, continue reading for more details about both events in the next two sections.&lt;/p&gt;
+
+&lt;h3 id=&quot;tech-get-together&quot;&gt;&lt;span class=&quot;newthought&quot;&gt;Tech Get Together&lt;/span&gt;&lt;/h3&gt;
+
+&lt;p&gt;trivago Tech Get Together is a unique internal tech conference that unites all trivago tech talents from across all pillars and locations to foster communication, trust and knowledge exchange. The 2019 edition had ~190 talks submitted and over 65 accepted after rigorous review and voting.&lt;/p&gt;
+
+&lt;p&gt;The highlight for me was the fact that 98% of those talks were prepared and presented by trivago talents. We also had guest speakers from Expedia, HomeAway and HotelsCom.&lt;/p&gt;
+
+&lt;figure&gt;&lt;img src=&quot;/assets/img/posts/life-at-trivago/rolf-open-remarks.jpg&quot; /&gt;&lt;figcaption class=&quot;maincolumn-figure&quot;&gt;Rolf Schrömgens - &lt;em&gt;trivago CEO in 2019&lt;/em&gt; giving the opening remarks.&lt;/figcaption&gt;&lt;/figure&gt;
+
+&lt;p&gt;The talks were categorised into &lt;em&gt;People/Team/Leadership&lt;/em&gt;, &lt;em&gt;Programming languages &amp;amp; Techniques&lt;/em&gt;, &lt;em&gt;Software &amp;amp; Applications&lt;/em&gt;, &lt;em&gt;Mobile&lt;/em&gt;, &lt;em&gt;Big Data &amp;amp; Data Science&lt;/em&gt;, &lt;em&gt;Product&lt;/em&gt;, &lt;em&gt;Infrastructure &amp;amp; DevOps&lt;/em&gt;, &lt;em&gt;Design UI/UX&lt;/em&gt; and &lt;em&gt;Various&lt;/em&gt; for talks that didn’t fit into the other categories. One interesting talk in the various category I clearly remember was &lt;strong&gt;A beginners guide to engineering bread.&lt;/strong&gt; Talents learnt how to make bread, and it was indeed an interesting session.&lt;/p&gt;
+
+&lt;p&gt;My favourite talk was &lt;strong&gt;Designing understandable data visualizations&lt;/strong&gt;, presented by Ana Risteska. Where she teaches how to use the power of visual attributes to communicate data without putting too much strain on the user’s brain. You can download the presentation &lt;a href=&quot;https://github.com/anarisris/presentations/blob/master/tech-get-together.pdf&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;I enjoyed all the session I attended and gained knowledge about things I didn’t previously know. I also had the opportunity to see and speak with the engineers from remote offices that I regularly work with, but had communication limited to slack and video calls.&lt;/p&gt;
+
+&lt;h3 id=&quot;trivago-on-tour&quot;&gt;&lt;span class=&quot;newthought&quot;&gt;trivago On Tour&lt;/span&gt;&lt;/h3&gt;
+
+&lt;p&gt;At trivago, 4 core company events happen every year, one of them is the trivago on tour which happens to be an annual trip for all trivago employees and frankly my favourite.&lt;/p&gt;
+
+&lt;p&gt;The activities and destination are guarded secrets, this means you wouldn’t know where you were going until you got there. Before d-day, some employees would have spread all kinds of rumours and gossips about the location and activities. No one validates or denies any of the rumours(FUN!!!), so we are left dreaming of where the journey might take us until we have arrived to our destination for the event.&lt;/p&gt;
+
+&lt;p&gt;Each tour had a different theme and destination. I missed the 2018 tour because I arrived at the company one month late. The 2018 tour was in an old military base near Dusseldorf and the theme was about endurance and helping each other conquer obstacles and challenges during trying times by working together as one team.&lt;/p&gt;
+
+&lt;p&gt;In 2019, the tour took us to Austria by train, and the theme was around one of trivago’s core value #trust. trivago gave all employees the opportunity to shape the tour with whatever hidden talents they have. We also had other fun activities including a short and long-distance hike, fun games, parties and lots of alcohol. Below are some pictures I took in Austria.&lt;/p&gt;
+
+&lt;div class=&quot;row&quot;&gt;&lt;figure class=&quot;col fullwidth&quot;&gt;&lt;img src=&quot;/assets/img/posts/life-at-trivago/team-in-austria.jpg&quot; /&gt;&lt;figcaption class=&quot;maincolumn-figure&quot;&gt;Some of my teammate at the tour. From L-R Myself, Axel, Sven and Florian&lt;/figcaption&gt;&lt;/figure&gt;&lt;span class=&quot;gap&quot;&gt;&lt;/span&gt;&lt;figure class=&quot;col fullwidth&quot;&gt;&lt;img src=&quot;/assets/img/posts/life-at-trivago/austria-beauty.jpg&quot; /&gt;&lt;figcaption class=&quot;maincolumn-figure&quot;&gt;The clouds were just too gorgeous&amp;#8230;soo blue&lt;/figcaption&gt;&lt;/figure&gt;&lt;/div&gt;
+
+&lt;div class=&quot;row&quot;&gt;&lt;figure class=&quot;col fullwidth&quot;&gt;&lt;img src=&quot;/assets/img/posts/life-at-trivago/austria-clouds.jpg&quot; /&gt;&lt;figcaption class=&quot;maincolumn-figure&quot;&gt;View from the mountain top after hiking for about 10KM.&lt;/figcaption&gt;&lt;/figure&gt;&lt;span class=&quot;gap&quot;&gt;&lt;/span&gt;&lt;figure class=&quot;col fullwidth&quot;&gt;&lt;img src=&quot;/assets/img/posts/life-at-trivago/austria-fountain.jpg&quot; /&gt;&lt;figcaption class=&quot;maincolumn-figure&quot;&gt;No caption :wink&lt;/figcaption&gt;&lt;/figure&gt;&lt;/div&gt;
+
+&lt;p&gt;I enjoyed my time at trivago, and I highly recommend it as an employer. In my opinion, trivago is one of the best places to work in Germany!. trivago is always hiring, feel free to check out their &lt;a href=&quot;https://company.trivago.com/open-positions/&quot;&gt;career page&lt;/a&gt; for open positions.&lt;/p&gt;
+
+</description>
+        <pubDate>Wed, 01 Jul 2020 10:21:00 -0500</pubDate>
+        <link>https://oshomo.oforomeh.com/articles/2020/07/life-at-trivago</link>
+        <guid isPermaLink="true">https://oshomo.oforomeh.com/articles/2020/07/life-at-trivago</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>BDD with CodeceptJS</title>
+        <description>&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;BDD (Behavior-driven development) is an Agile software development process that bridges the gap between business participants, quality assurance engineers and developer by encouraging collaboration across these roles with a shared understanding of the problem to be solved. BDD doesn’t aim to replace business or testing process but augment it. Which is why it imperative to understand that not every test cases should be described as BDD features. In this article, I will show you how to set up BDD with CodeceptJS.&lt;/p&gt;
+
+&lt;h2 id=&quot;setting-up-codeceptjs&quot;&gt;Setting up CodeceptJS&lt;/h2&gt;
+
+&lt;p&gt;We start with an empty project. I will call mine &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;codecept-bdd-sample&lt;/code&gt;. Open up your favourite terminal, mine is iTerm2 and initialize npm:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;npm init &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;I have chosen to use Puppeteer with CodeceptJS. Feel free to use any of the supported helpers.&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;npm &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;codeceptjs puppeteer &lt;span class=&quot;nt&quot;&gt;--save-dev&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Initialize CodeceptJS in the current directory by running the command below. You will be asked a couple of questions, press return/enter for all questions. When you are asked to select a helper choose &lt;strong&gt;Puppeteer&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;npx codeceptjs init
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;enable-gherkin&quot;&gt;Enable Gherkin&lt;/h2&gt;
+
+&lt;p&gt;Enabling Gherkin for your CodeceptJS project is as easy as running the command below:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;npx codeceptjs gherkin:init
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This command will add a gherkin section to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;codecept.conf.js&lt;/code&gt; file. It will also prepare directories for the BDD features and step definitions as well as create the first feature file for you. By default, the step definitions folder is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;step_definitions&lt;/code&gt; while the features’ folder is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;features&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;I like to leave things this way but, feel free to rename them to whatever suits you. If you do rename them, remember to update the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;codecept.conf.js&lt;/code&gt; file.&lt;/p&gt;
+
+&lt;h2 id=&quot;gherkin-keywords&quot;&gt;Gherkin Keywords&lt;/h2&gt;
+
+&lt;p&gt;Gherkin has sets of supported keywords that can be used in our feature files. Not all of them are supported by CodeceptJs. We would examine those supported in CodeceptJS in more details.&lt;/p&gt;
+
+&lt;p&gt;The primary keywords are:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Feature&lt;/li&gt;
+  &lt;li&gt;Scenario&lt;/li&gt;
+  &lt;li&gt;Given, When, Then, And&lt;/li&gt;
+  &lt;li&gt;Background&lt;/li&gt;
+  &lt;li&gt;Scenario Outline (or Scenario Template)&lt;/li&gt;
+  &lt;li&gt;Examples&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;There are a few secondary keywords as well:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;span&gt;””” (Doc Strings)&lt;/span&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;span&gt;| (Data Tables)&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;feature&quot;&gt;Feature&lt;/h3&gt;
+
+&lt;p&gt;The purpose of the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Feature&lt;/code&gt; keyword is to provide a high-level description of a software feature and to group related scenarios.&lt;/p&gt;
+
+&lt;p&gt;The first primary keyword in a Gherkin document must be &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Feature&lt;/code&gt;, followed by a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;:&lt;/code&gt; and a short text that describes the feature.&lt;/p&gt;
+
+&lt;p&gt;Replace the content of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;basic.feature&lt;/code&gt; with the content below:&lt;/p&gt;
+
+&lt;div class=&quot;language-gherkin highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;Feature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; Setting up CodeceptJS 
+    This is a good description of the feature 
+    and has no meaning to the test runner. 
+    Just a good way of providing documentation.
+    The description ends when we start a new line 
+    with the keyword Background, Rule, Example 
+    or Scenario Outline (or their alias keywords).
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;scenario&quot;&gt;Scenario&lt;/h3&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Scenario&lt;/code&gt; describes a concrete example that illustrates a business rule. It consists of a list of steps. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Scenario&lt;/code&gt; consists of steps using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Given&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;When&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Then&lt;/code&gt;, &amp;amp; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;And&lt;/code&gt; keywords.&lt;/p&gt;
+
+&lt;p&gt;You can have as many steps as you like, but it is recommended to keep the number at 3-5 so, the scenario doesn’t lose its expressive power as a specification and documentation.&lt;/p&gt;
+
+&lt;p&gt;We would add our first scenario to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;basic.feature&lt;/code&gt; so, the file should contain:&lt;/p&gt;
+
+&lt;div class=&quot;language-gherkin highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;Feature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; Setting up CodeceptJS 
+    This is a good description of the feature 
+    and has no meaning to the test runner.
+
+    &lt;span class=&quot;kn&quot;&gt;Scenario&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; Initialize npm
+      &lt;span class=&quot;nf&quot;&gt;Given &lt;/span&gt;I am trying to initialize npm
+      &lt;span class=&quot;nf&quot;&gt;When &lt;/span&gt;I run the command npm init -y
+      &lt;span class=&quot;nf&quot;&gt;Then &lt;/span&gt;a package.json file must be generated
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Update the step definitions file&lt;label for=&quot;step-definition-file-update&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;step-definition-file-update&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;sidenote&quot;&gt;You must always update the step definitions file every time you make changes to any of the feature file. &lt;/span&gt; with the command below:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;npx codeceptjs gherkin:snippets
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This will produce code templates for all undefined steps in the .feature files. By default, it will scan all the .feature files specified in the gherkin.features section of the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;codecept.conf.js&lt;/code&gt; file and produce code templates for all undefined steps.&lt;/p&gt;
+
+&lt;p&gt;The generated code template will be written in the first file of the gherkin.steps array in our &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;codecept.conf.js&lt;/code&gt; file which in our case will be &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;'./step_definitions/steps.js'&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;I don’t like this approach because this would mean step definition templates for all features will be written in the same file. The more feature files I add the longer the steps definition file will become.&lt;/p&gt;
+
+&lt;p&gt;This is also the reason why CodeceptJS provided the option to specify which feature file you want to scan and where you want the steps’ definition templates to be written. Passing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--feature&lt;/code&gt; option to the command above will make sure only the specified file will be scanned, while passing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--path&lt;/code&gt; option will write the generated code template to the specified file.&lt;label for=&quot;step-definition-file-in-config&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;step-definition-file-in-config&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;sidenote&quot;&gt;Before you pass a step file with the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--path&lt;/code&gt; option, the step should already be added to the gherkin.steps array in your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;codecept.conf.js&lt;/code&gt;. &lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;Let’s see it in action. Start by creating a new step file in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;step_definitions&lt;/code&gt; folder for the basic feature. I will call mine &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;basic.steps.js&lt;/code&gt;. Then, update the gherkin.steps array in my &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;codecept.conf.js&lt;/code&gt; file, so it looks like:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;steps: [
+    './step_definitions/steps.js',
+    './step_definitions/basic.steps.js'
+]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;We can now re-run the snippet command with the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--feature&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--path&lt;/code&gt; option with the command below:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;npx codeceptjs gherkin:snippets &lt;span class=&quot;nt&quot;&gt;--feature&lt;/span&gt; ./features/basic.feature &lt;span class=&quot;nt&quot;&gt;--path&lt;/span&gt; ./step_definitions/basic.steps.js
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;I am sure you agree that the command is quite long, plus we must always manually create a steps’ definition file for every feature file as well as remember to update the gherkin.steps array in our &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;codecept.conf.js&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;I don’t have the patience to keep repeating these steps, plus I won’t remember the step nor the command. So, I created a &lt;a href=&quot;https://www.npmjs.com/package/codecept-cli&quot;&gt;package&lt;/a&gt; for doing just that.&lt;/p&gt;
+
+&lt;h3 id=&quot;given&quot;&gt;Given&lt;/h3&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Given&lt;/code&gt; steps describe the initial state of the system - the scene of the scenario. It is typically something that happened or something that needs to happen before the user starts interacting with the system. Think of opening a page, initializing a database, creating a folder etc.&lt;/p&gt;
+
+&lt;p&gt;Examining the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Given&lt;/code&gt; step &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;I am trying to initialize npm&lt;/code&gt; of our &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Scenario&lt;/code&gt; above, this is where would create our project folder and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cd&lt;/code&gt; into the folder so, we can run the initialization command.&lt;/p&gt;
+
+&lt;p&gt;It is absolutely okay to have more than one &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Given&lt;/code&gt; step in your scenario, you can, however, make it more readable by using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Given&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;And&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Other Examples:&lt;/p&gt;
+
+&lt;div class=&quot;language-gherkin highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# ========= Example 1 =========&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;Given &lt;/span&gt;I am on the checkout page
+
+&lt;span class=&quot;c&quot;&gt;# ========= Example 2 =========&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;Given &lt;/span&gt;I am on the landing page
+&lt;span class=&quot;nf&quot;&gt;Given &lt;/span&gt;I am logged in
+
+&lt;span class=&quot;c&quot;&gt;# More readable with And. So we change to:&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;Given &lt;/span&gt;I am on the landing page
+&lt;span class=&quot;nf&quot;&gt;And &lt;/span&gt;I am logged in
+
+&lt;span class=&quot;c&quot;&gt;# ========= Example 3 =========&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;Given &lt;/span&gt;Max Mustermann has a balance of £42 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;when&quot;&gt;When&lt;/h3&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;When&lt;/code&gt; step describes an event or an action performed by a person(think product persona) interacting with the system, or it can be an event triggered by another system.&lt;/p&gt;
+
+&lt;p&gt;It’s strongly recommended to only have a one &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;When&lt;/code&gt; per &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Scenario&lt;/code&gt;. If you see yourself adding more than one &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;When&lt;/code&gt; per &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Scenario&lt;/code&gt;, then that is a big red flag you need to split that scenario into multiple scenarios.&lt;/p&gt;
+
+&lt;p&gt;Examining the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;When&lt;/code&gt; step &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;I run the command npm init -y&lt;/code&gt; of our &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Scenario&lt;/code&gt; above, the person here is me while the action is running the command &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm init -y&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Other Examples:&lt;/p&gt;
+
+&lt;div class=&quot;language-gherkin highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# ========= Example 1 =========&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;When &lt;/span&gt;I click on the booking button
+ 
+&lt;span class=&quot;c&quot;&gt;# ========= Example 2 =========&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;When &lt;/span&gt;I open the checkout page
+
+&lt;span class=&quot;c&quot;&gt;# ========= Example 3 =========&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;When &lt;/span&gt;Max Mustermann adds £20 his account
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;then&quot;&gt;Then&lt;/h3&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Then&lt;/code&gt; steps describe an expected outcome or result. This is where we would normally do an assertion that the action performed with the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;When&lt;/code&gt; step yield the expected outcome.&lt;/p&gt;
+
+&lt;p&gt;Just like the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Given&lt;/code&gt; step, it is also okay to have more than one &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Then&lt;/code&gt; step in your scenario, you can, however, make it more readable by using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Then&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;And&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Examining the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Then&lt;/code&gt; step &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;a package.json file must be generated&lt;/code&gt; of our &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Scenario&lt;/code&gt; above, this is where we check for the existence of the package.json file.&lt;/p&gt;
+
+&lt;p&gt;Other Examples:&lt;/p&gt;
+
+&lt;div class=&quot;language-gherkin highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# ========= Example 1 =========&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;Then &lt;/span&gt;I should see something
+ 
+&lt;span class=&quot;c&quot;&gt;# ========= Example 2 =========&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;Then &lt;/span&gt;I shouldn't see something 
+
+&lt;span class=&quot;c&quot;&gt;# ========= Example 3 =========&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;Then &lt;/span&gt;Max Mustermann should see a new balance
+&lt;span class=&quot;nf&quot;&gt;Then &lt;/span&gt;Max Mustermann balance should be £60
+&lt;span class=&quot;nf&quot;&gt;Then &lt;/span&gt;Max Mustermann should not see the old balance
+
+&lt;span class=&quot;c&quot;&gt;# More readable with And. So we change to:&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;Then &lt;/span&gt;Max Mustermann should see a new balance
+&lt;span class=&quot;nf&quot;&gt;And &lt;/span&gt;Max Mustermann balance should be £60
+&lt;span class=&quot;nf&quot;&gt;And &lt;/span&gt;Max Mustermann should not see the old balance
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;and&quot;&gt;And&lt;/h3&gt;
+
+&lt;p&gt;As described in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Given&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Then&lt;/code&gt; section, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;And&lt;/code&gt; step can be used for making successive &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Given&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Then&lt;/code&gt; more fluidly structured and readable.&lt;/p&gt;
+
+&lt;h3 id=&quot;background&quot;&gt;Background&lt;/h3&gt;
+
+&lt;p&gt;Sometimes you find yourself repeating the same steps for the scenarios in a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Feature&lt;/code&gt;. This is the reason for the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Background&lt;/code&gt; step. It behaves like the CodeceptJS &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Before Hook&lt;/code&gt;, however, try not to confuse it as being a replacement for the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Before Hook&lt;/code&gt; as CodeceptJS allow you to specify &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Before&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;After&lt;/code&gt; Hooks for all your steps file.&lt;/p&gt;
+
+&lt;p&gt;Example:&lt;/p&gt;
+
+&lt;div class=&quot;language-gherkin highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;Feature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; Adding product to cart
+  Adding product to cart feature description
+ 
+  &lt;span class=&quot;kn&quot;&gt;Scenario&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; Redirecting to product listing page
+    &lt;span class=&quot;nf&quot;&gt;Given &lt;/span&gt;I am a logged in user
+    &lt;span class=&quot;nf&quot;&gt;And &lt;/span&gt;I am on the landing page
+    &lt;span class=&quot;nf&quot;&gt;When &lt;/span&gt;I click on the product listing page link
+    &lt;span class=&quot;nf&quot;&gt;Then &lt;/span&gt;I should be redirected to the product listing page
+
+  &lt;span class=&quot;kn&quot;&gt;Scenario&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; Showing image in a Modal
+    &lt;span class=&quot;nf&quot;&gt;Given &lt;/span&gt;I am a logged in user
+    &lt;span class=&quot;nf&quot;&gt;And &lt;/span&gt;I am on the landing page
+    &lt;span class=&quot;nf&quot;&gt;When &lt;/span&gt;I click on an image in the image gallery
+    &lt;span class=&quot;nf&quot;&gt;Then &lt;/span&gt;The clicked image should be displayed in a full screen Modal
+
+&lt;span class=&quot;c&quot;&gt;# Notice how Given &amp;amp; And step of both scenarios are the same?&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Instead of having duplicated steps in both scenario, we can &lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# solve the duplication by using the Background step like below:&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;Feature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; Adding product to cart
+  Adding product to cart feature description
+
+  &lt;span class=&quot;kn&quot;&gt;Background&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;nf&quot;&gt;Given &lt;/span&gt;I am a logged in user
+    &lt;span class=&quot;nf&quot;&gt;And &lt;/span&gt;I am on the landing page
+ 
+  &lt;span class=&quot;kn&quot;&gt;Scenario&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; Redirecting to product listing page
+    &lt;span class=&quot;nf&quot;&gt;When &lt;/span&gt;I click on the product listing page link
+    &lt;span class=&quot;nf&quot;&gt;Then &lt;/span&gt;I should be redirected to the product listing page
+
+  &lt;span class=&quot;kn&quot;&gt;Scenario&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; Showing image in a Modal
+    &lt;span class=&quot;nf&quot;&gt;When &lt;/span&gt;I click on an image in the image gallery
+    &lt;span class=&quot;nf&quot;&gt;Then &lt;/span&gt;The clicked image should be displayed in a full screen Modal
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;scenario-outline&quot;&gt;Scenario Outline&lt;/h3&gt;
+
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Scenario Outline&lt;/code&gt;&lt;label for=&quot;no-support-for-scenario-outline&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;no-support-for-scenario-outline&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;sidenote&quot;&gt;As at the time of writing this post, CodeceptJS does not automatically generate the stub template definition for a &lt;em&gt;Scenario Outline&lt;/em&gt; so, you have to manually add the step definitions yourself. &lt;/span&gt; keyword can be used to run the same &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Scenario&lt;/code&gt; multiple times, with different combinations of values. Think of it like what you already know as &lt;a href=&quot;https://codecept.io/advanced/#data-driven-tests&quot;&gt;Data Driven Test&lt;/a&gt; in CodeceptJS. The keyword &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Scenario Template&lt;/code&gt; is a synonym of the keyword &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Scenario Outline&lt;/code&gt; so, feel free to use them interchangeably.&lt;/p&gt;
+
+&lt;p&gt;Take the example below, you will see how repetitive the scenarios become, with the total number of fruits, number of fruits eaten, and the number of fruits left as the only changing values.&lt;/p&gt;
+
+&lt;div class=&quot;language-gherkin highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;Feature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; Eating fruits
+  We can eat different kind of fruits
+ 
+  &lt;span class=&quot;kn&quot;&gt;Scenario&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; eat 5 out of 12
+    &lt;span class=&quot;nf&quot;&gt;Given &lt;/span&gt;there are 12 apples
+    &lt;span class=&quot;nf&quot;&gt;When &lt;/span&gt;I eat 5 apples
+    &lt;span class=&quot;nf&quot;&gt;Then &lt;/span&gt;I should have 7 apples left
+  
+  &lt;span class=&quot;kn&quot;&gt;Scenario&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; eat 5 out of 20
+    &lt;span class=&quot;nf&quot;&gt;Given &lt;/span&gt;there are 20 apples
+    &lt;span class=&quot;nf&quot;&gt;When &lt;/span&gt;I eat 5 apples
+    &lt;span class=&quot;nf&quot;&gt;Then &lt;/span&gt;I should have 15 apples left
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;We can collapse these two similar scenarios into a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Scenario Outline&lt;/code&gt; by replacing the changing values with a template delimited with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt; &amp;gt;&lt;/code&gt; and passing the changing values in form of a table using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Examples&lt;/code&gt; keyword. The table header should match the template used in the scenario.&lt;/p&gt;
+
+&lt;p&gt;Revising the initial example above using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Scenario Outline&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-gherkin highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# Notice how the template &amp;lt;total&amp;gt;, &amp;lt;eat&amp;gt; and &amp;lt;left&amp;gt; &lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# matches the table header in the `Examples` keyword.&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;Feature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; Eating fruits
+  We can eat different kind of fruits
+ 
+  &lt;span class=&quot;kn&quot;&gt;Scenario Outline&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; remainder after eating
+    &lt;span class=&quot;nf&quot;&gt;Given &lt;/span&gt;there are &lt;span class=&quot;nv&quot;&gt;&amp;lt;total&amp;gt;&lt;/span&gt; apples
+    &lt;span class=&quot;nf&quot;&gt;When &lt;/span&gt;I eat &lt;span class=&quot;nv&quot;&gt;&amp;lt;eat&amp;gt;&lt;/span&gt; apples
+    &lt;span class=&quot;nf&quot;&gt;Then &lt;/span&gt;I should have &lt;span class=&quot;nv&quot;&gt;&amp;lt;left&amp;gt;&lt;/span&gt; apples left
+
+    &lt;span class=&quot;nn&quot;&gt;Examples&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;total&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;eat&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;left&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;12&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;7&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;20&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;15&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;passing-parameters-to-step-definitions&quot;&gt;Passing parameters to step definitions&lt;/h2&gt;
+
+&lt;p&gt;In some cases, you might want to pass data to steps definition functions from your feature file. Take the feature below as an example:&lt;/p&gt;
+
+&lt;div class=&quot;language-gherkin highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;Feature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; checkout process
+  Buying order to buy products
+
+  &lt;span class=&quot;kn&quot;&gt;Scenario&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;nf&quot;&gt;Given &lt;/span&gt;I have product with $600 price in my cart
+    &lt;span class=&quot;nf&quot;&gt;When &lt;/span&gt;I go to checkout process
+    &lt;span class=&quot;nf&quot;&gt;Then &lt;/span&gt;I should see that total number of products is 2
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Running the CodeceptJS snippet command will generate the snippet below:&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;Given&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;I have product with $600 price in my cart&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// From &quot;features/basic.feature&quot; {&quot;line&quot;:5,&quot;column&quot;:5}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;throw&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;Not implemented yet&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;When&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;I go to checkout process&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// From &quot;features/basic.feature&quot; {&quot;line&quot;:6,&quot;column&quot;:5}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;throw&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;Not implemented yet&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;Then&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;I should see that total number of products is 2&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// From &quot;features/basic.feature&quot; {&quot;line&quot;:7,&quot;column&quot;:5}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;throw&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;Not implemented yet&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;While the above seems fine, the problem is the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$600&lt;/code&gt; from the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Given&lt;/code&gt; step &amp;amp; the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;2&lt;/code&gt; in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Then&lt;/code&gt; step will not be passed to the respective step function. There are different ways of resolving this so that data from the feature definition can be used in the step function.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Using Regular Expressions:&lt;/li&gt;
+  &lt;li&gt;Using Cucumber Expressions&lt;/li&gt;
+  &lt;li&gt;Using Doc Strings&lt;/li&gt;
+  &lt;li&gt;Using Data Tables&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;using-regular-expressions&quot;&gt;Using Regular Expressions&lt;/h3&gt;
+
+&lt;p&gt;We would change the step definition’s expression to be a Regular Expression. The Regular Expression much match the step defined in the feature file. Using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Given&lt;/code&gt; step definition defined above as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Given I have product with $600 price in my cart&lt;/code&gt;, updating the generated step definition using Regular Expressions will look like:&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;Given&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/I have product with &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\$(\d&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt; price in my cart/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;price&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// From &quot;features/basic.feature&quot; {&quot;line&quot;:5,&quot;column&quot;:5}&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;price&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;throw&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;Not implemented yet&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(\d+)&lt;/code&gt; will be passed as a parameter to the step function. The parameters will be passed according to when they appear in the expression, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(\d+)&lt;/code&gt; being the first parameter found in the expression will be the first to be passed to the function.&lt;/p&gt;
+
+&lt;p&gt;The parameters don’t have names, so feel free to access them with any name you see fit. In my example I have chosen to use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;price&lt;/code&gt; but, I could as well change it to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;parameter1&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;using-cucumber-expressions&quot;&gt;Using Cucumber Expressions&lt;/h3&gt;
+
+&lt;p&gt;Cucumber Expressions offer similar functionality to Regular Expressions, with a syntax that is easier to read and write. My personal preference is to use Cucumber Expressions. Using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Then&lt;/code&gt; step definition defined above as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Then I should see that total number of products is 2&lt;/code&gt;, updating the generated step function using Cucumber Expressions will look like:&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;Then&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;I should see that total number of products is {int}&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;totalProduct&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// From &quot;features/basic.feature&quot; {&quot;line&quot;:7,&quot;column&quot;:5}&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;totalProduct&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;throw&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;Not implemented yet&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Just like the Regular Expressions, the parameters will be passed according to when they appear in the expression. I also chose to use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;totalProduct&lt;/code&gt; as the variable name for accessing the first parameter, you can change this to whatever you like.&lt;/p&gt;
+
+&lt;p&gt;The following are built-in parameter types that can be used with Cucumber Expressions. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{int}&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{float}&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{word}&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{string}&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{}&lt;/code&gt;.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Parameter&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Description&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;strong&gt;{int}&lt;/strong&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Matches integers, for example &lt;strong&gt;71&lt;/strong&gt; or &lt;strong&gt;-19&lt;/strong&gt;.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;strong&gt;{float}&lt;/strong&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Matches floats, for example &lt;strong&gt;3.6&lt;/strong&gt;, &lt;strong&gt;.8&lt;/strong&gt; or &lt;strong&gt;-9.2&lt;/strong&gt;.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;strong&gt;{word}&lt;/strong&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Matches words without whitespace, for example &lt;strong&gt;banana&lt;/strong&gt; (but not &lt;strong&gt;banana split&lt;/strong&gt;)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;strong&gt;{string}&lt;/strong&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Matches single-quoted or double-quoted strings, for example &lt;strong&gt;“banana split”&lt;/strong&gt; or &lt;strong&gt;‘banana split’&lt;/strong&gt; (but not &lt;strong&gt;banana split&lt;/strong&gt;). Only the text between the quotes will be extracted. The quotes themselves are discarded. Empty pairs of quotes are valid and will be matched and passed to step code as empty strings.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;strong&gt;{}&lt;/strong&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Matches anything (&lt;strong&gt;/.*/&lt;/strong&gt;).&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;CodeceptJS will automatically convert double-quoted strings to Cucumber Expressions. For example, the generated step function for this =&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Given I have 2 &quot;apples&quot; and 4 &quot;tomatoes&quot;&lt;/code&gt; will look like:&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;Given&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;I have 2 {string} and 4 {string}&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;fruit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;vegetable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;fruit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;vegetable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;As you can see, I am accessing both parameters using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;fruit&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vegetable&lt;/code&gt;, which could also be changed to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;parameter1&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;parameter2&lt;/code&gt;. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;fruit&lt;/code&gt; will be equal to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;apples&lt;/code&gt; while &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vegetable&lt;/code&gt; will be equals to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tomatoes&lt;/code&gt; when the test runs.&lt;/p&gt;
+
+&lt;p&gt;You can do much more with Cucumber Expressions, check the &lt;a href=&quot;https://cucumber.io/docs/cucumber/cucumber-expressions/&quot;&gt;official documentation&lt;/a&gt; for other possibilities not covered in this article.&lt;/p&gt;
+
+&lt;h3 id=&quot;using-doc-strings&quot;&gt;Using Doc Strings&lt;/h3&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Doc Strings&lt;/code&gt; is handy for passing larger pieces of text that would not fit into a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{word}&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{string}&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{}&lt;/code&gt;. Unlike &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{int}&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{float}&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{word}&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{string}&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{}&lt;/code&gt; there is no need for you to match the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Doc Strings&lt;/code&gt; to a parameter in the step definition. This will be automatically passed as the last parameter of the step function and can be accessed with the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;content&lt;/code&gt; property of the last parameter.&lt;/p&gt;
+
+&lt;p&gt;Example:&lt;/p&gt;
+
+&lt;div class=&quot;language-gherkin highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;Feature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; blog posts
+  Creating a new blog post
+
+  &lt;span class=&quot;kn&quot;&gt;Scenario&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;nf&quot;&gt;Given &lt;/span&gt;a blog post named &lt;span class=&quot;s&quot;&gt;&quot;My first post&quot;&lt;/span&gt; with body
+        &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;
+        Here is the first paragraph of my blog post. Lorem ipsum dolor sit amet,
+        consectetur adipiscing elit.
+        &quot;&quot;&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The indentation of the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&quot;&quot;&quot;&lt;/code&gt; is not very important, but I prefer to indent two spaces after the enclosing step, the indentation inside the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&quot;&quot;&quot;&lt;/code&gt; is however important, because it behaves like the Javascript ES6 template literal and preserves the content as it was written in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Doc Strings&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;The generated step definition for the example feature above will look like:&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;Given&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;a blog post named {string} with body&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;postName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;docString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;postName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;docString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Remember that the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Doc Strings&lt;/code&gt; is passed as the last parameter, and the value can be accessed from the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;content&lt;/code&gt; property, which is why I logged &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docString.content&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;using-data-tables&quot;&gt;Using Data Tables&lt;/h3&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Data Tables&lt;/code&gt; are perfect for passing a list/array into a step function. So, instead of repeating a step with different values, we can pass those values as a list and iterate over them in our step function.&lt;/p&gt;
+
+&lt;div class=&quot;language-gherkin highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# Instead of doing&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;Scenario&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;nf&quot;&gt;Given &lt;/span&gt;the user with email &lt;span class=&quot;s&quot;&gt;&quot;max@example.com&quot;&lt;/span&gt; and twitter profile &lt;span class=&quot;s&quot;&gt;&quot;@maxM&quot;&lt;/span&gt; exists
+  &lt;span class=&quot;nf&quot;&gt;And &lt;/span&gt;the user with email &lt;span class=&quot;s&quot;&gt;&quot;steff@example.com&quot;&lt;/span&gt; and twitter profile &lt;span class=&quot;s&quot;&gt;&quot;@steff&quot;&lt;/span&gt; exists
+  &lt;span class=&quot;nf&quot;&gt;And &lt;/span&gt;the user with email &lt;span class=&quot;s&quot;&gt;&quot;greg@example.com&quot;&lt;/span&gt; and twitter profile &lt;span class=&quot;s&quot;&gt;&quot;@greg&quot;&lt;/span&gt; exists
+  &lt;span class=&quot;nf&quot;&gt;And &lt;/span&gt;the user with email &lt;span class=&quot;s&quot;&gt;&quot;jonathan@example.com&quot;&lt;/span&gt; and twitter profile &lt;span class=&quot;s&quot;&gt;&quot;@jonathan&quot;&lt;/span&gt; exists
+
+&lt;span class=&quot;c&quot;&gt;# We could use Data Tables to avoid step repetition by doing:&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;Scenario&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;nf&quot;&gt;Given &lt;/span&gt;user with email and twitter username exists
+    &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;email&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;twitter&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max@example.com&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;maxM&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;steff@example.com&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;steff&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;greg@example.com&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;greg&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jonathan@example.com&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jonathan&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Just like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Doc Strings&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Data Tables&lt;/code&gt; will be the last parameter passed to the step function. So the step definition for the scenario above will look something like:&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;Given&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;user with email and twitter username exists&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;dataTable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;tableByHeader&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;dataTable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;parse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;hashes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// Iterate through the table to access its values&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;row&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;tableByHeader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// Take the respective values &lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;email&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;row&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;email&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;twitter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;row&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;twitter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// ...&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;CodeceptJS allows you to parse the table using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hashes&lt;/code&gt; as we saw above and two other methods:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;raw()&lt;/strong&gt; - returns the table as a 2-D array&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;rows()&lt;/strong&gt; - returns the table as a 2-D array, without the first row&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;hashes()&lt;/strong&gt; - returns an array of objects where each row converted to an object (column header is the key)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;finally&quot;&gt;Finally&lt;/h2&gt;
+
+&lt;p&gt;The four methods outlined above for passing data from the feature file to step function can be used with any of the step keyword &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Given&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Then&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;When&lt;/code&gt; etc.&lt;/p&gt;
+
+&lt;p&gt;CodeceptJS supports &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Before&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;After&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Fail&lt;/code&gt; Hooks in the step definition files.&lt;/p&gt;
+
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Before&lt;/code&gt; Hook runs before any of the Scenario, it takes the current test as a parameter and is the best place to manage state between Scenarios or do general test configuration.&lt;/p&gt;
+
+&lt;p&gt;Example:&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;state&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{};&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;Before&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;state&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{};&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;retries&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// retry scenarios 2 times&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;Given&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;the user is logged in&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;someLoginFuntion&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;Then&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;the logged in user is Oshomo&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;assertEquals&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;Oshomo&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;After&lt;/code&gt; Hook runs after all the Scenarios, this is the best place to do general garbage collection or in simple terms clean up.&lt;/p&gt;
+
+&lt;p&gt;Example:&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;After&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;delete&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;someData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;someService&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;cleanup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Fail&lt;/code&gt; Hook run when any of the Scenario fails and receives two parameters, the current &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;test&lt;/code&gt; and the current &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;error&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Example:&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;Fail&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;An error has occurred - &lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Note that not all tests should be defined as BDD features, as such you might have generic acceptance tests, and a minimal set of BDD Scenarios for your key business values. By default, CodeceptJS will run both your BDD Scenarios and general acceptance tests with the command &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npx codeceptjs run&lt;/code&gt;, the BDD Scenarios runs first. You can tell CodeceptJS to run only the general acceptance tests by appending &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--tests&lt;/code&gt; to the command or run only the BDD Scenarios by appending &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--features&lt;/code&gt; to the command.&lt;/p&gt;
+
+&lt;p&gt;If you are new to BDD, I strongly recommend reading the following articles:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Introducing BDD by Dan North. &lt;a href=&quot;https://dannorth.net/introducing-bdd/&quot;&gt;https://dannorth.net/introducing-bdd/&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Behaviour-Driven Development by Cucumber. &lt;a href=&quot;https://cucumber.io/docs/bdd/&quot;&gt;https://cucumber.io/docs/bdd/&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Behaviour-Driven Development by Wikipedia. &lt;a href=&quot;https://www.wikiwand.com/en/Behavior-driven_development&quot;&gt;https://www.wikiwand.com/en/Behavior-driven_development&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Wed, 25 Mar 2020 08:12:00 -0500</pubDate>
+        <link>https://oshomo.oforomeh.com/articles/2020/03/bdd-with-codeceptjs</link>
+        <guid isPermaLink="true">https://oshomo.oforomeh.com/articles/2020/03/bdd-with-codeceptjs</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Bootstrapping a Startup - Part 1</title>
+        <description>&lt;h2 id=&quot;tldr&quot;&gt;TL;DR&lt;/h2&gt;
+
+&lt;p&gt;&lt;label for=&quot;mn-id-whatever&quot; class=&quot;margin-toggle&quot;&gt; ⊕&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;mn-id-whatever&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;marginnote&quot;&gt;&lt;strong&gt;Article Outline:&lt;/strong&gt;&lt;br /&gt;&lt;br /&gt;&lt;a href=&quot;#introduction&quot;&gt;Introduction&lt;/a&gt;&lt;br /&gt;&lt;a href=&quot;#communication&quot;&gt;Communication&lt;/a&gt;&lt;br /&gt;Issue/Task Tracking&lt;br /&gt;File Management &lt;br /&gt;Money Tracking&lt;br /&gt;Infrastructure&lt;br /&gt;Marketing&lt;br /&gt;Customer Management &lt;/span&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;As the co-founder of &lt;a href=&quot;https://spacebook.ng&quot;&gt;Spacebook&lt;/a&gt; -  A platform that connects users with any kind of space(event centres, short-let apartment, conference rooms etc) with prospective customers who are looking to use those spaces for parties, wedding ceremony, meetings or even short stay. One of my biggest challenge was how to reduce running cost mainly because we were self funded. In this article I share my &lt;a href=&quot;https://spacebook.ng&quot;&gt;Spacebook&lt;/a&gt; experience and the things we did to reduce running cost and get the most out of the money we are spending.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;If you are reading this, I assume you identified an opportunity in a market, thought about an idea, did some market research for your idea, and maybe went forward to do some SWOT analysis to match your idea with the market research you did. Now it is time to turn your idea into a product. This was me in the autumn of 2015, at the time, I had never run a business before and even worse I had never lead a team before. I break down the challenges we had as a product team into:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Communication&lt;/li&gt;
+  &lt;li&gt;Issue/Task Tracking&lt;/li&gt;
+  &lt;li&gt;File Management&lt;/li&gt;
+  &lt;li&gt;Money Tracking&lt;/li&gt;
+  &lt;li&gt;Infrastructure&lt;/li&gt;
+  &lt;li&gt;Marketing&lt;/li&gt;
+  &lt;li&gt;Customer Management&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;To make sure this article is not too long, I will dig deeper into each challenges outlined above in more details in separate articles, outlining the challenges we faced as well as the steps we took which then led to an increase in efficiency, productivity and more importantly reducing our running cost.&lt;/p&gt;
+
+&lt;h2 id=&quot;communication&quot;&gt;Communication&lt;/h2&gt;
+
+&lt;p&gt;In this section, I cover communication within the product team, communication between us and external services and communication between us and our customers. When I use the term &lt;strong&gt;us&lt;/strong&gt; or &lt;strong&gt;we&lt;/strong&gt;, I mean the business or people in charge or running the business.&lt;/p&gt;
+
+&lt;h2 id=&quot;1-internal-communication&quot;&gt;1. Internal Communication&lt;/h2&gt;
+
+&lt;p&gt;For communication within the product team which was about 5 members at the start, it wasn’t difficult deciding as most of us were already familiar with Slack. For this reason we settled for using &lt;a href=&quot;https://slack.com/&quot;&gt;Slack&lt;/a&gt; for internal instant communication and also because it was free. While I highly recommend that you use Slack for internal communications, it would be unfair not to mention there are other free alternatives to Slack including &lt;a href=&quot;https://www.chanty.com/&quot;&gt;Chanty&lt;/a&gt;, &lt;a href=&quot;https://products.office.com/en-us/microsoft-teams/group-chat-software&quot;&gt;Microsoft Teams&lt;/a&gt;, &lt;a href=&quot;https://flock.com/&quot;&gt;Flock&lt;/a&gt;, &lt;a href=&quot;https://glip.com/&quot;&gt;Glip&lt;/a&gt; and many more. A Google search for “Slack alternative” should give you more information about all the alternatives out there.&lt;/p&gt;
+
+&lt;h2 id=&quot;2-communication-between-us-and-external-services&quot;&gt;2. Communication between us and external services&lt;/h2&gt;
+
+&lt;p&gt;As a startup, you need to sign up for all kind or services and tools. 99.9% of all services out there require you fill a form and provide an email address. We didn’t have enough funds to use a service like Gmail for business which cost about $5 per user at the time and for a team of 5 people we would need in total about 7 email addresses.&lt;/p&gt;
+
+&lt;p&gt;After careful cost evaluation, we settled for creating a free Gmail account. While this works, it comes with a challenge; other businesses and even customers don’t take you seriously and it affect trust between you and your customer as well as other businesses because they expect you to have an email address ending with &lt;em&gt;@domain.com&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Most shared hosting platform offer free email setup if you are managing your domain and hosting with them. In our case we weren’t, our domain was managed with Cloudflare which led to the option described above. With the aforementioned challenge in mind we were looking for a free or less expensive way to all get a &lt;strong&gt;@spacebook.ng&lt;/strong&gt; email addresses.&lt;/p&gt;
+
+&lt;p&gt;After much research I came across &lt;a href=&quot;https://www.mailgun.com/&quot;&gt;Mailgun&lt;/a&gt; which we eventually settled for. With Mailgun, we were all able create &lt;strong&gt;@spacebook.ng&lt;/strong&gt; email addresses and also send and receive up to 10K email messages monthly without any cost. This was later reduced to 5k&lt;label for=&quot;mailgun-pricing&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;mailgun-pricing&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;sidenote&quot;&gt;See Mailgun  pricing here &lt;a href=&quot;https://www.mailgun.com/pricing&quot;&gt;https://www.mailgun.com/pricing&lt;/a&gt; &lt;/span&gt;. To be able to send and receive emails with the &lt;em&gt;@domain.com&lt;/em&gt; addresses using Mailgun, there are few configurations and tricks(nothing illegal) you need to do. I will cover this in a step by step guide to sending and receiving email with Mailgun.&lt;/p&gt;
+
+&lt;h2 id=&quot;3-communication-between-us-and-customers&quot;&gt;3. Communication between us and Customers&lt;/h2&gt;
+
+&lt;p&gt;For communication between us and our customers, we started by adding a phone number in the contact section of our website. This worked for a while but also came with it’s own challenges:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;It was not distributed because only one person could answer one customer at a time&lt;label for=&quot;mn-id-distributed-phone-reason&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;mn-id-distributed-phone-reason&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;sidenote&quot;&gt;The phone number belonged to one of us, as a result we can only attend to one customer at a time. If the person with the phone was not able to answer the call at that time then the customer would not be able to reach us and we end up incurring a cost that could have been avoided if we decide to call the customer back. &lt;/span&gt;,&lt;/li&gt;
+  &lt;li&gt;It was not instant and context is easily lost because the user might no longer be on our website,&lt;/li&gt;
+  &lt;li&gt;Most users would rather leave the page since calling us mean they need to spend money.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;One of the biggest mistakes we made was allowing a member of the team to use their phone number as the business number. Aside from the fact that it caused contact bloat on the persons’ phone, we also had an identity war, because whenever a call comes in from an unsaved number, you are not sure whether to say your name or the business name.&lt;/p&gt;
+
+&lt;p&gt;We were not a registered business, so we couldn’t get a registered business phone number at the time. However, what we could have done which we eventually did was:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Get a new phone (I recommend any cheap Android phone),&lt;/li&gt;
+  &lt;li&gt;Have one of us register a new personal phone number,&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.truecaller.com/&quot;&gt;Truecaller&lt;/a&gt; app was very popular in Nigeria at the time, we installed the app and updated the contact name to our business name so our customers who have the app installed can easily identify us.&lt;/li&gt;
+  &lt;li&gt;WhatsApp is also very popular in Nigeria, so we installed WhatsApp and created an account with the newly registered phone number so our customer could call and drop messages without spending additional money.&lt;/li&gt;
+  &lt;li&gt;Finally, we updated the contact section of our website with the newly registered phone numbers and also added a WhatsApp icon so users were aware they can reach us on WhatsApp&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The steps above didn’t solve the problem of distribution, so that all or available members of the team could attend to multiple customers at once. We began to brainstorm, and eventually decided to integrate a live chat solution on the website.&lt;/p&gt;
+
+&lt;p&gt;We began to research free or inexpensive live chat solutions out there. After much research and comparisons, we went with &lt;a href=&quot;https://www.smartsupp.com&quot;&gt;Smartsupp&lt;/a&gt; because it offers mouth watering features for free&lt;label for=&quot;smartsupp-pricing&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;smartsupp-pricing&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;sidenote&quot;&gt;See Smartsupp features &amp;amp; pricing here &lt;a href=&quot;https://www.smartsupp.com/pricing#features&quot;&gt;https://www.smartsupp.com/pricing#features&lt;/a&gt; &lt;/span&gt; including but not limited to support for 3 agents for free, mobile app for Android and IOS was available, 14-days chat history and many more.&lt;/p&gt;
+
+&lt;p&gt;In the coming weeks I will publish the second part of this article, going into details about Issue/Task Tracking. If you enjoyed this article or you have any clarification or you see areas of the article you think need improvements, feel free to send me an email at &lt;a href=&quot;mailto:hello@oshomo.oforomeh&quot;&gt;hello@oshomo.oforomeh&lt;/a&gt;.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 18 Feb 2020 07:12:00 -0600</pubDate>
+        <link>https://oshomo.oforomeh.com/articles/2020/02/bootstrapping-a-startup</link>
+        <guid isPermaLink="true">https://oshomo.oforomeh.com/articles/2020/02/bootstrapping-a-startup</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>A Productive Engineer</title>
+        <description>&lt;h2 id=&quot;tldr&quot;&gt;TL;DR&lt;/h2&gt;
+
+&lt;p&gt;&lt;label for=&quot;mn-id-whatever&quot; class=&quot;margin-toggle&quot;&gt; ⊕&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;mn-id-whatever&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;marginnote&quot;&gt;&lt;strong&gt;Article Outline:&lt;/strong&gt;&lt;br /&gt;&lt;br /&gt;&lt;a href=&quot;#introduction&quot;&gt;Introduction&lt;/a&gt;&lt;br /&gt;&lt;a href=&quot;#being-busy-is-not-being-productive&quot;&gt;Being busy is not being productive&lt;/a&gt;&lt;br /&gt;&lt;a href=&quot;#1-meetings&quot;&gt;Meeting&lt;/a&gt;&lt;br /&gt;&lt;a href=&quot;#2-processes-over-tools&quot;&gt;Processes over tools&lt;/a&gt;&lt;br /&gt;&lt;a href=&quot;#3-distractions&quot;&gt;Distractions&lt;/a&gt; &lt;/span&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Over the years, I have noticed that I am most productive when I work from home or when I work after people leave or before people arrive at my workplace. This caused for a self-reflection and I began to ask the question; “why am I most productive during these times?”. After much thought, it has come down to: &lt;strong&gt;Meetings&lt;/strong&gt;, &lt;strong&gt;Processes over tools&lt;/strong&gt; and &lt;strong&gt;Distractions&lt;/strong&gt;. In this article, I discuss my personal view and experiences of how this elements hinder productivity and in some cases proffer solutions that work for me. I hope you enjoy it.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;Software Engineers like to build stuff (cool stuff), use new technologies, pay technical-debt, make existing solutions faster, find new ways to approach existing solutions. All this and more are what makes a software engineer pumped up and ready to work every other day.&lt;/p&gt;
+
+&lt;p&gt;The reason we call them software engineers in the first place is because of their ability to solve simple and complex problems with software systems by applying software engineering principles to design, develop, maintain and test software systems.&lt;/p&gt;
+
+&lt;p&gt;One of the most difficult jobs in software engineering is tracking software engineers’ productivity, which is even more difficult is communicating their productivity to top management and business stakeholders. This is usually the job of an engineering manager.&lt;/p&gt;
+
+&lt;p&gt;It is easier to communicate to management that an increase in the marketing budget by 40% will increase the conversion, sign-up or app download rates by a certain percentage with the show of data and some predictive analysis.&lt;/p&gt;
+
+&lt;p&gt;In comparison, from an engineering manager’s perspective, how do they justify to management the need for an additional hire say a PHP engineer when there are already say 4 of such engineers on the ground? Considering the challenge in measuring the work output and productivity of the already existing engineers. There are data points and metrics to measure software engineer’s and engineering teams productivity and also communicate it, but, I would cover that in another series.&lt;/p&gt;
+
+&lt;p&gt;I have noticed certain practices at the workplace that stalls software engineers’ workflow thereby making them less productive. In the next sections, I will dig deep into these practices in more details.&lt;/p&gt;
+
+&lt;h2 id=&quot;being-busy-is-not-being-productive&quot;&gt;Being busy is not being productive&lt;/h2&gt;
+
+&lt;p&gt;&lt;label for=&quot;mf-id-we-are-too-busy&quot; class=&quot;margin-toggle&quot;&gt;⊕&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;mf-id-we-are-too-busy&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;marginnote&quot;&gt;&lt;img class=&quot;fullwidth&quot; src=&quot;/assets/img/posts/being-busy.jpg&quot; /&gt;&lt;br /&gt;“No thanks, we are too busy” &lt;em&gt;Image credit - Google Images&lt;/em&gt;.&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;I bet you’vs seen a busy engineering team, but at the end of the week, there is nothing to show for their busyness. Don’t get it twisted, being busy doesn’t mean being productive.&lt;/p&gt;
+
+&lt;p&gt;I don’t think any software engineer leaves their home in the morning with the sole purpose of coming to work to faff. For this write-up, a productive software engineer is that software engineer that spends at least about 80% of their daily work time writing software the solves users problems in a better, faster and easier way. This always involves using certain tools to:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;know which user problem has the highest priority, (See &lt;a href=&quot;https://www.atlassian.com/software/jira&quot;&gt;Jira Software&lt;/a&gt;);&lt;/li&gt;
+  &lt;li&gt;collaborate and work with other software engineers on the same product (See &lt;a href=&quot;https://git-scm.com/&quot;&gt;Git&lt;/a&gt;);&lt;/li&gt;
+  &lt;li&gt;test that the engineered solution solves the user problem;&lt;/li&gt;
+  &lt;li&gt;release the working tested solution to the user.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;As a software engineer, after everyday work, I ask myself, was I productive today? and I can tell you for a fact that in the past 4 years I have only answered “yes” to that question 40% of the time. Below are elements that stand out and hinder me from being productive as a software engineer.&lt;/p&gt;
+
+&lt;h3 id=&quot;1-meetings&quot;&gt;1. Meetings&lt;/h3&gt;
+
+&lt;p&gt;Software craftsmanship requires that software engineers be in a certain flow within a certain period during the day or night, this flow is difficult to get into, but when you get in this flow, awesome things happen(at least for me). One common practice at the workplace that stops me from getting into the flow or takes me out of the flow is meetings.&lt;/p&gt;
+
+&lt;p&gt;And I am not talking about those meetings that are pre-planned(daily stand-up, refinement, retrospective and sprint planning); I am referring to those meeting that adds no significant value to your job as a software engineer. I mean those meetings someone from product asked you to join in case there is a technical question that needs to be answered. I am talking about those meetings you joined because you think you will miss out on crucial information if you don’t, a symptom widely known as &lt;a href=&quot;https://en.wikipedia.org/wiki/Fear_of_missing_out&quot;&gt;FOMO&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;I often hear different companies argue that these meetings are not compulsory and you can choose to decline. What these companies don’t realise is the amount of time needed to reject or accept meeting invites and more importantly, the havoc caused by the noise and distractions from emails or push notifications as a result of this meeting invites. As you read on you will learn how I mitigate noise and distractions caused by emails and push notifications.&lt;/p&gt;
+
+&lt;p&gt;In my experience, the meetings described above is a symptom of not having technical product managers or technical team lead or engineering manager. If the product managers are not technical, then you need an engineering manager and maybe a technical team lead. The technical team lead is not always needed as a senior engineer in the team can always act in the same regard as a technical team lead. If the product managers are also technical, having an engineering manager is highly advised. And if for any reason you already have these roles filled within your team or organization and you still see this problem at large, then one of these guys aren’t doing their job.&lt;/p&gt;
+
+&lt;h3 id=&quot;2-processes-over-tools&quot;&gt;2. Processes over tools&lt;/h3&gt;
+
+&lt;p&gt;As I mentioned before, writing software that solves user problem in an easier, better and faster way always involves using certain tools. These tools are by far the most important aspect of shipping working software/product to the user on time.  These tools are so important that some companies have dedicated teams that build tools to make software engineers life better. Some common name of such teams includes infrastructure teem, &lt;a href=&quot;https://landing.google.com/engprod/&quot;&gt;engineering productivity team as used by Google&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Now, with the level of importance these tools have, one would expect engineering teams to invest time and other resources into the building, buying or leasing the best tools needed for the job, but surprisingly that is not the case as a lot&lt;label for=&quot;lot-of-clarification&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;lot-of-clarification&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;sidenote&quot;&gt;This is based on engineering teams I have personally encountered and not any publicly available data. &lt;/span&gt; of product and engineering teams have now replaced those tools with processes.&lt;/p&gt;
+
+&lt;p&gt;A classic and maybe very popular example is release management. Today one would assume that shipping tested and working software should be as easy as merging to a master branch but consider this real-world scenario I personally encountered.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Scenario&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Max a mid-level software engineer, picks a task with the highest priority from the backlog, he completes the implementation in 2 days and makes a pull request (PR) against a branch called test. At this stage other software engineers start reviewing the pull request for code and implementation quality, consistency with products coding standard and many other reasons. The pull request is accepted and changes are deployed to the test environment. The quality assurance team(QA) now takes over to do some manual testing, Max gets lucky and his implementation is accepted by the QA. Now you are probably thinking finally, we are going to ship this feature to the customer, sorry to disappoint you, we are not.&lt;/p&gt;
+
+&lt;p&gt;The next step is for Max to make another PR to a branch called stage which from an argument I have been made to understand is an integration branch. Luckily for Max, no code review is needed at this step, but he has to merge and deploy to the stage/integration environment. After deploying to the integration environment, the QA takes over to do another round of testing, if all is good they give an okay to ship the changes to the customer. This makes it the 4th day since Max first interacted with the task.&lt;/p&gt;
+
+&lt;p&gt;Unfortunately for Max, it is now 5 PM and release would have to wait till the following day, poor customers, I bet you also feel for the customer as much as I do. But there is hope, the release would happen the following day. Oh wait, the following day is Friday and this particular engineering team has a no Friday release policy (😀). Well, it is what it is, they can’t risk making production changes on a Friday, there is a lot of what if; what if the release fails and we need to roll back, what if the release breaks another feature and we only detect this over the weekend. Our poor customers will have to wait until Monday.&lt;/p&gt;
+
+&lt;p&gt;Finally, its Monday, and we are able to release the working software to the customer. This scenario probably sounds made-up but it is not as I experienced this firsthand. For this scenario, below are some things I think could have been done to improve the development process for the engineer and reduce the time taken to ship working software to the customer.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Use available tools for low-level code review. By low-level, I mean code style checks, syntax checks, etc.&lt;/li&gt;
+  &lt;li&gt;Use available tools for managing external package update, upgrade and security checks.&lt;label for=&quot;dependency-bot&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;dependency-bot&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;sidenote&quot;&gt;An example is &lt;a href=&quot;https://dependabot.com/&quot;&gt;Dependabot&lt;/a&gt;. Dependabot creates pull requests to keep your dependencies secure and up-to-date. Has support for various language and for free if you are using Github. &lt;/span&gt;&lt;/li&gt;
+  &lt;li&gt;Invest in automated testing, be it unit tests, integration tests or even end to end tests and more importantly integrate these tests into your merge checks; one tool I highly recommend is &lt;a href=&quot;https://codecov.io&quot;&gt;codecov.io&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;Use feature toggles/flags to manage feature roll out to customers. However, remember that feature flags tend to multiply rapidly, particularly when first introduced. They are useful and cheap to create and so often lots are created therefore carrying a cost.&lt;label for=&quot;feature-toggle-pete-hodgson&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;feature-toggle-pete-hodgson&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;sidenote&quot;&gt;A statement from Pete Hodgson &lt;a href=&quot;https://martinfowler.com/articles/feature-toggles.html&quot;&gt;article&lt;/a&gt; on Feature Toggles (aka Feature Flags). &lt;/span&gt;&lt;/li&gt;
+  &lt;li&gt;Invest heavily into logging, monitoring and alerting the right people.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;3-distractions&quot;&gt;3. Distractions&lt;/h3&gt;
+
+&lt;p&gt;Often have I heard the phrases, “I am more productive in the morning”, “I am more productive at night”, “I am more productive from home” etc. After asking myself and a few other engineers, I realize one common theme with the engineers that make these comments. These engineers are either not distracted during this period, or they have fewer distractions during this time.&lt;/p&gt;
+
+&lt;p&gt;Researchers at the University of California, Irvine, found after careful observation that the typical office worker is interrupted, on average, every 3 minutes and 5 seconds. And it can take 23 minutes and 15 seconds just to get back to where they left off.  If you have 8 working hours in a day, removing compulsory and pre-planned meeting and lunch, you probably have 6 hours in total to do real work. If you get distracted for at least 6 times during those 6 hour period you end up with having less than 4 hours to do real work as the half of the time was probably spent getting back into the zone.&lt;/p&gt;
+
+&lt;p&gt;I categorise distraction into two forms; direct and indirect distraction.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Direct Distraction&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Direct distractions are those distractions that are primarily created by the software engineer or those they have 100% control over. All form of communication falls into this category, IM, slack, emails, and social media. This services or tools themselves do no harm, distraction is mostly caused by how we use them. Below are ideas on how to reduce distractions caused by how we use these tools or services.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Disabled mobile notifications for email, social media apps and slack. Also, note that I did this on the device level and not the app level.&lt;/li&gt;
+  &lt;li&gt;Created email automation to move irrelevant emails from my inbox to a separate folder and mark them as read. Irrelevant emails include emails for an update on a pull request, emails for an update on issues or task I am watching.&lt;/li&gt;
+  &lt;li&gt;Created email automation to move all calendar invite from my inbox to a separate folder so I can attend to them when I want.&lt;/li&gt;
+  &lt;li&gt;Slack is such a good communication tool for work, but if you are not careful, it can be a productivity bottleneck. Thankfully, Slack has implemented different features&lt;label for=&quot;slack-noise-cancelling-features&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;slack-noise-cancelling-features&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;sidenote&quot;&gt;Slack keeps all your team communication in one place, but your team does a lot! &lt;a href=&quot;https://slack.com/intl/en-de/help/articles/218551977-Reduce-noise-in-Slack&quot;&gt;These tips&lt;/a&gt; will help you manage what gets your attention — and what does not. While &lt;a href=&quot;https://slack.com/intl/en-de/help/articles/217626558-Keep-up-with-whats-important&quot;&gt;this&lt;/a&gt; will help you keep up with what is important. &lt;/span&gt; to put you in charge of how you consume information.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Indirect Distraction&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Indirect distractions are those distractions that I cannot control. Distraction from colleagues falls into this category. Think about the way most offices are set up. In an open floor plan, where everyone can see one another. it’s easy for someone to walk by and ask, ‘Got a minute?’ right when you’re about to get into the zone, and we all know a minute is never just a minute. I haven’t found a solution that works for me to avoid this kind of distraction, but, thankfully &lt;a href=&quot;https://company.trivago.com/&quot;&gt;trivago&lt;/a&gt; where I work at the time of this writing, has this concept of focus rooms that tackles this problem.&lt;label for=&quot;trivago-focus-room&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;trivago-focus-room&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;sidenote&quot;&gt;At trivago, the focus room is where you go if you want to get work done and avoid distractions from colleagues because it has strict rules like:&lt;br /&gt;1. You are not allowed to speak to one another or make any kind or noise.&lt;br /&gt;2. No one is allowed to pull you out unless there is an emergency. &lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;Meetings generally also fall in this category. In my first point above, I discussed how meetings can hinder one from optimum productivity. Meetings are very difficult to control, especially when you are not the one setting up the meeting. However, there are things you can do to get the most out of your days while attending only relevant meetings and staying productive.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Find out your sweet spot during the day, be it mornings, afternoon or evenings and set up fake recurring meetings for this time in your calendar.&lt;/li&gt;
+  &lt;li&gt;The brain, needs time to recharge, if you usually break from 12 PM, set up fake meetings from 12 PM to 1:30 PM so you can enjoy lunch, recharge and get back to work with the assurance that no one will schedule a meeting for that time.&lt;/li&gt;
+  &lt;li&gt;Make a habit of going over your calendar after every day’s work, declining less important meetings, and rescheduling those that can be rescheduled.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;In conclusion, focus is an habit that needs to be built and exercised, it does not come naturally. I hope after reading this article, you can start to exercise some of the points outlined above for yourself and gain more productive hours in your workplace.&lt;/p&gt;
+
+</description>
+        <pubDate>Fri, 10 Jan 2020 09:21:00 -0600</pubDate>
+        <link>https://oshomo.oforomeh.com/articles/2020/01/a-productive-engineer</link>
+        <guid isPermaLink="true">https://oshomo.oforomeh.com/articles/2020/01/a-productive-engineer</guid>
+        
+        
+      </item>
+    
   </channel>
 </rss>

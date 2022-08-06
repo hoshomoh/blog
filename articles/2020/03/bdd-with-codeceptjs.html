@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BDD with CodeceptJS</title>
+  <meta name="description" content="BDD (Behavior-driven development) is an Agile software development process that bridges the gap between business participants, quality assurance engineers an...">
+  <meta name="image" content="https://oshomo.oforomeh.com/assets/img/oshomo.jpg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BDD with CodeceptJS">
+  <meta name="twitter:description" content="BDD (Behavior-driven development) is an Agile software development process that bridges the gap between business participants, quality assurance engineers an...">
+  <meta name="twitter:site" content="@hoshomoh">
+  <meta name="twitter:creator" content="@hoshomoh">
+  <meta name="twitter:image:src" content="https://oshomo.oforomeh.com/assets/img/oshomo.jpg">
+  <meta name="og:title" content="BDD with CodeceptJS">
+  <meta name="og:description" content="BDD (Behavior-driven development) is an Agile software development process that bridges the gap between business participants, quality assurance engineers an...">
+  <meta name="og:image" content="https://oshomo.oforomeh.com/assets/img/oshomo.jpg">
+  <meta name="og:url" content="/articles/2020/03/bdd-with-codeceptjs">
+  <meta name="og:site_name" content="Oshomo Oforomeh">
+  <meta name="og:locale" content="en_UK">
+  <meta name="og:type" content="website">
+  <meta key="theme-color" name="theme-color" content="#f2f7f8" />
+  <meta key="apple-status-bar-color" name="apple-mobile-web-app-status-bar-style" content="#f2f7f8" />
+  <link rel="shortcut icon" href="https://oshomo.oforomeh.com/assets/img/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="https://oshomo.oforomeh.com/assets/img/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" href="https://oshomo.oforomeh.com/assets/img/manifest-icon-192.png" />
+  <link rel="manifest" href="https://oshomo.oforomeh.com/manifest.json" />
+
+  <!-- Google Fonts loaded here depending on setting in _data/options.yml true loads font, blank does not-->
+  
+    <link href='//fonts.googleapis.com/css?family=Lato:400,400italic' rel='stylesheet' type='text/css'>
+  
+
+  <!-- Load up MathJax script if needed ... specify in /_data/options.yml file-->
+  
+    <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+  <link rel="stylesheet" type="text/css" href="https://oshomo.oforomeh.com/css/tufte.css?revision=WgO4KJSdRn1%%H4ZgLZ&wMB8Gmc5NVr">
+  <link rel="stylesheet" type="text/css" href="https://oshomo.oforomeh.com/css/print.css?revision=WgO4KJSdRn1%%H4ZgLZ&wMB8Gmc5NVr" media="print">
+  <link rel="canonical" href="https://oshomo.oforomeh.com/articles/2020/03/bdd-with-codeceptjs">
+  <link rel="alternate" type="application/rss+xml" title="Oshomo Oforomeh" href="https://oshomo.oforomeh.com/feed.xml" />
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-120373129-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+    gtag('config', 'UA-120373129-1');
+  </script>
+
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "Person",
+      "name": "Oshomo Oforomeh",
+      "url": "https://oshomo.oforomeh.com",
+      "sameAs": [
+          "https://www.facebook.com/hoshizzy",
+          "http://instagram.com/hoshomoh",
+          "https://twitter.com/hoshomoh",
+          "https://www.linkedin.com/in/hoshomoh/",
+          "https://github.com/hoshomoh"
+      ]
+    }
+  </script>
+</head>
+
+  <body>
+    <!--- Header and nav template site-wide -->
+<header>
+    <nav class="group">
+	<a href="/"><img class="badge" src="/assets/img/badge.png" alt="Oshomo Oforomeh"></a>
+	
+		
+  	
+		
+		    
+		      <a href="/">Articles</a>
+		    
+	    
+  	
+		
+		    
+		      <a href="/about/">About</a>
+		    
+	    
+  	
+		
+		    
+		      <a href="/css/print.css"></a>
+		    
+	    
+  	
+		
+  	
+	</nav>
+</header>
+    <article class="group">
+      <h1>BDD with CodeceptJS</h1>
+<p class="subtitle">March 25, 2020</p>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>BDD (Behavior-driven development) is an Agile software development process that bridges the gap between business participants, quality assurance engineers and developer by encouraging collaboration across these roles with a shared understanding of the problem to be solved. BDD doesn’t aim to replace business or testing process but augment it. Which is why it imperative to understand that not every test cases should be described as BDD features. In this article, I will show you how to set up BDD with CodeceptJS.</p>
+
+<h2 id="setting-up-codeceptjs">Setting up CodeceptJS</h2>
+
+<p>We start with an empty project. I will call mine <code class="language-plaintext highlighter-rouge">codecept-bdd-sample</code>. Open up your favourite terminal, mine is iTerm2 and initialize npm:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm init <span class="nt">-y</span>
+</code></pre></div></div>
+
+<p>I have chosen to use Puppeteer with CodeceptJS. Feel free to use any of the supported helpers.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install </span>codeceptjs puppeteer <span class="nt">--save-dev</span>
+</code></pre></div></div>
+
+<p>Initialize CodeceptJS in the current directory by running the command below. You will be asked a couple of questions, press return/enter for all questions. When you are asked to select a helper choose <strong>Puppeteer</strong>.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npx codeceptjs init
+</code></pre></div></div>
+
+<h2 id="enable-gherkin">Enable Gherkin</h2>
+
+<p>Enabling Gherkin for your CodeceptJS project is as easy as running the command below:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npx codeceptjs gherkin:init
+</code></pre></div></div>
+
+<p>This command will add a gherkin section to the <code class="language-plaintext highlighter-rouge">codecept.conf.js</code> file. It will also prepare directories for the BDD features and step definitions as well as create the first feature file for you. By default, the step definitions folder is <code class="language-plaintext highlighter-rouge">step_definitions</code> while the features’ folder is <code class="language-plaintext highlighter-rouge">features</code>.</p>
+
+<p>I like to leave things this way but, feel free to rename them to whatever suits you. If you do rename them, remember to update the <code class="language-plaintext highlighter-rouge">codecept.conf.js</code> file.</p>
+
+<h2 id="gherkin-keywords">Gherkin Keywords</h2>
+
+<p>Gherkin has sets of supported keywords that can be used in our feature files. Not all of them are supported by CodeceptJs. We would examine those supported in CodeceptJS in more details.</p>
+
+<p>The primary keywords are:</p>
+
+<ul>
+  <li>Feature</li>
+  <li>Scenario</li>
+  <li>Given, When, Then, And</li>
+  <li>Background</li>
+  <li>Scenario Outline (or Scenario Template)</li>
+  <li>Examples</li>
+</ul>
+
+<p>There are a few secondary keywords as well:</p>
+
+<ul>
+  <li><span>””” (Doc Strings)</span></li>
+  <li><span>| (Data Tables)</span></li>
+</ul>
+
+<h3 id="feature">Feature</h3>
+
+<p>The purpose of the <code class="language-plaintext highlighter-rouge">Feature</code> keyword is to provide a high-level description of a software feature and to group related scenarios.</p>
+
+<p>The first primary keyword in a Gherkin document must be <code class="language-plaintext highlighter-rouge">Feature</code>, followed by a <code class="language-plaintext highlighter-rouge">:</code> and a short text that describes the feature.</p>
+
+<p>Replace the content of <code class="language-plaintext highlighter-rouge">basic.feature</code> with the content below:</p>
+
+<div class="language-gherkin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">Feature</span><span class="p">:</span> Setting up CodeceptJS 
+    This is a good description of the feature 
+    and has no meaning to the test runner. 
+    Just a good way of providing documentation.
+    The description ends when we start a new line 
+    with the keyword Background, Rule, Example 
+    or Scenario Outline (or their alias keywords).
+</code></pre></div></div>
+
+<h3 id="scenario">Scenario</h3>
+
+<p><code class="language-plaintext highlighter-rouge">Scenario</code> describes a concrete example that illustrates a business rule. It consists of a list of steps. <code class="language-plaintext highlighter-rouge">Scenario</code> consists of steps using the <code class="language-plaintext highlighter-rouge">Given</code>, <code class="language-plaintext highlighter-rouge">When</code>, <code class="language-plaintext highlighter-rouge">Then</code>, &amp; <code class="language-plaintext highlighter-rouge">And</code> keywords.</p>
+
+<p>You can have as many steps as you like, but it is recommended to keep the number at 3-5 so, the scenario doesn’t lose its expressive power as a specification and documentation.</p>
+
+<p>We would add our first scenario to the <code class="language-plaintext highlighter-rouge">basic.feature</code> so, the file should contain:</p>
+
+<div class="language-gherkin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">Feature</span><span class="p">:</span> Setting up CodeceptJS 
+    This is a good description of the feature 
+    and has no meaning to the test runner.
+
+    <span class="kn">Scenario</span><span class="p">:</span> Initialize npm
+      <span class="nf">Given </span>I am trying to initialize npm
+      <span class="nf">When </span>I run the command npm init -y
+      <span class="nf">Then </span>a package.json file must be generated
+</code></pre></div></div>
+
+<p>Update the step definitions file<label for="step-definition-file-update" class="margin-toggle sidenote-number"></label><input type="checkbox" id="step-definition-file-update" class="margin-toggle" /><span class="sidenote">You must always update the step definitions file every time you make changes to any of the feature file. </span> with the command below:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npx codeceptjs gherkin:snippets
+</code></pre></div></div>
+
+<p>This will produce code templates for all undefined steps in the .feature files. By default, it will scan all the .feature files specified in the gherkin.features section of the <code class="language-plaintext highlighter-rouge">codecept.conf.js</code> file and produce code templates for all undefined steps.</p>
+
+<p>The generated code template will be written in the first file of the gherkin.steps array in our <code class="language-plaintext highlighter-rouge">codecept.conf.js</code> file which in our case will be <code class="language-plaintext highlighter-rouge">'./step_definitions/steps.js'</code>.</p>
+
+<p>I don’t like this approach because this would mean step definition templates for all features will be written in the same file. The more feature files I add the longer the steps definition file will become.</p>
+
+<p>This is also the reason why CodeceptJS provided the option to specify which feature file you want to scan and where you want the steps’ definition templates to be written. Passing <code class="language-plaintext highlighter-rouge">--feature</code> option to the command above will make sure only the specified file will be scanned, while passing <code class="language-plaintext highlighter-rouge">--path</code> option will write the generated code template to the specified file.<label for="step-definition-file-in-config" class="margin-toggle sidenote-number"></label><input type="checkbox" id="step-definition-file-in-config" class="margin-toggle" /><span class="sidenote">Before you pass a step file with the <code class="language-plaintext highlighter-rouge">--path</code> option, the step should already be added to the gherkin.steps array in your <code class="language-plaintext highlighter-rouge">codecept.conf.js</code>. </span></p>
+
+<p>Let’s see it in action. Start by creating a new step file in the <code class="language-plaintext highlighter-rouge">step_definitions</code> folder for the basic feature. I will call mine <code class="language-plaintext highlighter-rouge">basic.steps.js</code>. Then, update the gherkin.steps array in my <code class="language-plaintext highlighter-rouge">codecept.conf.js</code> file, so it looks like:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>steps: [
+    './step_definitions/steps.js',
+    './step_definitions/basic.steps.js'
+]
+</code></pre></div></div>
+
+<p>We can now re-run the snippet command with the <code class="language-plaintext highlighter-rouge">--feature</code> and <code class="language-plaintext highlighter-rouge">--path</code> option with the command below:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npx codeceptjs gherkin:snippets <span class="nt">--feature</span> ./features/basic.feature <span class="nt">--path</span> ./step_definitions/basic.steps.js
+</code></pre></div></div>
+
+<p>I am sure you agree that the command is quite long, plus we must always manually create a steps’ definition file for every feature file as well as remember to update the gherkin.steps array in our <code class="language-plaintext highlighter-rouge">codecept.conf.js</code>.</p>
+
+<p>I don’t have the patience to keep repeating these steps, plus I won’t remember the step nor the command. So, I created a <a href="https://www.npmjs.com/package/codecept-cli">package</a> for doing just that.</p>
+
+<h3 id="given">Given</h3>
+
+<p><code class="language-plaintext highlighter-rouge">Given</code> steps describe the initial state of the system - the scene of the scenario. It is typically something that happened or something that needs to happen before the user starts interacting with the system. Think of opening a page, initializing a database, creating a folder etc.</p>
+
+<p>Examining the <code class="language-plaintext highlighter-rouge">Given</code> step <code class="language-plaintext highlighter-rouge">I am trying to initialize npm</code> of our <code class="language-plaintext highlighter-rouge">Scenario</code> above, this is where would create our project folder and <code class="language-plaintext highlighter-rouge">cd</code> into the folder so, we can run the initialization command.</p>
+
+<p>It is absolutely okay to have more than one <code class="language-plaintext highlighter-rouge">Given</code> step in your scenario, you can, however, make it more readable by using <code class="language-plaintext highlighter-rouge">Given</code> with <code class="language-plaintext highlighter-rouge">And</code>.</p>
+
+<p>Other Examples:</p>
+
+<div class="language-gherkin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># ========= Example 1 =========</span>
+<span class="nf">Given </span>I am on the checkout page
+
+<span class="c"># ========= Example 2 =========</span>
+<span class="nf">Given </span>I am on the landing page
+<span class="nf">Given </span>I am logged in
+
+<span class="c"># More readable with And. So we change to:</span>
+<span class="nf">Given </span>I am on the landing page
+<span class="nf">And </span>I am logged in
+
+<span class="c"># ========= Example 3 =========</span>
+<span class="nf">Given </span>Max Mustermann has a balance of £42 
+</code></pre></div></div>
+
+<h3 id="when">When</h3>
+
+<p><code class="language-plaintext highlighter-rouge">When</code> step describes an event or an action performed by a person(think product persona) interacting with the system, or it can be an event triggered by another system.</p>
+
+<p>It’s strongly recommended to only have a one <code class="language-plaintext highlighter-rouge">When</code> per <code class="language-plaintext highlighter-rouge">Scenario</code>. If you see yourself adding more than one <code class="language-plaintext highlighter-rouge">When</code> per <code class="language-plaintext highlighter-rouge">Scenario</code>, then that is a big red flag you need to split that scenario into multiple scenarios.</p>
+
+<p>Examining the <code class="language-plaintext highlighter-rouge">When</code> step <code class="language-plaintext highlighter-rouge">I run the command npm init -y</code> of our <code class="language-plaintext highlighter-rouge">Scenario</code> above, the person here is me while the action is running the command <code class="language-plaintext highlighter-rouge">npm init -y</code>.</p>
+
+<p>Other Examples:</p>
+
+<div class="language-gherkin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># ========= Example 1 =========</span>
+<span class="nf">When </span>I click on the booking button
+ 
+<span class="c"># ========= Example 2 =========</span>
+<span class="nf">When </span>I open the checkout page
+
+<span class="c"># ========= Example 3 =========</span>
+<span class="nf">When </span>Max Mustermann adds £20 his account
+</code></pre></div></div>
+
+<h3 id="then">Then</h3>
+
+<p><code class="language-plaintext highlighter-rouge">Then</code> steps describe an expected outcome or result. This is where we would normally do an assertion that the action performed with the <code class="language-plaintext highlighter-rouge">When</code> step yield the expected outcome.</p>
+
+<p>Just like the <code class="language-plaintext highlighter-rouge">Given</code> step, it is also okay to have more than one <code class="language-plaintext highlighter-rouge">Then</code> step in your scenario, you can, however, make it more readable by using <code class="language-plaintext highlighter-rouge">Then</code> with <code class="language-plaintext highlighter-rouge">And</code>.</p>
+
+<p>Examining the <code class="language-plaintext highlighter-rouge">Then</code> step <code class="language-plaintext highlighter-rouge">a package.json file must be generated</code> of our <code class="language-plaintext highlighter-rouge">Scenario</code> above, this is where we check for the existence of the package.json file.</p>
+
+<p>Other Examples:</p>
+
+<div class="language-gherkin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># ========= Example 1 =========</span>
+<span class="nf">Then </span>I should see something
+ 
+<span class="c"># ========= Example 2 =========</span>
+<span class="nf">Then </span>I shouldn't see something 
+
+<span class="c"># ========= Example 3 =========</span>
+<span class="nf">Then </span>Max Mustermann should see a new balance
+<span class="nf">Then </span>Max Mustermann balance should be £60
+<span class="nf">Then </span>Max Mustermann should not see the old balance
+
+<span class="c"># More readable with And. So we change to:</span>
+<span class="nf">Then </span>Max Mustermann should see a new balance
+<span class="nf">And </span>Max Mustermann balance should be £60
+<span class="nf">And </span>Max Mustermann should not see the old balance
+</code></pre></div></div>
+
+<h3 id="and">And</h3>
+
+<p>As described in the <code class="language-plaintext highlighter-rouge">Given</code> and <code class="language-plaintext highlighter-rouge">Then</code> section, <code class="language-plaintext highlighter-rouge">And</code> step can be used for making successive <code class="language-plaintext highlighter-rouge">Given</code> and <code class="language-plaintext highlighter-rouge">Then</code> more fluidly structured and readable.</p>
+
+<h3 id="background">Background</h3>
+
+<p>Sometimes you find yourself repeating the same steps for the scenarios in a <code class="language-plaintext highlighter-rouge">Feature</code>. This is the reason for the <code class="language-plaintext highlighter-rouge">Background</code> step. It behaves like the CodeceptJS <code class="language-plaintext highlighter-rouge">Before Hook</code>, however, try not to confuse it as being a replacement for the <code class="language-plaintext highlighter-rouge">Before Hook</code> as CodeceptJS allow you to specify <code class="language-plaintext highlighter-rouge">Before</code> and <code class="language-plaintext highlighter-rouge">After</code> Hooks for all your steps file.</p>
+
+<p>Example:</p>
+
+<div class="language-gherkin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">Feature</span><span class="p">:</span> Adding product to cart
+  Adding product to cart feature description
+ 
+  <span class="kn">Scenario</span><span class="p">:</span> Redirecting to product listing page
+    <span class="nf">Given </span>I am a logged in user
+    <span class="nf">And </span>I am on the landing page
+    <span class="nf">When </span>I click on the product listing page link
+    <span class="nf">Then </span>I should be redirected to the product listing page
+
+  <span class="kn">Scenario</span><span class="p">:</span> Showing image in a Modal
+    <span class="nf">Given </span>I am a logged in user
+    <span class="nf">And </span>I am on the landing page
+    <span class="nf">When </span>I click on an image in the image gallery
+    <span class="nf">Then </span>The clicked image should be displayed in a full screen Modal
+
+<span class="c"># Notice how Given &amp; And step of both scenarios are the same?</span>
+<span class="c"># Instead of having duplicated steps in both scenario, we can </span>
+<span class="c"># solve the duplication by using the Background step like below:</span>
+
+<span class="kd">Feature</span><span class="p">:</span> Adding product to cart
+  Adding product to cart feature description
+
+  <span class="kn">Background</span><span class="p">:</span>
+    <span class="nf">Given </span>I am a logged in user
+    <span class="nf">And </span>I am on the landing page
+ 
+  <span class="kn">Scenario</span><span class="p">:</span> Redirecting to product listing page
+    <span class="nf">When </span>I click on the product listing page link
+    <span class="nf">Then </span>I should be redirected to the product listing page
+
+  <span class="kn">Scenario</span><span class="p">:</span> Showing image in a Modal
+    <span class="nf">When </span>I click on an image in the image gallery
+    <span class="nf">Then </span>The clicked image should be displayed in a full screen Modal
+</code></pre></div></div>
+
+<h3 id="scenario-outline">Scenario Outline</h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">Scenario Outline</code><label for="no-support-for-scenario-outline" class="margin-toggle sidenote-number"></label><input type="checkbox" id="no-support-for-scenario-outline" class="margin-toggle" /><span class="sidenote">As at the time of writing this post, CodeceptJS does not automatically generate the stub template definition for a <em>Scenario Outline</em> so, you have to manually add the step definitions yourself. </span> keyword can be used to run the same <code class="language-plaintext highlighter-rouge">Scenario</code> multiple times, with different combinations of values. Think of it like what you already know as <a href="https://codecept.io/advanced/#data-driven-tests">Data Driven Test</a> in CodeceptJS. The keyword <code class="language-plaintext highlighter-rouge">Scenario Template</code> is a synonym of the keyword <code class="language-plaintext highlighter-rouge">Scenario Outline</code> so, feel free to use them interchangeably.</p>
+
+<p>Take the example below, you will see how repetitive the scenarios become, with the total number of fruits, number of fruits eaten, and the number of fruits left as the only changing values.</p>
+
+<div class="language-gherkin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">Feature</span><span class="p">:</span> Eating fruits
+  We can eat different kind of fruits
+ 
+  <span class="kn">Scenario</span><span class="p">:</span> eat 5 out of 12
+    <span class="nf">Given </span>there are 12 apples
+    <span class="nf">When </span>I eat 5 apples
+    <span class="nf">Then </span>I should have 7 apples left
+  
+  <span class="kn">Scenario</span><span class="p">:</span> eat 5 out of 20
+    <span class="nf">Given </span>there are 20 apples
+    <span class="nf">When </span>I eat 5 apples
+    <span class="nf">Then </span>I should have 15 apples left
+</code></pre></div></div>
+
+<p>We can collapse these two similar scenarios into a <code class="language-plaintext highlighter-rouge">Scenario Outline</code> by replacing the changing values with a template delimited with <code class="language-plaintext highlighter-rouge">&lt; &gt;</code> and passing the changing values in form of a table using the <code class="language-plaintext highlighter-rouge">Examples</code> keyword. The table header should match the template used in the scenario.</p>
+
+<p>Revising the initial example above using <code class="language-plaintext highlighter-rouge">Scenario Outline</code>:</p>
+
+<div class="language-gherkin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Notice how the template &lt;total&gt;, &lt;eat&gt; and &lt;left&gt; </span>
+<span class="c"># matches the table header in the `Examples` keyword.</span>
+<span class="kd">Feature</span><span class="p">:</span> Eating fruits
+  We can eat different kind of fruits
+ 
+  <span class="kn">Scenario Outline</span><span class="p">:</span> remainder after eating
+    <span class="nf">Given </span>there are <span class="nv">&lt;total&gt;</span> apples
+    <span class="nf">When </span>I eat <span class="nv">&lt;eat&gt;</span> apples
+    <span class="nf">Then </span>I should have <span class="nv">&lt;left&gt;</span> apples left
+
+    <span class="nn">Examples</span><span class="p">:</span>
+      <span class="p">|</span> <span class="nv">total</span> <span class="p">|</span> <span class="nv">eat</span> <span class="p">|</span> <span class="nv">left</span> <span class="p">|</span>
+      <span class="p">|</span>    <span class="n">12</span> <span class="p">|</span>   <span class="n">5</span> <span class="p">|</span>    <span class="n">7</span> <span class="p">|</span>
+      <span class="p">|</span>    <span class="n">20</span> <span class="p">|</span>   <span class="n">5</span> <span class="p">|</span>   <span class="n">15</span> <span class="p">|</span>
+</code></pre></div></div>
+
+<h2 id="passing-parameters-to-step-definitions">Passing parameters to step definitions</h2>
+
+<p>In some cases, you might want to pass data to steps definition functions from your feature file. Take the feature below as an example:</p>
+
+<div class="language-gherkin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">Feature</span><span class="p">:</span> checkout process
+  Buying order to buy products
+
+  <span class="kn">Scenario</span><span class="p">:</span>
+    <span class="nf">Given </span>I have product with $600 price in my cart
+    <span class="nf">When </span>I go to checkout process
+    <span class="nf">Then </span>I should see that total number of products is 2
+</code></pre></div></div>
+
+<p>Running the CodeceptJS snippet command will generate the snippet below:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Given</span><span class="p">(</span><span class="dl">'</span><span class="s1">I have product with $600 price in my cart</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="c1">// From "features/basic.feature" {"line":5,"column":5}</span>
+    <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="dl">'</span><span class="s1">Not implemented yet</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="nx">When</span><span class="p">(</span><span class="dl">'</span><span class="s1">I go to checkout process</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="c1">// From "features/basic.feature" {"line":6,"column":5}</span>
+    <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="dl">'</span><span class="s1">Not implemented yet</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="nx">Then</span><span class="p">(</span><span class="dl">'</span><span class="s1">I should see that total number of products is 2</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="c1">// From "features/basic.feature" {"line":7,"column":5}</span>
+    <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="dl">'</span><span class="s1">Not implemented yet</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>While the above seems fine, the problem is the <code class="language-plaintext highlighter-rouge">$600</code> from the <code class="language-plaintext highlighter-rouge">Given</code> step &amp; the <code class="language-plaintext highlighter-rouge">2</code> in the <code class="language-plaintext highlighter-rouge">Then</code> step will not be passed to the respective step function. There are different ways of resolving this so that data from the feature definition can be used in the step function.</p>
+
+<ol>
+  <li>Using Regular Expressions:</li>
+  <li>Using Cucumber Expressions</li>
+  <li>Using Doc Strings</li>
+  <li>Using Data Tables</li>
+</ol>
+
+<h3 id="using-regular-expressions">Using Regular Expressions</h3>
+
+<p>We would change the step definition’s expression to be a Regular Expression. The Regular Expression much match the step defined in the feature file. Using the <code class="language-plaintext highlighter-rouge">Given</code> step definition defined above as <code class="language-plaintext highlighter-rouge">Given I have product with $600 price in my cart</code>, updating the generated step definition using Regular Expressions will look like:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Given</span><span class="p">(</span><span class="sr">/I have product with </span><span class="se">\$(\d</span><span class="sr">+</span><span class="se">)</span><span class="sr"> price in my cart/</span><span class="p">,</span> <span class="p">(</span><span class="nx">price</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="c1">// From "features/basic.feature" {"line":5,"column":5}</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">price</span><span class="p">);</span>
+    <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="dl">'</span><span class="s1">Not implemented yet</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">(\d+)</code> will be passed as a parameter to the step function. The parameters will be passed according to when they appear in the expression, <code class="language-plaintext highlighter-rouge">(\d+)</code> being the first parameter found in the expression will be the first to be passed to the function.</p>
+
+<p>The parameters don’t have names, so feel free to access them with any name you see fit. In my example I have chosen to use <code class="language-plaintext highlighter-rouge">price</code> but, I could as well change it to <code class="language-plaintext highlighter-rouge">parameter1</code>.</p>
+
+<h3 id="using-cucumber-expressions">Using Cucumber Expressions</h3>
+
+<p>Cucumber Expressions offer similar functionality to Regular Expressions, with a syntax that is easier to read and write. My personal preference is to use Cucumber Expressions. Using the <code class="language-plaintext highlighter-rouge">Then</code> step definition defined above as <code class="language-plaintext highlighter-rouge">Then I should see that total number of products is 2</code>, updating the generated step function using Cucumber Expressions will look like:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Then</span><span class="p">(</span><span class="dl">'</span><span class="s1">I should see that total number of products is {int}</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">totalProduct</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="c1">// From "features/basic.feature" {"line":7,"column":5}</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">totalProduct</span><span class="p">);</span>
+    <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="dl">'</span><span class="s1">Not implemented yet</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>Just like the Regular Expressions, the parameters will be passed according to when they appear in the expression. I also chose to use <code class="language-plaintext highlighter-rouge">totalProduct</code> as the variable name for accessing the first parameter, you can change this to whatever you like.</p>
+
+<p>The following are built-in parameter types that can be used with Cucumber Expressions. <code class="language-plaintext highlighter-rouge">{int}</code>, <code class="language-plaintext highlighter-rouge">{float}</code>, <code class="language-plaintext highlighter-rouge">{word}</code>, <code class="language-plaintext highlighter-rouge">{string}</code> and <code class="language-plaintext highlighter-rouge">{}</code>.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Parameter</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><strong>{int}</strong></td>
+      <td style="text-align: left">Matches integers, for example <strong>71</strong> or <strong>-19</strong>.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>{float}</strong></td>
+      <td style="text-align: left">Matches floats, for example <strong>3.6</strong>, <strong>.8</strong> or <strong>-9.2</strong>.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>{word}</strong></td>
+      <td style="text-align: left">Matches words without whitespace, for example <strong>banana</strong> (but not <strong>banana split</strong>)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>{string}</strong></td>
+      <td style="text-align: left">Matches single-quoted or double-quoted strings, for example <strong>“banana split”</strong> or <strong>‘banana split’</strong> (but not <strong>banana split</strong>). Only the text between the quotes will be extracted. The quotes themselves are discarded. Empty pairs of quotes are valid and will be matched and passed to step code as empty strings.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>{}</strong></td>
+      <td style="text-align: left">Matches anything (<strong>/.*/</strong>).</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>CodeceptJS will automatically convert double-quoted strings to Cucumber Expressions. For example, the generated step function for this =&gt; <code class="language-plaintext highlighter-rouge">Given I have 2 "apples" and 4 "tomatoes"</code> will look like:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Given</span><span class="p">(</span><span class="dl">'</span><span class="s1">I have 2 {string} and 4 {string}</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">fruit</span><span class="p">,</span> <span class="nx">vegetable</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">fruit</span><span class="p">,</span> <span class="nx">vegetable</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>As you can see, I am accessing both parameters using <code class="language-plaintext highlighter-rouge">fruit</code> and <code class="language-plaintext highlighter-rouge">vegetable</code>, which could also be changed to <code class="language-plaintext highlighter-rouge">parameter1</code> and <code class="language-plaintext highlighter-rouge">parameter2</code>. <code class="language-plaintext highlighter-rouge">fruit</code> will be equal to <code class="language-plaintext highlighter-rouge">apples</code> while <code class="language-plaintext highlighter-rouge">vegetable</code> will be equals to <code class="language-plaintext highlighter-rouge">tomatoes</code> when the test runs.</p>
+
+<p>You can do much more with Cucumber Expressions, check the <a href="https://cucumber.io/docs/cucumber/cucumber-expressions/">official documentation</a> for other possibilities not covered in this article.</p>
+
+<h3 id="using-doc-strings">Using Doc Strings</h3>
+
+<p><code class="language-plaintext highlighter-rouge">Doc Strings</code> is handy for passing larger pieces of text that would not fit into a <code class="language-plaintext highlighter-rouge">{word}</code>, <code class="language-plaintext highlighter-rouge">{string}</code> or <code class="language-plaintext highlighter-rouge">{}</code>. Unlike <code class="language-plaintext highlighter-rouge">{int}</code>, <code class="language-plaintext highlighter-rouge">{float}</code>, <code class="language-plaintext highlighter-rouge">{word}</code>, <code class="language-plaintext highlighter-rouge">{string}</code> and <code class="language-plaintext highlighter-rouge">{}</code> there is no need for you to match the <code class="language-plaintext highlighter-rouge">Doc Strings</code> to a parameter in the step definition. This will be automatically passed as the last parameter of the step function and can be accessed with the <code class="language-plaintext highlighter-rouge">content</code> property of the last parameter.</p>
+
+<p>Example:</p>
+
+<div class="language-gherkin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">Feature</span><span class="p">:</span> blog posts
+  Creating a new blog post
+
+  <span class="kn">Scenario</span><span class="p">:</span>
+      <span class="nf">Given </span>a blog post named <span class="s">"My first post"</span> with body
+        <span class="s">"""
+        Here is the first paragraph of my blog post. Lorem ipsum dolor sit amet,
+        consectetur adipiscing elit.
+        """</span>
+</code></pre></div></div>
+
+<p>The indentation of the <code class="language-plaintext highlighter-rouge">"""</code> is not very important, but I prefer to indent two spaces after the enclosing step, the indentation inside the <code class="language-plaintext highlighter-rouge">"""</code> is however important, because it behaves like the Javascript ES6 template literal and preserves the content as it was written in the <code class="language-plaintext highlighter-rouge">Doc Strings</code>.</p>
+
+<p>The generated step definition for the example feature above will look like:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Given</span><span class="p">(</span><span class="dl">'</span><span class="s1">a blog post named {string} with body</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">postName</span><span class="p">,</span> <span class="nx">docString</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">postName</span><span class="p">,</span> <span class="nx">docString</span><span class="p">.</span><span class="nx">content</span><span class="p">)</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>Remember that the <code class="language-plaintext highlighter-rouge">Doc Strings</code> is passed as the last parameter, and the value can be accessed from the <code class="language-plaintext highlighter-rouge">content</code> property, which is why I logged <code class="language-plaintext highlighter-rouge">docString.content</code>.</p>
+
+<h3 id="using-data-tables">Using Data Tables</h3>
+
+<p><code class="language-plaintext highlighter-rouge">Data Tables</code> are perfect for passing a list/array into a step function. So, instead of repeating a step with different values, we can pass those values as a list and iterate over them in our step function.</p>
+
+<div class="language-gherkin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Instead of doing</span>
+<span class="kn">Scenario</span><span class="p">:</span>
+  <span class="nf">Given </span>the user with email <span class="s">"max@example.com"</span> and twitter profile <span class="s">"@maxM"</span> exists
+  <span class="nf">And </span>the user with email <span class="s">"steff@example.com"</span> and twitter profile <span class="s">"@steff"</span> exists
+  <span class="nf">And </span>the user with email <span class="s">"greg@example.com"</span> and twitter profile <span class="s">"@greg"</span> exists
+  <span class="nf">And </span>the user with email <span class="s">"jonathan@example.com"</span> and twitter profile <span class="s">"@jonathan"</span> exists
+
+<span class="c"># We could use Data Tables to avoid step repetition by doing:</span>
+<span class="kn">Scenario</span><span class="p">:</span>
+  <span class="nf">Given </span>user with email and twitter username exists
+    <span class="p">|</span> <span class="nv">email</span> <span class="p">|</span> <span class="nv">twitter</span> <span class="p">|</span>
+    <span class="p">|</span> <span class="n">max@example.com</span> <span class="p">|</span> <span class="n">maxM</span> <span class="p">|</span>
+    <span class="p">|</span> <span class="n">steff@example.com</span> <span class="p">|</span> <span class="n">steff</span> <span class="p">|</span>
+    <span class="p">|</span> <span class="n">greg@example.com</span> <span class="p">|</span> <span class="n">greg</span> <span class="p">|</span>
+    <span class="p">|</span> <span class="n">jonathan@example.com</span> <span class="p">|</span> <span class="n">jonathan</span> <span class="p">|</span>
+</code></pre></div></div>
+
+<p>Just like <code class="language-plaintext highlighter-rouge">Doc Strings</code>, <code class="language-plaintext highlighter-rouge">Data Tables</code> will be the last parameter passed to the step function. So the step definition for the scenario above will look something like:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Given</span><span class="p">(</span><span class="dl">'</span><span class="s1">user with email and twitter username exists</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">dataTable</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">tableByHeader</span> <span class="o">=</span> <span class="nx">dataTable</span><span class="p">.</span><span class="nx">parse</span><span class="p">().</span><span class="nx">hashes</span><span class="p">();</span>
+    <span class="c1">// Iterate through the table to access its values</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">const</span> <span class="nx">row</span> <span class="k">in</span> <span class="nx">tableByHeader</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// Take the respective values </span>
+        <span class="kd">const</span> <span class="nx">email</span> <span class="o">=</span> <span class="nx">row</span><span class="p">.</span><span class="nx">email</span><span class="p">;</span>
+        <span class="kd">const</span> <span class="nx">twitter</span> <span class="o">=</span> <span class="nx">row</span><span class="p">.</span><span class="nx">twitter</span><span class="p">;</span>
+        <span class="c1">// ...</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>CodeceptJS allows you to parse the table using <code class="language-plaintext highlighter-rouge">hashes</code> as we saw above and two other methods:</p>
+
+<ul>
+  <li><strong>raw()</strong> - returns the table as a 2-D array</li>
+  <li><strong>rows()</strong> - returns the table as a 2-D array, without the first row</li>
+  <li><strong>hashes()</strong> - returns an array of objects where each row converted to an object (column header is the key)</li>
+</ul>
+
+<h2 id="finally">Finally</h2>
+
+<p>The four methods outlined above for passing data from the feature file to step function can be used with any of the step keyword <code class="language-plaintext highlighter-rouge">Given</code>, <code class="language-plaintext highlighter-rouge">Then</code>, <code class="language-plaintext highlighter-rouge">When</code> etc.</p>
+
+<p>CodeceptJS supports <code class="language-plaintext highlighter-rouge">Before</code>, <code class="language-plaintext highlighter-rouge">After</code> and <code class="language-plaintext highlighter-rouge">Fail</code> Hooks in the step definition files.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">Before</code> Hook runs before any of the Scenario, it takes the current test as a parameter and is the best place to manage state between Scenarios or do general test configuration.</p>
+
+<p>Example:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">state</span> <span class="o">=</span> <span class="p">{};</span>
+
+<span class="nx">Before</span><span class="p">((</span><span class="nx">test</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">state</span> <span class="o">=</span> <span class="p">{};</span>
+    <span class="nx">test</span><span class="p">.</span><span class="nx">retries</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span> <span class="c1">// retry scenarios 2 times</span>
+<span class="p">});</span>
+
+<span class="nx">Given</span><span class="p">(</span><span class="dl">'</span><span class="s1">the user is logged in</span><span class="dl">'</span><span class="p">,</span> <span class="k">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">state</span><span class="p">.</span><span class="nx">user</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">someLoginFuntion</span><span class="p">();</span>
+<span class="p">});</span>
+
+<span class="nx">Then</span><span class="p">(</span><span class="dl">'</span><span class="s1">the logged in user is Oshomo</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">assertEquals</span><span class="p">(</span><span class="dl">'</span><span class="s1">Oshomo</span><span class="dl">'</span><span class="p">,</span> <span class="nx">state</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">After</code> Hook runs after all the Scenarios, this is the best place to do general garbage collection or in simple terms clean up.</p>
+
+<p>Example:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">After</span><span class="p">(</span><span class="k">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">delete</span> <span class="nx">someData</span><span class="p">;</span>
+    <span class="k">await</span> <span class="nx">someService</span><span class="p">.</span><span class="nx">cleanup</span><span class="p">();</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">Fail</code> Hook run when any of the Scenario fails and receives two parameters, the current <code class="language-plaintext highlighter-rouge">test</code> and the current <code class="language-plaintext highlighter-rouge">error</code>.</p>
+
+<p>Example:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Fail</span><span class="p">((</span><span class="nx">test</span><span class="p">,</span> <span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">An error has occurred - </span><span class="dl">'</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>Note that not all tests should be defined as BDD features, as such you might have generic acceptance tests, and a minimal set of BDD Scenarios for your key business values. By default, CodeceptJS will run both your BDD Scenarios and general acceptance tests with the command <code class="language-plaintext highlighter-rouge">npx codeceptjs run</code>, the BDD Scenarios runs first. You can tell CodeceptJS to run only the general acceptance tests by appending <code class="language-plaintext highlighter-rouge">--tests</code> to the command or run only the BDD Scenarios by appending <code class="language-plaintext highlighter-rouge">--features</code> to the command.</p>
+
+<p>If you are new to BDD, I strongly recommend reading the following articles:</p>
+
+<ul>
+  <li>Introducing BDD by Dan North. <a href="https://dannorth.net/introducing-bdd/">https://dannorth.net/introducing-bdd/</a></li>
+  <li>Behaviour-Driven Development by Cucumber. <a href="https://cucumber.io/docs/bdd/">https://cucumber.io/docs/bdd/</a></li>
+  <li>Behaviour-Driven Development by Wikipedia. <a href="https://www.wikiwand.com/en/Behavior-driven_development">https://www.wikiwand.com/en/Behavior-driven_development</a></li>
+</ul>
+
+
+
+
+    </article>
+    <span class="print-footer">BDD with CodeceptJS - March 25, 2020 - Oshomo Oforomeh</span>
+    <footer>
+    <hr class="slender">
+    <ul class="footer-links">
+        <li>
+            <a href="mailto:hello@oshomo.oforomeh.com" target="_blank">
+                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="envelope-square"
+                     class="svg-inline--fa fa-envelope-square fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg"
+                     viewBox="0 0 448 512">
+                    <path fill="currentColor"
+                          d="M400 32H48C21.49 32 0 53.49 0 80v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48V80c0-26.51-21.49-48-48-48zM178.117 262.104C87.429 196.287 88.353 196.121 64 177.167V152c0-13.255 10.745-24 24-24h272c13.255 0 24 10.745 24 24v25.167c-24.371 18.969-23.434 19.124-114.117 84.938-10.5 7.655-31.392 26.12-45.883 25.894-14.503.218-35.367-18.227-45.883-25.895zM384 217.775V360c0 13.255-10.745 24-24 24H88c-13.255 0-24-10.745-24-24V217.775c13.958 10.794 33.329 25.236 95.303 70.214 14.162 10.341 37.975 32.145 64.694 32.01 26.887.134 51.037-22.041 64.72-32.025 61.958-44.965 81.325-59.406 95.283-70.199z"></path>
+                </svg>
+            </a>
+        </li>
+        <li>
+            <a href="//github.com/hoshomoh" target="_blank">
+                <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="github"
+                     class="svg-inline--fa fa-github fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg"
+                     viewBox="0 0 496 512">
+                    <path fill="currentColor"
+                          d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path>
+                </svg>
+            </a>
+        </li>
+        <li>
+            <a href="//linkedin.com/in/hoshomoh/" target="_blank">
+                <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="linkedin"
+                     class="svg-inline--fa fa-linkedin fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg"
+                     viewBox="0 0 448 512">
+                    <path fill="currentColor"
+                          d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"></path>
+                </svg>
+            </a>
+        </li>
+        <li>
+            <a href="//www.twitter.com/hoshomoh" target="_blank">
+                <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="twitter-square"
+                     class="svg-inline--fa fa-twitter-square fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg"
+                     viewBox="0 0 448 512">
+                    <path fill="currentColor"
+                          d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-48.9 158.8c.2 2.8.2 5.7.2 8.5 0 86.7-66 186.6-186.6 186.6-37.2 0-71.7-10.8-100.7-29.4 5.3.6 10.4.8 15.8.8 30.7 0 58.9-10.4 81.4-28-28.8-.6-53-19.5-61.3-45.5 10.1 1.5 19.2 1.5 29.6-1.2-30-6.1-52.5-32.5-52.5-64.4v-.8c8.7 4.9 18.9 7.9 29.6 8.3a65.447 65.447 0 0 1-29.2-54.6c0-12.2 3.2-23.4 8.9-33.1 32.3 39.8 80.8 65.8 135.2 68.6-9.3-44.5 24-80.6 64-80.6 18.9 0 35.9 7.9 47.9 20.7 14.8-2.8 29-8.3 41.6-15.8-4.9 15.2-15.2 28-28.8 36.1 13.2-1.4 26-5.1 37.8-10.2-8.9 13.1-20.1 24.7-32.9 34z"></path>
+                </svg>
+            </a>
+        </li>
+        <li>
+            <a href="/feed" target="_blank">
+                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="rss-square"
+                     class="svg-inline--fa fa-rss-square fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg"
+                     viewBox="0 0 448 512">
+                    <path fill="currentColor"
+                          d="M400 32H48C21.49 32 0 53.49 0 80v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48V80c0-26.51-21.49-48-48-48zM112 416c-26.51 0-48-21.49-48-48s21.49-48 48-48 48 21.49 48 48-21.49 48-48 48zm157.533 0h-34.335c-6.011 0-11.051-4.636-11.442-10.634-5.214-80.05-69.243-143.92-149.123-149.123-5.997-.39-10.633-5.431-10.633-11.441v-34.335c0-6.535 5.468-11.777 11.994-11.425 110.546 5.974 198.997 94.536 204.964 204.964.352 6.526-4.89 11.994-11.425 11.994zm103.027 0h-34.334c-6.161 0-11.175-4.882-11.427-11.038-5.598-136.535-115.204-246.161-251.76-251.76C68.882 152.949 64 147.935 64 141.774V107.44c0-6.454 5.338-11.664 11.787-11.432 167.83 6.025 302.21 141.191 308.205 308.205.232 6.449-4.978 11.787-11.432 11.787z"></path>
+                </svg>
+            </a>
+        </li>
+    </ul>
+    <div class="credits">
+        <span>&copy; 2022 &nbsp;&nbsp;OSHOMO OFOROMEH</span></br> <br>
+    </div>
+</footer>
+
+  </body>
+</html>
