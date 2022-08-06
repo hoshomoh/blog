@@ -14,7 +14,7 @@ Create production build:
 
 ```shell script
 make shell
-
+rm -rf _site
 jekyll build
 ```
 
