@@ -9,7 +9,15 @@ markdown: kramdown
 markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 permalink: /articles/:year/:month/:title
 excerpt_separator: <!--more-->  # you can specify your own separator, of course.
-exclude: ['Gemfile', 'Gemfile.lock', 'README.md']
+exclude: [
+  'Gemfile',
+  'Gemfile.lock',
+  'README.md',
+  'deploy.sh',
+  'docker-compose.yml',
+  'Makefile',
+  '.gitignore'
+]
 jekyll_compose:
   default_front_matter:
     drafts:
