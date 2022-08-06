@@ -14,6 +14,7 @@ fi
 # Move generated site to temporary directory
 mv _site/* $TEMP_DIR
 git checkout -B master
+git pull origin master
 rm -rf *
 mv $TEMP_DIR/* .
 
