@@ -8,8 +8,8 @@ My name is *Oshomo Oforomeh* and I am an experienced software engineer with a Bs
 I have a good understanding of the current technology landscape and unlike many software engineers, I am also a product person. I like to have a full understanding of what I am working on and more importantly why I am working on it. Asking questions like: what value does this feature give to customers? How do we make profit and still keep our customers happy? How do we keep delivering value to customers while keeping their data safe and adhering to all GDPR directives?
 
 I am currently not looking for any job opportunities at the moment as I am quite happy with my current role at
-[Taxfix](https://taxfix.de/). However, if you are a junior engineer, looking for a mentor, I might have some time to
-spare, just reach out to me at [hello@oshomo.oforomeh.com](mailto:hello@oshomo.oforomeh.com).
+[Taxfix](https://taxfix.de/){:target="_blank"}. However, if you are a junior engineer, looking for a mentor, I might have some time to
+spare, just reach out to me at [hello@oshomo.oforomeh.com](mailto:hello@oshomo.oforomeh.com){:target="_blank"}.
 
 [//]: # (I am currently looking for a senior role with focus on Frontend and Mobile using technologies like React, React Native, GraphQL, Styled-Component, Typescript etc. With a minimum remuneration of 80k gross annually. If this doesn't sound like your company, don’t bother getting back to me.)
 
