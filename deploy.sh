@@ -15,7 +15,7 @@ fi
 mv _site/* $TEMP_DIR
 git checkout -B master
 rm -rf *
-mv "$TEMP_DIR/*" .
+mv $TEMP_DIR/* .
 
 # Push changes to github
 git add .
@@ -25,8 +25,4 @@ git checkout dev
 
 # Exit on done
 echo "Deployment Done"
-exit 0
-
-# Make sure the temp directory gets removed on script exit.
-trap "exit 1"           HUP INT PIPE QUIT TERM
-trap 'rm -rf "$TEMP_DIR"'  EXIT
+rm -rf $TEMP_DIR
